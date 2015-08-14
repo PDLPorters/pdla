@@ -6,7 +6,7 @@ use PDLA::LiteF;
 use strict;
 use warnings;
 
-our $loaded; our $slatec;
+my $loaded; my $slatec;
 BEGIN {
     # Must load slatec before Func since Func loads slatec itself
     # and this line will be a no-op (and so we will not be able to
