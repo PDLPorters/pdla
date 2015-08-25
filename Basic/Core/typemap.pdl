@@ -8,23 +8,27 @@ PDL_Indx  T_IV
 float	T_NV
 PDL_Anyval  T_PDL_ANYVAL
 
-
-
 INPUT
 
 T_PDL
 	$var = PDL->SvPDLV($arg);
 
 T_PDL_ANYVAL
-	if ( SvIOK($arg) ) {
-	        fprintf(stderr, \"(before) PDL_Anyval INPUT: (%d:%ld)\\n\", PDL_N, SvIOK($arg));
-		$var.type = PDL_N;
-		$var.value.N = (PDL_Indx) SvIV($arg);
-	        fprintf(stderr, \"PDL_Anyval INPUT: (%d:%ld)\\n\", PDL_N, $var.value.N);
+	/* XXX-PDLANYVAL what to do with undef? */
+	if (!SvOK($arg)) {
+		$var.type = -1;
+		$var.value.B = 0;
+	} else if (SvIOK($arg)) {
+#if IVSIZE == 8
+		$var.type = PDL_LL;
+		$var.value.Q = (PDL_LongLong) SvIV($arg);
+#else
+		$var.type = PDL_L;
+		$var.value.L = (PDL_Long) SvIV($arg);
+#endif
 	} else {
 		$var.type = PDL_D;
 		$var.value.D = (PDL_Double) SvNV($arg);
-	        fprintf(stderr, \"PDL_Anyval INPUT: (%d:%g)\\n\", PDL_D, $var.value.D);
 	}
 
 T_PDLTRANS
@@ -34,47 +38,13 @@ T_PDLTRANS
 	        croak(\"$var is not of type PDL::Trans\");
 
 
-
 OUTPUT
 
 T_PDL
 	PDL->SetSV_PDL($arg,$var);
 
 T_PDL_ANYVAL
-	switch ($var.type) {
-	    case PDL_B:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%d)\\n\", PDL_B, $var.value.B);
-	        sv_setiv($arg, (IV)$var.value.B );
-	        break;
-	    case PDL_S:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%d)\\n\", PDL_S, $var.value.S);
-	        sv_setiv($arg, (IV)$var.value.S );
-	        break;
-	    case PDL_US:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%d)\\n\", PDL_US, $var.value.U);
-	        sv_setiv($arg, (IV)$var.value.U );
-	        break;
-	    case PDL_L:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%d)\\n\", PDL_L, $var.value.L);
-	        sv_setiv($arg, (IV)$var.value.L );
-	        break;
-	    case PDL_IND:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%ld)\\n\", PDL_IND, $var.value.N);
-	        sv_setiv($arg, (IV)$var.value.N );
-	        break;
-	    case PDL_LL:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%ld)\\n\", PDL_LL, $var.value.Q);
-	        sv_setiv($arg, (IV)$var.value.Q );
-	        break;
-	    case PDL_F:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%f)\\n\", PDL_F, $var.value.F);
-	        sv_setnv($arg, (double) $var.value.F );
-	        break;
-	    case PDL_D:
-	        fprintf(stderr, \"PDL_Anyval OUTPUT: (%d:%g)\\n\", PDL_D, $var.value.D);
-	        sv_setnv($arg, (double) $var.value.D );
-	        break;
-	}
+	ANYVAL_TO_SV($arg, $var)
 
 T_PDLTRANS
 	sv_setref_pv($arg, \"PDL::Trans\", (void*)$var);

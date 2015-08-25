@@ -315,10 +315,7 @@ sub flushgeneric {  # Construct the generic code switch
 
      $type = $PDL_DATATYPES{$case};
 
-     next if $type eq 'PDL_Anyval';
-
      my $ppsym = $PDL::Types::typehash{$case}->{ppsym};
-
      print $indent,"case $case:\n"; # Start of this case
      print $indent,"   {";
 
@@ -729,9 +726,10 @@ sub datatypes_switch {
   foreach my $i ( 0 .. $ntypes ) {
     my $type = PDL::Type->new( $i );
     my $typesym = $type->symbol;
+    my $typeppsym = $type->ppsym;
     my $cname = $type->ctype;
     $cname =~ s/^PDL_//;
-    push @m, "\tcase $typesym: retval = PDL.bvals.$cname; break;";
+    push @m, "\tcase $typesym: retval.type = $typesym; retval.value.$typeppsym = PDL.bvals.$cname; break;";
   }
   print map "$_\n", @m;
 }
@@ -819,7 +817,6 @@ sub generate_badval_init {
   for my $type (PDL::Types::types()) {
     my $typename = $type->ctype;
     $typename =~ s/^PDL_//;
-    next if $typename eq 'Anyval';  # only have atomic types in switch
     my $bval = $type->defbval;
     if ($PDL::Config{BADVAL_USENAN} && $type->usenan) {
       # note: no defaults if usenan

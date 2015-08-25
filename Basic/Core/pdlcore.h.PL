@@ -138,7 +138,7 @@ void    pdl_unpackdims ( SV* sv, PDL_Indx *dims,  /* Unpack */
                          int ndims );
 void*   pdl_malloc ( STRLEN nbytes );           /* malloc memory - auto free()*/
 
-void pdl_makescratchhash(pdl *ret,PDL_Anyval data, int datatype);
+void pdl_makescratchhash(pdl *ret, PDL_Anyval data);
 PDL_Indx pdl_safe_indterm(PDL_Indx dsz, PDL_Indx at, char *file, int lineno);
 void pdl_barf(const char* pat,...); /* General croaking utility */
 void pdl_warn(const char* pat,...); /* General warn utility */

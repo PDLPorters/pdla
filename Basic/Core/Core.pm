@@ -55,10 +55,8 @@ $PDL::toolongtoprint = 10000;  # maximum pdl size to stringify for printing
 *at		= \&PDL::at;	  *flows	= \&PDL::flows;
 *sclr           = \&PDL::sclr;    *shape        = \&PDL::shape;
 
-# TODO: Need to fix datatype constructors to pass the desired type
-#       *into* the alltopdl part so that the pdl is *created* with
-#       the required type from the start.
-#
+# XXX-PDLANYVAL alltopdl changes need a check */
+
 for (map {
   [ PDL::Types::typefld($_,'convertfunc'), PDL::Types::typefld($_,'numval') ]
 } PDL::Types::typesrtkeys()) {
@@ -66,7 +64,7 @@ for (map {
   no strict 'refs';
   *$conv = *{"PDL::$conv"} = sub {
     return bless [$val], "PDL::Type" unless @_;
-    convert(alltopdl('PDL', (scalar(@_)>1 ? [@_] : shift)), $val);
+    alltopdl('PDL', (scalar(@_)>1 ? [@_] : shift), PDL::Type->new($val));
   };
 }
 
@@ -2202,6 +2200,10 @@ sub PDL::topdl {
 # Convert everything to PDL if not blessed
 
 sub alltopdl {
+    if (ref $_[2] eq 'PDL::Type') {
+      return convert($_[1], $_[2]) if blessed($_[1]);
+      return $_[0]->new($_[2], $_[1]) if $_[0] eq 'PDL';
+    }
     return $_[1] if blessed($_[1]); # Fall through
     return $_[0]->new($_[1]);
 0;}
@@ -2715,7 +2717,7 @@ sub PDL::convert {
   barf 'Usage: $y = convert($x, $newtypenum)'."\n" unless Scalar::Util::looks_like_number($type);
   return $pdl if $pdl->get_datatype == $type;
   # make_physical-call: temporary stopgap to work around core bug
-  my $conv = $pdl->flowconvert($type)->make_physical->sever;  # flowconvert pp_def'd in slices.pd
+  my $conv = $pdl->flowconvert($type)->make_physical->sever;
   return $conv;
 }
 

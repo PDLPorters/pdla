@@ -10,33 +10,6 @@
 #include "pdl.h"      /* Data structure declarations */
 #include "pdlcore.h"  /* Core declarations */
 
-#define SET_VALUE_TYPE_FROM_ANYVAL(pdlval,type,myany) do { switch (type) { \
-                                          case PDL_B: \
-                                             pdlval = myany.value.B; \
-                                             break; \
-                                          case PDL_S: \
-                                             pdlval = myany.value.S; \
-                                             break; \
-                                          case PDL_US: \
-                                             pdlval = myany.value.U; \
-                                             break; \
-                                          case PDL_L: \
-                                             pdlval = myany.value.L; \
-                                             break; \
-                                          case PDL_IND: \
-                                             pdlval = myany.value.N; \
-                                             break; \
-                                          case PDL_LL: \
-                                             pdlval = myany.value.Q; \
-                                             break; \
-                                          case PDL_F: \
-                                             pdlval = myany.value.F; \
-                                             break; \
-                                          case PDL_D: \
-                                             pdlval = myany.value.D; \
-                                             break; \
-                                          } \
-                                          } while (0)
 
 
 /*
@@ -236,7 +209,7 @@ PDL_Anyval pdl_at( void* x, int datatype, PDL_Indx* pos, PDL_Indx* dims,
 
     int i;
     PDL_Indx ioff;
-    PDL_Anyval result = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    PDL_Anyval result = { -1, 0 };
 
     for(i=0; i<ndims; i++) { /* Check */
 
@@ -283,8 +256,7 @@ void pdl_set( void* x, int datatype, PDL_Indx* pos, PDL_Indx* dims, PDL_Indx* in
    GENERICLOOP (datatype)
 
       generic *xx = (generic *) x;
-      SET_VALUE_TYPE_FROM_ANYVAL(xx[ioff],datatype,value);
-      /* xx[ioff] = value; */
+      ANYVAL_TO_CTYPE(xx[ioff], generic, value);
 
    ENDGENERICLOOP
 }

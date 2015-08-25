@@ -58,43 +58,6 @@ print OUT <<'!HEADER!';
  * So many ways to be undefined...
  */
 #define sv_undef(sv)  ( (!(sv) || ((sv)==&PL_sv_undef)) || !(SvNIOK(sv) || (SvTYPE(sv)==SVt_PVMG) || SvPOK(sv) || SvROK(sv)))
-
-#define SET_ANYVAL_SV(myany,svval,type) do { switch (type) { \
-                                          case PDL_B: \
-                                             myany.type = type; \
-                                             myany.value.B = (PDL_Byte) SvIV(svval); \
-                                             break; \
-                                          case PDL_S: \
-                                             myany.type = type; \
-                                             myany.value.S = (PDL_Short) SvIV(svval); \
-                                             break; \
-                                          case PDL_US: \
-                                             myany.type = type; \
-                                             myany.value.U = (PDL_Ushort) SvIV(svval); \
-                                             break; \
-                                          case PDL_L: \
-                                             myany.type = type; \
-                                             myany.value.L = (PDL_Long) SvIV(svval); \
-                                             break; \
-                                          case PDL_IND: \
-                                             myany.type = type; \
-                                             myany.value.N = (PDL_Indx) SvIV(svval); \
-                                             break; \
-                                          case PDL_LL: \
-                                             myany.type = type; \
-                                             myany.value.Q = (PDL_LongLong) SvIV(svval); \
-                                             break; \
-                                          case PDL_F: \
-                                             myany.type = type; \
-                                             myany.value.F = (PDL_Float) SvNV(svval); \
-                                             break; \
-                                          case PDL_D: \
-                                             myany.type = type; \
-                                             myany.value.D = (PDL_Double) SvNV(svval); \
-                                             break; \
-                                          } \
-                                          } while (0)
-
 !HEADER!
 
 
@@ -148,253 +111,103 @@ FOO
 # PDL handling stuff starts here
 #
 print OUT <<'!NO!SUBS!'
-int are_anyvals_equal(PDL_Anyval x, PDL_Anyval y) {
-    PDL_Byte     xB = x.value.B;
-    PDL_Short    xS = x.value.S;
-    PDL_Ushort   xU = x.value.U;
-    PDL_Long     xL = x.value.L;
-    PDL_Indx     xN = x.value.N;
-    PDL_LongLong xQ = x.value.Q;
-    PDL_Float    xF = x.value.F;
-    PDL_Double   xD = x.value.D;
-
-    PDL_Byte     yB = y.value.B;
-    PDL_Short    yS = y.value.S;
-    PDL_Ushort   yU = y.value.U;
-    PDL_Long     yL = y.value.L;
-    PDL_Indx     yN = y.value.N;
-    PDL_LongLong yQ = y.value.Q;
-    PDL_Float    yF = y.value.F;
-    PDL_Double   yD = y.value.D;
-
-    switch (x.type) {
-        case PDL_B:
-            fprintf(stderr, "x: %1d, %2hhu\t", x.type, x.value.B);
-            break;
-        case PDL_S:
-            fprintf(stderr, "x: %1d, %2hd\t",  x.type, x.value.S);
-            break;
-        case PDL_US:
-            fprintf(stderr, "x: %1d, %2hu\t",  x.type, x.value.U);
-            break;
-        case PDL_L:
-            fprintf(stderr, "x: %1d, %2d\t",   x.type, x.value.L);
-            break;
-        case PDL_IND:
-            fprintf(stderr, "x: %1d, %2ld\t",  x.type, x.value.N);
-            break;
-        case PDL_LL:
-            fprintf(stderr, "x: %1d, %2ld\t",  x.type, x.value.Q);
-            break;
-        case PDL_F:
-            fprintf(stderr, "x: %1d, %2g\t",   x.type, x.value.F);
-            break;
-        case PDL_D:
-            fprintf(stderr, "x: %1d, %2g\t",   x.type, x.value.D);
-            break;
-        default:
-            fprintf(stderr, "Uh-oh! got unexpected x.type is %1d (%x)\n", x.type, x.value.Q);
-            break;
-    }
-
-    switch (y.type) {
-        case PDL_B:
-            fprintf(stderr, "y: %1d, %2hhu\n", y.type, y.value.B);
-            break;
-        case PDL_S:
-            fprintf(stderr, "y: %1d, %2hd\n",  y.type, y.value.S);
-            break;
-        case PDL_US:
-            fprintf(stderr, "y: %1d, %2hu\n",  y.type, y.value.U);
-            break;
-        case PDL_L:
-            fprintf(stderr, "y: %1d, %2d\n",   y.type, y.value.L);
-            break;
-        case PDL_IND:
-            fprintf(stderr, "y: %1d, %2ld\n",  y.type, y.value.N);
-            break;
-        case PDL_LL:
-            fprintf(stderr, "y: %1d, %2ld\n",  y.type, y.value.Q);
-            break;
-        case PDL_F:
-            fprintf(stderr, "y: %1d, %2g\n",   y.type, y.value.F);
-            break;
-        case PDL_D:
-            fprintf(stderr, "y: %1d, %2g\n",   y.type, y.value.D);
-            break;
-        default:
-            fprintf(stderr, "Uh-oh! got unexpected y.type is %1d (%x)\n", y.type, y.value.Q);
-            break;
-    }
-
+int _anyval_eq_anyval(PDL_Anyval x, PDL_Anyval y) {
     switch (x.type) {
         case PDL_B:
             switch (y.type) {
-                case PDL_B:
-                    return (xB == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xB == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xB == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xB == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xB == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xB == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xB == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xB == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.B                 == y.value.B) ? 1 : 0;
+                case PDL_S:   return ((PDL_Short)(x.value.B)    == y.value.S) ? 1 : 0;
+                case PDL_US:  return ((PDL_Ushort)(x.value.B)   == y.value.U) ? 1 : 0;
+                case PDL_L:   return ((PDL_Long)(x.value.B)     == y.value.L) ? 1 : 0;
+                case PDL_IND: return ((PDL_Indx)(x.value.B)     == y.value.N) ? 1 : 0;
+                case PDL_LL:  return ((PDL_LongLong)(x.value.B) == y.value.Q) ? 1 : 0;
+                case PDL_F:   return ((PDL_Float)(x.value.B)    == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.B)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_S:
             switch (y.type) {
-                case PDL_B:
-                    return (xS == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xS == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xS == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xS == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xS == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xS == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xS == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xS == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.S                 == (PDL_Short)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return (x.value.S                 == y.value.S) ? 1 : 0;
+                case PDL_US:  return ((PDL_Long)(x.value.S)     == (PDL_Long)(y.value.U)) ? 1 : 0;
+                case PDL_L:   return ((PDL_Long)(x.value.S)     == y.value.L) ? 1 : 0;
+                case PDL_IND: return ((PDL_Indx)(x.value.S)     == y.value.N) ? 1 : 0;
+                case PDL_LL:  return ((PDL_LongLong)(x.value.S) == y.value.Q) ? 1 : 0;
+                case PDL_F:   return ((PDL_Float)(x.value.S)    == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.S)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_US:
             switch (y.type) {
-                case PDL_B:
-                    return (xU == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xU == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xU == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xU == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xU == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xU == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xU == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xU == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.U                 == (PDL_Ushort)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return ((PDL_Long)(x.value.U)     == (PDL_Long)(y.value.S)) ? 1 : 0;
+                case PDL_US:  return (x.value.U                 == y.value.U) ? 1 : 0;
+                case PDL_L:   return ((PDL_Long)(x.value.U)     == y.value.L) ? 1 : 0;
+                case PDL_IND: return ((PDL_Indx)(x.value.U)     == y.value.N) ? 1 : 0;
+                case PDL_LL:  return ((PDL_LongLong)(x.value.U) == y.value.Q) ? 1 : 0;
+                case PDL_F:   return ((PDL_Float)(x.value.U)    == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.U)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_L:
             switch (y.type) {
-                case PDL_B:
-                    return (xL == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xL == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xL == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xL == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xL == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xL == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xL == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xL == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.L                 == (PDL_Long)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return (x.value.L                 == (PDL_Long)(y.value.S)) ? 1 : 0;
+                case PDL_US:  return (x.value.L                 == (PDL_Long)(y.value.U)) ? 1 : 0;
+                case PDL_L:   return (x.value.L                 == y.value.L) ? 1 : 0;
+                case PDL_IND: return ((PDL_Indx)(x.value.L)     == y.value.N) ? 1 : 0;
+                case PDL_LL:  return ((PDL_LongLong)(x.value.L) == y.value.Q) ? 1 : 0;
+                case PDL_F:   return ((PDL_Float)(x.value.L)    == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.L)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_IND:
             switch (y.type) {
-                case PDL_B:
-                    return (xN == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xN == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xN == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xN == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xN == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xN == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xN == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xN == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.N                 == (PDL_Indx)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return (x.value.N                 == (PDL_Indx)(y.value.S)) ? 1 : 0;
+                case PDL_US:  return (x.value.N                 == (PDL_Indx)(y.value.U)) ? 1 : 0;
+                case PDL_L:   return (x.value.N                 == (PDL_Indx)(y.value.L)) ? 1 : 0;
+                case PDL_IND: return (x.value.N                 == y.value.N) ? 1 : 0;
+                case PDL_LL:  return ((PDL_LongLong)(x.value.N) == y.value.Q) ? 1 : 0;
+                case PDL_F:   return ((PDL_Float)(x.value.N)    == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.N)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_LL:
             switch (y.type) {
-                case PDL_B:
-                    return (xQ == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xQ == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xQ == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xQ == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xQ == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xQ == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xQ == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xQ == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.Q                 == (PDL_LongLong)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return (x.value.Q                 == (PDL_LongLong)(y.value.S)) ? 1 : 0;
+                case PDL_US:  return (x.value.Q                 == (PDL_LongLong)(y.value.U)) ? 1 : 0;
+                case PDL_L:   return (x.value.Q                 == (PDL_LongLong)(y.value.L)) ? 1 : 0;
+                case PDL_IND: return (x.value.Q                 == (PDL_LongLong)(y.value.N)) ? 1 : 0;
+                case PDL_LL:  return (x.value.Q                 == y.value.Q) ? 1 : 0;
+                case PDL_F:   return ((PDL_Float)(x.value.Q)    == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.Q)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_F:
             switch (y.type) {
-                case PDL_B:
-                    return (xF == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xF == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xF == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xF == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xF == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xF == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xF == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xF == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.F                 == (PDL_Float)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return (x.value.F                 == (PDL_Float)(y.value.S)) ? 1 : 0;
+                case PDL_US:  return (x.value.F                 == (PDL_Float)(y.value.U)) ? 1 : 0;
+                case PDL_L:   return (x.value.F                 == (PDL_Float)(y.value.L)) ? 1 : 0;
+                case PDL_IND: return (x.value.F                 == (PDL_Float)(y.value.N)) ? 1 : 0;
+                case PDL_LL:  return (x.value.F                 == (PDL_Float)(y.value.Q)) ? 1 : 0;
+                case PDL_F:   return (x.value.F                 == y.value.F) ? 1 : 0;
+                case PDL_D:   return ((PDL_Double)(x.value.F)   == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         case PDL_D:
             switch (y.type) {
-                case PDL_B:
-                    return (xD == yB) ? 1 : 0;
-                case PDL_S:
-                    return (xD == yS) ? 1 : 0;
-                case PDL_US:
-                    return (xD == yU) ? 1 : 0;
-                case PDL_L:
-                    return (xD == yL) ? 1 : 0;
-                case PDL_IND:
-                    return (xD == yN) ? 1 : 0;
-                case PDL_LL:
-                    return (xD == yQ) ? 1 : 0;
-                case PDL_F:
-                    return (xD == yF) ? 1 : 0;
-                case PDL_D:
-                    return (xD == yD) ? 1 : 0;
-                default:
-                    return 0;
+                case PDL_B:   return (x.value.D                 == (PDL_Double)(y.value.B)) ? 1 : 0;
+                case PDL_S:   return (x.value.D                 == (PDL_Double)(y.value.S)) ? 1 : 0;
+                case PDL_US:  return (x.value.D                 == (PDL_Double)(y.value.U)) ? 1 : 0;
+                case PDL_L:   return (x.value.D                 == (PDL_Double)(y.value.L)) ? 1 : 0;
+                case PDL_IND: return (x.value.D                 == (PDL_Double)(y.value.N)) ? 1 : 0;
+                case PDL_LL:  return (x.value.D                 == (PDL_Double)(y.value.Q)) ? 1 : 0;
+                case PDL_F:   return (x.value.D                 == (PDL_Double)(y.value.F)) ? 1 : 0;
+                case PDL_D:   return (x.value.D                 == y.value.D) ? 1 : 0;
+                default:      return 0;
             }
         default:
             return 0;
@@ -435,7 +248,6 @@ int pdl_howbig (int datatype) {
 
 for my $type (typesrtkeys()) {
    my ($sym,$ctype) = map {typefld($type,$_)} qw/sym ctype/;
-   next if $ctype eq 'PDL_Anyval';
    print OUT << "!WITH!SUBS!";
     case $sym:
       return sizeof($ctype);
@@ -463,14 +275,13 @@ print OUT <<'!NO!SUBS!';
 #if defined _MSC_VER && _MSC_VER < 1400
 #pragma optimize("", off)
 #endif
-int pdl_whichdatatype (PDL_Indx nv) {
+int pdl_whichdatatype (IV nv) {
 !NO!SUBS!
 
 # generate the cases for the various types
 
 for my $type (typesrtkeys()) {
    my ($sym,$ctype) = map {typefld($type,$_)} qw/sym ctype/;
-   next if $sym eq 'PDL_A';
    print OUT << "!WITH!SUBS!";
         TESTTYPE($sym,$ctype)
 !WITH!SUBS!
@@ -486,7 +297,7 @@ print OUT <<'!NO!SUBS!';
 
 /* Check minimum, at least float, datatype required to represent number */
 
-int pdl_whichdatatype_double (double nv) {
+int pdl_whichdatatype_double (NV nv) {
         TESTTYPE(PDL_F,PDL_Float)
         TESTTYPE(PDL_D,PDL_Double)
 
@@ -505,13 +316,13 @@ int pdl_whichdatatype_double (double nv) {
 
 /* Make a scratch dataspace for a scalar pdl */
 
-void pdl_makescratchhash(pdl *ret, PDL_Anyval data, int datatype) {
+void pdl_makescratchhash(pdl *ret, PDL_Anyval data) {
   STRLEN n_a;
   HV *hash;
   SV *dat; PDL_Indx fake[1];
   
   /* Compress to smallest available type.  */
-  ret->datatype = datatype;
+  ret->datatype = data.type;
 
   /* Create a string SV of apropriate size.  The string is arbitrary
    * and just has to be larger than the largest datatype.   */
@@ -530,7 +341,6 @@ void pdl_makescratchhash(pdl *ret, PDL_Anyval data, int datatype) {
   ret->nvals = 1;            /* 1 val  in a scalar */
   
   /* NULLs should be ok because no dimensions. */
-  fprintf(stderr,"pdl_makescratchhash( PDL_Anyval type==%d, PDL datatype==%d )\n", data.type, datatype );
   pdl_set(ret->data, ret->datatype, NULL, NULL, NULL, 0, 0, data);
   
 }
@@ -554,6 +364,8 @@ pdl* SvPDLV ( SV* sv ) {
       SV *dat;
       PDL_Anyval data;
       int datatype;
+      NV tmp_NV;
+      IV tmp_IV;
 
       ret = pdl_new();  /* Scratch pdl */
 
@@ -568,9 +380,8 @@ pdl* SvPDLV ( SV* sv ) {
       }
 
       /* Figure datatype to use */
-      if ( !SvIOK(sv) && SvNOK(sv) && SvNIOK(sv)  )  {/* Perl Double (e.g. 2.0) */
-         data.type = PDL_D;
-         data.value.D = SvNV(sv);
+      if ( !SvIOK(sv) )  { /* Perl Double (e.g. 2.0) */
+         tmp_NV = SvNV(sv);
 
 !NO!SUBS!
 
@@ -582,31 +393,29 @@ if ( $bvalflag and $usenan ) {
        * default NaN/Infs to double
        *
        */
-      if ( finite(data.value.D) == 0 ) {
+      if ( finite(tmp_NV) == 0 ) {
         datatype = PDL_D;
       } else {
-        datatype = pdl_whichdatatype_double(data.value.D);
+        datatype = pdl_whichdatatype_double(tmp_NV);
       }
    }
 } else {
    print OUT q{
-      datatype = pdl_whichdatatype_double(data.value.D);
+        datatype = pdl_whichdatatype_double(tmp_NV);
 
    }
 } # if: $bvalflag
 
 print OUT <<'!NO!SUBS!';
-         fprintf(stderr,"SvPDLV: data.value.D == %g and got datatype==%d\n", data.value.D, datatype);
+        ANYVAL_FROM_CTYPE(data, datatype, tmp_NV);
      } /* end of Perl Double case for data type */
      else { /* Perl Int (e.g. 2) */
-        data.type = PDL_N;  /* Using PDL_Indx here since it is same as ivtype */
-        data.value.N = SvIV(sv);
-        datatype = pdl_whichdatatype(data.value.N);
-        fprintf(stderr,"SvPDLV: data.value.N == %ld and got datatype==%d\n", data.value.N, datatype);
+        tmp_IV = SvIV(sv);
+        datatype = pdl_whichdatatype(tmp_IV);
+        ANYVAL_FROM_CTYPE(data, datatype, tmp_IV);
      }
 
-     /* pdl_makescratchhash(ret,data,datatype); */
-     pdl_makescratchhash(ret,data,data.type);  /* See if this works */
+     pdl_makescratchhash(ret, data);
 
      return ret;
 
@@ -683,8 +492,7 @@ print OUT <<'!NO!SUBS!';
         /* Pull sizes using av_ndcheck */
         depth = 1 + av_ndcheck(av,dims,0,&datalevel);
 
-        /* Need to fix selection of pdl type, PDL_D default for SvPDLV not good enough */
-        return pdl_from_array(av,dims,PDL_D,NULL);
+        return pdl_from_array(av, dims, -1, NULL); /* -1 means pdltype autodetection */
 
     } /* end of AV code */
     
@@ -1078,6 +886,33 @@ PDL_Indx av_ndcheck(AV* av, AV* dims, int level, int *datalevel)
   return depth;
 }
 
+/* helper function used in pdl_from_array */
+static int _detect_datatype(AV *av) {
+  SV **item;
+  AV *array;
+  int top, i;
+  if (!av) return PDL_D;
+  top = av_top_index(av);
+  for (i = 0; i <= top; i++) {
+    item = av_fetch(av, i, 0);
+    if (*item) {
+      if (SvROK(*item)) {
+        array = (AV*)SvRV(*item);
+        if (_detect_datatype(array) == PDL_D) {
+          return PDL_D;
+        }
+      }
+      if (SvOK(*item) && !SvIOK(*item)) {
+        return PDL_D;
+      }
+    }
+  }
+#if IVSIZE == 8
+  return PDL_LL;
+#else
+  return PDL_L;
+#endif
+}
 
 /**********************************************************************
  * pdl_from_array - dispatcher gets called only by pdl_avref (defined in
@@ -1088,7 +923,7 @@ pdl* pdl_from_array(AV* av, AV* dims, int type, pdl* p)
 {
   int ndims, i, level=0;
   PDL_Indx *pdims;
-  PDL_Anyval undefval = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+  PDL_Anyval undefval = { -1, 0 };
 
   ndims = av_len(dims)+1;
   pdims = (PDL_Indx *) pdl_malloc( (ndims) * sizeof(*pdims) );
@@ -1099,6 +934,10 @@ pdl* pdl_from_array(AV* av, AV* dims, int type, pdl* p)
   if (p == NULL)
      p = pdl_new();
   pdl_setdims (p, pdims, ndims);
+  if (type == -1) {
+    /* XXX-PDLANYVAL do we reaaly want this type of autodetection (it used to be always PDL_D) */
+    type = _detect_datatype(av);
+  }
   p->datatype = type;
   pdl_allocdata (p);
   pdl_make_physical(p);
@@ -1108,10 +947,20 @@ pdl* pdl_from_array(AV* av, AV* dims, int type, pdl* p)
      * Copy the undefval to fill empty spots in the piddle...
      */
     SV *sv = get_sv("PDL::undefval",0);
-    if ( (!!sv) && SvOK(sv) ) {
+    if ((!sv) || (sv==&PL_sv_undef)) {
+       ANYVAL_FROM_CTYPE(undefval, type, 0);
+    }
+    else {
        /* Need to set undefvalue from the perl scalar */
-       SET_ANYVAL_SV(undefval, sv, type);
-       /* undefval = (PDL_Anyval)SvNV(sv); */
+       if (SvIOK(sv)) {
+         ANYVAL_FROM_CTYPE(undefval, type, SvIV(sv));
+       }
+       else if (SvNOK(sv)) {
+         ANYVAL_FROM_CTYPE(undefval, type, SvNV(sv));
+       }
+       else {
+         ANYVAL_FROM_CTYPE(undefval, type, 0); /* this should not happen */
+       }
     }
   }
 
@@ -1124,9 +973,7 @@ pdl* pdl_from_array(AV* av, AV* dims, int type, pdl* p)
 #
   for my $type(sort keys %PDL_DATATYPES){
     my $t2 = $PDL_DATATYPES{$type};
-    my $t2sym = $t2;
     $t2 =~ s/PDL_//;
-    next if $t2 eq 'Anyval';
     print OUT <<"!WITH!SUBS!";
   case $type:
     pdl_setav_$t2(p->data,av,pdims,ndims,level, undefval.value.$PDL::Types::typehash{$type}->{ppsym});
@@ -1187,8 +1034,6 @@ pdl* pdl_from_array(AV* av, AV* dims, int type, pdl* p)
 
 for my $in ( keys %PDL_DATATYPES ) {
 
-   next if $in eq 'PDL_A';  # PDL_Anyval is not an atomic type
-
   (my $type = $PDL_DATATYPES{$in}) =~ s/^PDL_//;
 
 print OUT <<"!WITH!SUBS!";
@@ -1242,8 +1087,6 @@ PDL_Indx pdl_kludge_copy_$type(PDL_Indx poff, // Offset into the dest data array
         foreach my $switch_type (keys %PDL::Types::typehash) {
 
         my $ctype = $PDL::Types::typehash{$switch_type}{ctype};
-
-        next if $ctype eq 'PDL_Anyval';
 
         print OUT <<"!WITH!SUBS!";
 
@@ -1398,8 +1241,11 @@ PDL_Indx pdl_setav_$type(PDL_$type* pdata, AV* av,
         undef_count++;
 
       } else {              /* scalar case */
-        *pdata = (PDL_$type) SvNV(el);
-
+        if (SvIOK(el)) {
+          *pdata = (PDL_$type) SvIV(el);
+        } else {
+          *pdata = (PDL_$type) SvNV(el);
+        }
       }
 
       /* Pad dim if we are not deep enough */

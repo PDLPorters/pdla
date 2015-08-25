@@ -28,38 +28,6 @@
 
 #define setflag(reg,flagval,val) (val?(reg |= flagval):(reg &= ~flagval))
 
-/* #define SET_RETVAL_NV(x) x->datatype<PDL_F ? (RETVAL=newSViv( (IV)result )) : (RETVAL=newSVnv( result )) */
-
-#define SET_SV_ANYVAL(svANY,result) do { switch (result.type) { \
-                                          case PDL_B: \
-                                             svANY=newSViv( (IV)result.value.B ); \
-                                             break; \
-                                          case PDL_S: \
-                                             svANY=newSViv( (IV)result.value.S ); \
-                                             break; \
-                                          case PDL_US: \
-                                             svANY=newSViv( (IV)result.value.U ); \
-                                             break; \
-                                          case PDL_L: \
-                                             svANY=newSViv( (IV)result.value.L ); \
-                                             break; \
-                                          case PDL_IND: \
-                                             svANY=newSViv( (IV)result.value.N ); \
-                                             break; \
-                                          case PDL_LL: \
-                                             svANY=newSViv( (IV)result.value.Q ); \
-                                             break; \
-                                          case PDL_F: \
-                                             svANY=newSVnv( result.value.F ); \
-                                             break; \
-                                          case PDL_D: \
-                                             svANY=newSVnv( result.value.D ); \
-                                             break; \
-                                          } \
-                                          } while (0)
-
-#define ANYVAL_IS_EQ(x,y) ( are_anyvals_equal(x, y) )
-
 Core PDL; /* Struct holding pointers to shared C routines */
 
 #ifdef FOO
@@ -278,7 +246,7 @@ void propagate_badvalue( pdl *it ) {
 
 /* this is horrible - the routines from bad should perhaps be here instead ? */
 PDL_Anyval pdl_get_badvalue( int datatype ) {
-    PDL_Anyval retval = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    PDL_Anyval retval = { -1, 0 };
     switch ( datatype ) {
 
 #include "pdldataswitch.c"
@@ -291,7 +259,7 @@ PDL_Anyval pdl_get_badvalue( int datatype ) {
 
 
 PDL_Anyval pdl_get_pdl_badvalue( pdl *it ) {
-    PDL_Anyval retval = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    PDL_Anyval retval = { -1, 0 };
     int datatype;
 
 #if BADVAL_PER_PDL
@@ -650,10 +618,10 @@ sclr_c(it)
 	PDL_Indx nullp = 0;
 	PDL_Indx dummyd = 1;
 	PDL_Indx dummyi = 1;
-	PDL_Anyval result = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+	PDL_Anyval result = { -1, 0 };
    CODE:
         /* get the first element of a piddle and return as
-         * Perl double scalar (NV)
+         * Perl scalar (autodetect suitable type IV or NV)
          */
         pdl_make_physvaffine( it );
 	if (it->nvals < 1)
@@ -662,8 +630,7 @@ sclr_c(it)
         /* result = pdl_get_offs(PDL_REPRP(it),offs); */
         result=pdl_at(PDL_REPRP(it), it->datatype, &nullp, &dummyd,
         &dummyi, PDL_REPROFFS(it),1);
-        /* SET_RETVAL_NV(it) ; */
-        SET_SV_ANYVAL(RETVAL,result) ;
+        ANYVAL_TO_SV(RETVAL, result);
 
     OUTPUT:
         RETVAL
@@ -677,7 +644,7 @@ at_c(x,position)
     PDL_Indx * pos;
     int npos;
     int ipos;
-    PDL_Anyval result = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    PDL_Anyval result = { -1, 0 };
    CODE:
     pdl_make_physvaffine( x );
 
@@ -699,8 +666,7 @@ at_c(x,position)
         (PDL_VAFFOK(x) ? x->vafftrans->incs : x->dimincs), PDL_REPROFFS(x),
 	x->ndims);
 
-    /* SET_RETVAL_NV(x) ; */
-    SET_SV_ANYVAL(RETVAL,result) ;
+    ANYVAL_TO_SV(RETVAL, result);
 
     OUTPUT:
      RETVAL
@@ -714,7 +680,7 @@ at_bad_c(x,position)
     int npos;
     int ipos;
     int badflag;
-    PDL_Anyval result = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+    PDL_Anyval result = { -1, 0 };
    CODE:
     pdl_make_physvaffine( x );
 
@@ -740,23 +706,23 @@ at_bad_c(x,position)
 #  if BADVAL_USENAN
    /* do we have to bother about NaN's? */
    if ( badflag &&
-        ( ( x->datatype < 4 && ANYVAL_IS_EQ(result, pdl_get_badvalue( x->datatype )) ) ||
-          ( x->datatype >= 4 && ( finite(result.value.D) == 0 ) )
+        ( ( x->datatype < PDL_F && ANYVAL_EQ_ANYVAL(result, pdl_get_badvalue(x->datatype)) ) ||
+          ( x->datatype == PDL_F && finite(pdl_val.value.F) == 0 ) ||
+          ( x->datatype == PDL_D && finite(pdl_val.value.D) == 0 ) )
         )
       ) {
 	 RETVAL = newSVpvn( "BAD", 3 );
    } else
 #  else
    if ( badflag &&
-   ANYVAL_IS_EQ( result, pdl_get_badvalue( x->datatype ) )
+        ANYVAL_EQ_ANYVAL( result, pdl_get_badvalue( x->datatype ) )
       ) {
 	 RETVAL = newSVpvn( "BAD", 3 );
    } else
 #  endif
 #endif
 
-    /* SET_RETVAL_NV(x) ; */
-    SET_SV_ANYVAL(RETVAL,result) ;
+    ANYVAL_TO_SV(RETVAL, result);
 
     OUTPUT:
      RETVAL
@@ -772,7 +738,7 @@ list_c(x)
 	void *data;
 	int ind;
 	int stop = 0;
-        SV *sv;
+	SV *sv;
 	PPCODE:
       pdl_make_physvaffine( x );
 	inds = pdl_malloc(sizeof(PDL_Indx) * x->ndims); /* GCC -> on stack :( */
@@ -783,9 +749,9 @@ list_c(x)
 	EXTEND(sp,x->nvals);
 	for(ind=0; ind < x->ndims; ind++) inds[ind] = 0;
 	while(!stop) {
-                PDL_Anyval pdl_val = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+		PDL_Anyval pdl_val = { -1, 0 };
 		pdl_val = pdl_at( data, x->datatype, inds, x->dims, incs, offs, x->ndims);
-                SET_SV_ANYVAL(sv,pdl_val);
+		ANYVAL_TO_SV(sv,pdl_val);
 		PUSHs(sv_2mortal(sv));
 		stop = 1;
 		for(ind = 0; ind < x->ndims; ind++)
@@ -811,8 +777,8 @@ listref_c(x)
    int stop = 0;
    AV *av;
    SV *sv;
-   PDL_Anyval pdl_val =    { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-   PDL_Anyval pdl_badval = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
+   PDL_Anyval pdl_val =    { -1, 0 };
+   PDL_Anyval pdl_badval = { -1, 0 };
   CODE:
 #if BADVAL
     /*
@@ -821,11 +787,10 @@ listref_c(x)
     #  returns
     */
 
-   /* SV *sv; */
    int badflag = (x->state & PDL_BADVAL) > 0;
 #  if BADVAL_USENAN
     /* do we have to bother about NaN's? */
-   if ( badflag && x->datatype < 4 ) {
+   if ( badflag && x->datatype < PDL_F ) {
       pdl_badval = pdl_get_pdl_badvalue( x );
    }
 #  else
@@ -849,22 +814,21 @@ listref_c(x)
       pdl_val = pdl_at( data, x->datatype, inds, x->dims, incs, offs, x->ndims );
       if ( badflag && 
 #  if BADVAL_USENAN
-	/* NOTE: dangerous use of hardwired datatype value 4! */
-        /* NEED TO FIX FOR PDL_Anyval support!!!!!!!!!! */
-	( (x->datatype < 4 && ANYVAL_IS_EQ(pdl_val, pdl_badval)) ||
-			(x->datatype >= 4 && finite(pdl_val.value.D) == 0) )
+        ( (x->datatype < PDL_F && ANYVAL_EQ_ANYVAL(pdl_val, pdl_badval)) ||
+          (x->datatype == PDL_F && finite(pdl_val.value.F) == 0) ||
+          (x->datatype == PDL_D && finite(pdl_val.value.D) == 0) )
 #  else
-        ANYVAL_IS_EQ(pdl_val,pdl_badval)
+        ANYVAL_EQ_ANYVAL(pdl_val, pdl_badval)
 #  endif
       ) {
 	 sv = newSVpvn( "BAD", 3 );
       } else {
-	 SET_SV_ANYVAL(sv,pdl_val);
+	 ANYVAL_TO_SV(sv, pdl_val);
       }
       av_store( av, lind, sv );
 #else
-        pdl_val = pdl_at( data, x->datatype, inds, x->dims, incs, offs, x->ndims );
-	SET_SV_ANYVAL(sv,pdl_val);
+      pdl_val = pdl_at( data, x->datatype, inds, x->dims, incs, offs, x->ndims );
+      ANYVAL_TO_SV(sv, pdl_val);
       av_store(av, lind, sv);
 #endif
 
@@ -1381,10 +1345,10 @@ threadover_n(...)
 		EXTEND(sp,items);
 		PUSHs(sv_2mortal(newSViv((sd-1))));
 		for(i=0; i<npdls; i++) {
-                   PDL_Anyval pdl_val = { 0, 0, 0, 0, 0, 0, 0, 0, 0, };
-		   pdl_val = pdl_get_offs(pdls[i],pdl_thr.offs[i]);
-                   SET_SV_ANYVAL(sv,pdl_val);
-                   PUSHs(sv_2mortal(sv));
+			PDL_Anyval pdl_val = { -1, 0 };
+			pdl_val = pdl_get_offs(pdls[i],pdl_thr.offs[i]);
+			ANYVAL_TO_SV(sv, pdl_val);
+			PUSHs(sv_2mortal(sv));
 		}
 	    	PUTBACK;
 		perl_call_sv(code,G_DISCARD);

@@ -409,8 +409,6 @@ for (keys %PDL::Types::typehash) {
     my $ctype = $PDL::Types::typehash{$_}{ctype};
     my $ppsym = $PDL::Types::typehash{$_}{ppsym};
 
-    next if $ppsym eq 'A';
-
     pp_add_boot( " PDL->qsort_${ppsym} = pdl_qsort_${ppsym};" .
 		 " PDL->qsort_ind_${ppsym} = pdl_qsort_ind_${ppsym};\n" );
 

@@ -480,8 +480,6 @@ foreach my $i ( 0 .. $ntypes ) {
     my $realctype = $type->realctype;
     my $typesym = $type->symbol;
 
-    next if $typesym eq 'PDL_A';
-
     my $cname = $type->ctype;
     $cname =~ s/^PDL_//;
     my $storage = "PDL->bvals.$cname";
@@ -494,8 +492,7 @@ foreach my $i ( 0 .. $ntypes ) {
 
 EOC
 
-    # my $set_code = "if ( items > 0 ) { $storage = ($realctype) val; }";
-    my $set_code = "if ( items > 1 && doset == 1 ) { SET_VALUE_TYPE_FROM_ANYVAL($storage,val.type,val); }";
+    my $set_code = "if ( val.type != -1 ) { ANYVAL_TO_CTYPE($storage, $ctype, val); }";
 
     # if UseNaN is true, then we can not change the value used to
     # represent bad elements since it's a NaN. At least, not for
@@ -508,9 +505,8 @@ EOC
     $str .=
 "
 pdl *
-_badvalue_int${i}(val,doset)
+_badvalue_int${i}(val)
     PDL_Anyval val
-    int doset
   CODE:
    {
     $init_code
@@ -522,14 +518,13 @@ _badvalue_int${i}(val,doset)
     RETVAL
 
 pdl *
-_badvalue_per_pdl_int${i}(pdl_val, val, doset)
+_badvalue_per_pdl_int${i}(pdl_val, val)
     pdl* pdl_val
     PDL_Anyval val
-    int doset
   CODE:
    {
     $init_code
-    if ( items > 1 && doset == 1) {
+    if ( val.type != -1) {
        pdl_val->badvalue = val;
        pdl_val->has_badvalue = 1;
        PDL->propagate_badvalue( pdl_val );
@@ -538,8 +533,7 @@ _badvalue_per_pdl_int${i}(pdl_val, val, doset)
     if (pdl_val->has_badvalue == 0) {
        *data = ($ctype) $storage;
     } else {
-       /* *data = ($ctype) pdl_val->badvalue; */
-       SET_VALUE_TYPE_FROM_ANYVAL(*data,pdl_val->badvalue.type,pdl_val->badvalue);
+       ANYVAL_TO_CTYPE(*data, $ctype, pdl_val->badvalue);
     }
 
     RETVAL = p;
@@ -583,7 +577,7 @@ sub PDL::badvalue {
     my $num;
     if ( UNIVERSAL::isa($self,"PDL") ) {
 	$num = $self->get_datatype;
-	if ( $num < 4 and defined($val) and $self->badflag ) {
+	if ( $num < $PDL_F && defined($val) && $self->badflag ) {
 	    $self->inplace->setbadtoval( $val );
 	    $self->badflag(1);
 	}
@@ -591,9 +585,9 @@ sub PDL::badvalue {
 	if ($PDL::Config{BADVAL_PER_PDL}) {
 	    my $name = "PDL::_badvalue_per_pdl_int$num";
 	    if ( defined $val ) {
-		return &{$name}($self, $val, 1 )->sclr;
+		return &{$name}($self, $val )->sclr;
 	    } else {
-		return &{$name}($self, 0,    0  )->sclr;
+		return &{$name}($self, undef)->sclr;
 	    }
 	}
 
@@ -606,9 +600,9 @@ sub PDL::badvalue {
 
     my $name = "PDL::_badvalue_int$num";
     if ( defined $val ) {
-	return &{$name}( $val, 1 )->sclr;
+	return &{$name}( $val )->sclr;
     } else {
-	return &{$name}( 0,    0 )->sclr;
+	return &{$name}( undef )->sclr;
     }
 
 } # sub: badvalue()

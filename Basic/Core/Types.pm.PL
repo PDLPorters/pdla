@@ -143,15 +143,6 @@ my @types = (
 		  packtype => 'd*',
 	          defaultbadval => '-DBL_MAX',
 	      },
-              ### {
-	      ###     identifier => 'A',
-	      ###     pdlctype => 'PDL_Anyval',
-	      ###     realctype => 'PDL_Generic',
-	      ###     ppforcetype => 'anyval',
-	      ###     usenan => 0,
-	      ###     packtype => '(a8)*',
-	      ###     defaultbadval => '-DBL_MAX',
-	      ### },
 	      );
 
 sub checktypehas {
@@ -165,7 +156,7 @@ sub checktypehas {
 sub gentypevars {
   my @types = @_;
   checktypehas 'identifier', @types;
-  my @ret = grep { $_ ne '$PDL_A' } map {"\$PDL_$_->{identifier}"} @types;
+  my @ret = map {"\$PDL_$_->{identifier}"} @types;
   return wantarray ? @ret : $ret[0];
 }
 
@@ -177,7 +168,7 @@ sub genexports {
 sub gentypenames {
   my @types = @_;
   checktypehas 'identifier', @types;
-  my @ret = grep { $_ ne 'PDL_A' } map {"PDL_$_->{identifier}"} @types;
+  my @ret = map {"PDL_$_->{identifier}"} @types;
   return wantarray ? @ret : $ret[0];
 }
 
@@ -371,7 +362,7 @@ return array of pp symbols for all known types
 =cut
 
 sub ppdefs {
-	return grep { $_ ne 'A' } map {$typehash{$_}->{ppsym}} typesrtkeys;
+	return map {$typehash{$_}->{ppsym}} typesrtkeys;
 }
 
 =head2 typefld
@@ -384,10 +375,8 @@ by querying type hash
 sub typefld {
   my ($type,$fld) = @_;
   croak "unknown type $type" unless exists $typehash{$type};
-  unless ( exists $typehash{$type}->{$fld} ) {
-     $DB::single = 1;
-     croak "unknown field $fld in type $type";
-  }
+  croak "unknown field $fld in type $type"
+     unless exists $typehash{$type}->{$fld};
   return $typehash{$type}->{$fld};
 }
 
@@ -455,14 +444,20 @@ sub datatypes_header {
     $PDL_Indx_type = $Config::Config{'ivtype'};
     warn "Using new 64bit index support\n" if $Config::Config{'ivsize'}==8;
 
+    my $anyval_union = '';
     my $enum = '';
     my $typedefs = '';
     for (sort { $typehash{$a}{'numval'}<=>$typehash{$b}{'numval'} }  keys %typehash) {
      $enum .= $typehash{$_}{'sym'}.", ";
+     $anyval_union .= "        $typehash{$_}{'ctype'} $typehash{$_}{'ppsym'};\n";
      $typedefs .= "typedef $typehash{$_}{'realctype'}              $typehash{$_}{'ctype'};\n";
     }
     chop $enum;
     chop $enum;
+
+    $typedefs .= "typedef struct {\n    pdl_datatypes type;\n    union {\n";
+    $typedefs .= $anyval_union;
+    $typedefs .= "    } value;\n} PDL_Anyval;\n";
 
     my $indx_type = typefld('PDL_IND','realctype');
     $typedefs .= '#define IND_FLAG ';
@@ -483,7 +478,7 @@ sub datatypes_header {
 
 /* Data types/sizes [must be in order of complexity] */
 
-enum pdl_datatypes { $enum };
+typedef enum { $enum } pdl_datatypes;
 
 /* Define the pdl data types */
 
@@ -669,8 +664,8 @@ no strict 'refs';
 sub badvalue {
   my ( $self, $val ) = @_;
   my $name = "PDL::_badvalue_int" . $self->enum();
-  if ( defined $val ) { return &{$name}( $val, 1)->sclr; }
-  else                { return &{$name}( 0,    0)->sclr; }
+  if ( defined $val ) { return &{$name}( $val )->sclr; }
+  else                { return &{$name}( undef )->sclr; }
 }
 
 sub orig_badvalue {

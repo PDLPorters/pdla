@@ -74,8 +74,6 @@ void pdl_${name}(pdl *a) {
 
 for my $in ( keys %PDL_DATATYPES ) {
 
-   next if $in eq 'PDL_A';
-
     my $intype = $PDL_DATATYPES{$in};
     print OUT <<"!WITH!SUBS!";
     case ${in}:
@@ -194,8 +192,6 @@ void pdl_converttype( pdl** aa, int targtype, Logical changePerl ) {
 
 for my $in ( keys %PDL_DATATYPES ) { 
 
-   next if $in eq 'PDL_A';
-
     my $intype = $PDL_DATATYPES{$in}; 
 
     print OUT <<"!WITH!SUBS!";
@@ -208,8 +204,6 @@ for my $in ( keys %PDL_DATATYPES ) {
 !WITH!SUBS!
 
     for my $targ ( keys %PDL_DATATYPES ) {
-
-       next if $targ eq 'PDL_A';
 
 	next if $in eq $targ; # Skip duplicates
 	my $targtype = $PDL_DATATYPES{$targ};
@@ -303,7 +297,7 @@ void pdl_coercetypes( pdl** aa, pdl** bb, Logical changePerl ) {
            if (vector->datatype == PDL_F)  /* FxD is OK as F */
               targtype = vector->datatype;
 
-           else if (vector->datatype <= PDL_L && scalar->datatype <= PDL_L)
+           else if (vector->datatype <= PDL_LL && scalar->datatype <= PDL_LL)
               targtype = vector->datatype; /* two ints is OK as input int */
 
            else if (vector->datatype <= PDL_F && scalar->datatype==PDL_D)
