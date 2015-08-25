@@ -27,7 +27,7 @@ or if you don't have the cpan script try
 |    MODULE      |     DEPENDS ON      |             COMMENT                 |
 +----------------+---------------------+-------------------------------------+
 
-PDL (all)         perl >= 5.8.x           PDL requires at least this version
+PDL (all)         perl >= 5.10.x          PDL requires at least this version
                                           of perl to build and run.
 
                   File::Spec  >= 0.6      perl5 core module.
@@ -138,14 +138,6 @@ PDL::Graphics::PGPLOT
                                           PDL::Graphics::PGPLOT Module
                                           builds ok without PGPLOT module
                                           and library.
-
-
-PDL::Graphics::PLplot
-                  The PLplot graphics library.
-                  See http://plplot.sourceforge.net 
-
-                                          Module will be built if the
-                                          PLplot library is detected.
 
 
 PDL::Graphics::IIS

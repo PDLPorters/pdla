@@ -444,7 +444,6 @@ if($Config{archname}=~m/x86_64/) {
 
 # create GENERATED subdir with *.pm files during 'make dist' (to make metacpan.org happy)
 my $preop = '$(PERL) -I$(INST_ARCHLIB) -I$(INST_LIB) -MPDL::Core::Dev -e pdlpp_mkgen $(DISTVNAME)';
-$preop .= q[ && git log --stat --since='29 Apr 2009' > Changes.new && $(MV) Changes.new $(DISTVNAME)/Changes] if $^O ne 'MSWin32';
 
 my %makefile_hash = (
 	      'PREREQ_PM' => { @prereq },
@@ -452,6 +451,7 @@ my %makefile_hash = (
                 'Devel::CheckLib' => 1.01,
                 'Carp'            => 1.20,    # EU::MM seems to need this not to crash
                 'ExtUtils::MakeMaker' => 6.56,
+                'File::Path'          => 0,
               },
               TEST_REQUIRES => {
                 'CPAN::Meta' => '2.120900',
@@ -461,7 +461,8 @@ my %makefile_hash = (
               },
               BUILD_REQUIRES => {
                 'ExtUtils::MakeMaker' => 0,
-                'ExtUtils::ParseXS' => 3.01, # avoids 2.21, known broken
+                'ExtUtils::ParseXS'   => 3.01, # avoids 2.21, known broken
+                'File::Path'          => 0,
               },
               'MIN_PERL_VERSION' => '5.010',
 	      'NAME' => 'PDL',
@@ -582,9 +583,11 @@ pdldoc.pod : pdldoc
 
 EOPS
 
+# Here, `pdl.c` is used directly because some makes (e.g., on Solaris) do not
+# support the `$<` variable in explicit rules
 $text .= <<EOT if $^O !~ /MSWin/;
 pdl$Config::Config{exe_ext} : pdl.c
-	\$(CC) \$< -o \$\@
+	\$(CC) pdl.c -o \$\@
 EOT
 
 $text .= << 'EOT' if $^O =~ /MSWin/;

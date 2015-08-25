@@ -5,9 +5,11 @@ package PDL::Core;
 use strict;
 use warnings;
 use PDL::Exporter;
+require PDL; # for $VERSION
 use DynaLoader;
 our @ISA    = qw( PDL::Exporter DynaLoader );
-bootstrap PDL::Core;
+our $VERSION = '2.013';
+bootstrap PDL::Core $VERSION;
 use PDL::Types ':All';
 
 our @EXPORT = qw( piddle pdl null barf ); # Only stuff always exported!

@@ -1,70 +1,296 @@
-Release Notes for PDL 2.007_17 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.007 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.013 2015-08-14 08:37:15-04:00
 
 General Notes:
 
- * This is PDL-2.008 / TBD
+ * This is PDL-2.013.  It is PDL-2.012 with some fixes
+   for badvalue problems and Solaris make issues.
+ 
+ * See PDL 2.012 notes below.
 
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-
-   - Manual build/install is possible, but easiest is to
-     use cpanm:
-
-       cpanm --dev PDL
 
 Highlights:
 
- * TBD
+ * Fix for sf.net bug #390: scalar PDL with badvalue
+   always compares BAD with perl scalars.  Now a warning
+   is given if the badvalue could conflict with the
+   results of a logical or comparision operation.
+ 
+ * Fixed a makefile construct which was ambiguous and
+   caused build failures on Solaris using their make.
+   Gnu make was not affected even on Solaris.
 
 
 
-Release Notes for PDL 2.007_16 --------------------------
+v2.012_01 2015-08-01 15:47401-0400
 
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.007 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+General Notes:
+
+ * This is PDL-2.012_01.  It is PDL-2.012 with some fixes
+   for badvalue problems when the badvalue was 0 or 1.
+ 
+ * See PDL 2.012 notes below.
+
+
+Highlights:
+
+ * Candidate fix for sf.net bug #390: scalar PDL with
+   badvalue always compares BAD with perl scalars
+
+
+
+v2.012 2015-06-14 08:27:01-0400
+
+General Notes:
+
+ * This is PDL-2.012 it is essentially PDL-2.011 with some
+   fixes for some minor issues that only came to light
+   with a new official release.
+ 
+ * See PDL 2.011 notes below.
+
+
+Highlights:
+
+ * Add package statements so PDL::Lite and PDL::LiteF are
+   indexed correctly
+ 
+ * Give PDL::NiceSlice a non-developer release for indexing
+
+ * Fix build regression that broke ActiveState perl
+   builds for many perl versions and OS platforms.
+
+
+
+v2.011 2015-06-02 17:01:22-0400
+
+General Notes:
+
+ * This is PDL-2.011 it is essentially PDL-2.008 with some
+   fixes for some minor issues.
+ 
+ * perl 5.10.x is now the minimum version of perl
+   supported by PDL-2.008 and later.
+
+ * PDL::FFTW is no longer part of the PDL Core.
+   Please use PDL::FFTW3 from CPAN (Dima Kogan)
+   with Alien::FFTW3 support (Craig DeForest)
+
+ * PDL::Graphics::PLplot is no longer included in
+   the PDL core distribution.  Please install from
+   CPAN directly.
+
+ * 50 sf.net bug tickets closed/fixed since PDL-2.007!
+
+ * Partial 64bit indexing support with some fixes
+   to remaining issues.  Full 64bit support for perl
+   modulus operater ('%') is in progress.
+ 
+ * Major clean up and rework of the core PDL
+   computation code, the build process, test suites,
+   and updating to reflect more of the best practices
+   for perl module development.
+ 
+ * The PDL development has moved to github and now
+   has added continuous commit testing via the
+   Travis-CI framework.  The git workflow is now
+   inline with current practices and it is expected
+   that this will allow more contributions and "eyes
+   on the code".
+
+
+Highlights:
+
+ * See PDL 2.008 Highlights below.
+
+
+
+v2.010 2015-06-02 14:40:15-0400
+
+General Notes:
+
+ * Another indexing regression.  Sigh.
+
+
+
+v2.009_01 2015-05-29 17:47:57-0400
+
+General Notes:
+
+Highlights:
+
+ * Removal of PDL::Graphics::PLplot since exists as separate CPAN distro
+
+
+
+v2.009 2015-05-29 12:26:25-0400
+
+General Notes:
+
+ * This is PDL-2.009. It has tweaks to fix PAUSE/CPAN
+   indexing problems in 2.008.
+ 
+ * Known_problems updated to reflect a seldom seen
+   pdldoc installation problem for certain custom
+   perl configurations on cygwin.  A workaround is
+   known.  Please contact the PDL mailing list if you
+   have this problem.  See the sf.net bug report at
+   http://sourceforge.net/p/pdl/bugs/384/ for more
+   information.
+ 
+ * See Release Notes for PDL 2.008 below for more.
+
+
+
+v2.008 2015-05-24 18:42:22-0400
+
+General Notes:
+
+ * This is PDL-2.008!  Yay!
+
+ * perl 5.10.x is now the minimum version of perl
+   supported by PDL-2.008 and later.
+
+ * 50 sf.net bug tickets closed/fixed since PDL-2.007!
+
+ * Partial 64bit indexing support with some fixes to
+   remaining issues.  Full 64bit support for perl modulus
+   operater ('%') is in progress.
+ 
+ * Major clean up and rework of the core PDL computation
+   code, the build process, test suites, and updating to
+   reflect more of the best practices for perl module
+   development.
+ 
+ * The PDL development has moved to github and now has
+   added continuous commit testing via the Travis-CI
+   framework.  The git workflow is now inline with
+   current practices and it is expected that this will
+   allow more contributions and "eyes on the code".
+
+Highlights:
+
+ * PDL::FFTW is no longer part of the PDL Core.
+   Please use PDL::FFTW3 from CPAN (Dima Kogan)
+   with Alien::FFTW3 support (Craig DeForest)
+
+ * New improved vsearch functionality, interfaces,
+   and documentation (Diab Jerius)
+ 
+ * PDL::IO::Storable now robust against version, platform
+   endianness, and supports the new 64bit PDL_Indx data
+   type (Dima Kogan)
+
+ * Clean up of PDL/Basic/Core code to remove cruft and
+   to simplify the evolution to a coming improvements
+   (Craig DeForest)
+ 
+ * Major clean up, de-crufting, and streamlining of the
+   entire PDL ExtUtils::MakeMaker build process (Ed J)
+ 
+ * Standardizing and updating the entire PDL test suite
+   to a common basis (use Test::More) and coding to more
+   consistent best practices.  E.g., use strict
+   This is a huge (ongoing) effort but a comprehensive
+   test suite is needed for regression tests to validate
+   compatibility of coming PDL3 architecture changes.
+   (Zakariyya Mughal)
+
+ * You can now call the PDL::Graphics2D twiddle()
+   routine with an argument of 0 or 1 (i.e., false
+   or true) to set whether the twiddle loop is run.
+
+ * Library dependency detection improvements including
+   PROJ4 and GD.  A number of improvements in this for
+   strawberry perl on windows (kmx)
+ 
+ * The PDL distribution process now generated the
+   documentation for the modules using the automated
+   code generation process.  This makes all the PDL
+   docs available on http://search.cpan.org and on
+   http://metacpan.org for your web browser. (kmx)
+
+ * Improved support to build XS/C extensions: (Ed J)
+   - You can now: "use Inline with => 'PDL';", see PDL::API
+   - You can, in your module's Makefile.PL:
+     "$p = new ExtUtils::Depends 'MyMod', 'PDL'"
+
+ * MANY sf.net tickets closed:
+
+   377   PDL::Transform::Proj4 not building under latest dev EUMM
+   375   Storable files incorrectly processed from older versions.
+   374   CONFIGURE_REQUIRES => Devel::CheckLib
+   373   2.007_11 MANIFEST
+   372   2.007_11 fails on MS Windows 64bit
+   371   PDL-2.4.11 medover failure in perl 5.20.1
+   370   PDL-2.007 can fail to build Basic/#Core files
+   369   slice fails with subclass index
+   368   PDL::Slatec::polyfit ignores incorrect length of weight piddle...
+   367   BAD value parsing breakage
+   365   CPAN PDL install broken due to breakage in Module::Compile 0.34
+   363   PP "OtherPars" namespace is not clean
+   362   rcols COLIDS need chomp-ing
+   361   vsearch bug w/# reversed list
+   360   subtle & rare bug in vsearch
+   359   Improved documentation for vsearch
+   358   one2nd() has unexpected behaviour when given a Perl scalar rather than a piddle
+   357   Android support
+   356   overload::Method() does not return coderef for stringification
+   355   dog creates 0 dim piddle which squeezes to 1 dim.
+   353   imag2d not 'use warnings' safe and no way to disable twiddle
+   352   reorder() not an lvalue sub
+   351   PDL_BOOT has wrong XS code
+   350   Modules using PDL::Slatec will get installed even if Slatec is disabled
+   349   PDL needs integrated support for PDL::PP and CPAN indexer
+   348   PDL->null->slice('')->nelem results in error
+   345   documentation of WITH_PLPLOT in perldl.conf incorrect
+   344   Current version numbering is broken
+   342   BUGS file not indexable or discoverable
+   337   rangeb() broken for 64bit index support on 32bit perl
+   332   "isn't numeric in null operation" warning could be more helpful
+   331   uniq does not always return proper object
+   329   t/#picrgb.t fails in PDL build
+   321   Several core modules do not have man pages
+   319   PDL::Index does not render on websites
+   316   plplot.t failure when building 2.4.11
+   314   conv1d bad value broken
+   313   clip() edge case not handled right
+   312   Wrong results in corner empty-set cases
+   283   PDL::IO::FITS::wfits corrupting FITS image
+   272   indexND of Empty pdls can segfault
+   268   PLplot still unusable with X
+   261   max() fails on nan
+   256   Threadable version of PDL::MatrixOps::inv
+   232   perl -d chokes on lvalue functions
+   227   PGPLOT module doesn't work in PDL
+   224   Ctrl-C kills perldl in win32 console
+   207   Name "PDL::SHARE" used only once.
+    63   Unable to get the 3d demos
+    51   justify option fails in imag (PDL2.3.4)
+
+
+
+v2.007_17 2015-05-06 13:35:57-0400
+
+General Notes:
+
+ * This is PDL-2.008_rc4!
+
+Highlights:
+
+ * Clean up of large number modulo tests and make TODO for
+   the PDL-2.008 release.
+ 
+ * Fix build/configure problems from CPAN Testers reports.
+
+ * Quiet excessive warnings in perldl and pdl2doc
+
+
+
+v2.007_16 2015-04-22 10:23:46-0400
 
 General Notes:
 
  * This is PDL-2.008_rc3!
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-
-   - Manual build/install is possible, but easiest is to
-     use cpanm:
-
-       cpanm --dev PDL
 
 Highlights:
 
@@ -75,36 +301,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_15 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_15 2015-04-19 17:08:55-0400
 
 General Notes:
 
  * This is PDL-2.008_rc2!
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-
-   - Manual build/install is possible, but easiest is to
-     use cpanm:
-
-       cpanm --dev PDL
 
 Highlights:
 
@@ -116,36 +317,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_14 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_14 2015-04-11 14:28:07-0400
 
 General Notes:
 
  * This is PDL-2.008_rc1!
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-
-   - Manual build/install is possible, but easiest is to
-     use cpanm:
-
-       cpanm --dev PDL
 
 Highlights:
 
@@ -156,36 +332,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_13 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.007 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_13 2015-03-22 16:00:03-0400
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this April 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-
-   - Manual build/install is possible, but easiest is to
-     use cpanm:
-
-       cpanm --dev PDL
 
 Highlights:
 
@@ -214,16 +365,7 @@ Highlights:
 
  * Make "isn't numeric in null operation" warning more helpful
 
-
-Release Notes for PDL 2.007_12 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_12 2015-03-06 09:18:04-05:00
 
 General Notes:
 
@@ -233,26 +375,6 @@ General Notes:
    priority issues needed for PDL-2.008.  Expect feature
    freeze, final shakedown, and release to come!
 
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_12.tar.gz
-       cpan> make CHM/PDL-2.007_12.tar.gz
-       cpan> test CHM/PDL-2.007_12.tar.gz
-       cpan> look CHM/PDL-2.007_12.tar.gz
 
 Highlights:
 
@@ -277,43 +399,11 @@ Highlights:
 
  * Lots of tweaks and cleanup...
 
-
-
-Release Notes for PDL 2.007_11 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_11 2015-02-24 16:08:36-05:00
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this February 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_11.tar.gz
-       cpan> make CHM/PDL-2.007_11.tar.gz
-       cpan> test CHM/PDL-2.007_11.tar.gz
-       cpan> look CHM/PDL-2.007_11.tar.gz
-
 Highlights:
 
  * The new Filter::Simple engine for PDL::NiceSlice is now
@@ -331,40 +421,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_10 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_10 2015-02-02 10:59:22-05:00
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this February 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_10.tar.gz
-       cpan> make CHM/PDL-2.007_10.tar.gz
-       cpan> test CHM/PDL-2.007_10.tar.gz
-       cpan> look CHM/PDL-2.007_10.tar.gz
 
 Highlights:
 
@@ -372,40 +433,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_09 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_09 2015-01-29 11:01:24-05:00
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this February 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_09.tar.gz
-       cpan> make CHM/PDL-2.007_09.tar.gz
-       cpan> test CHM/PDL-2.007_09.tar.gz
-       cpan> look CHM/PDL-2.007_09.tar.gz
 
 Highlights:
 
@@ -416,40 +448,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_08 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_08 2015-01-20 18:24:01-05:00
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this January 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_08.tar.gz
-       cpan> make CHM/PDL-2.007_08.tar.gz
-       cpan> test CHM/PDL-2.007_08.tar.gz
-       cpan> look CHM/PDL-2.007_08.tar.gz
 
 Highlights:
 
@@ -461,40 +464,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_07 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_07 2015-01-06 17:44:08+11:00
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this January 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_07.tar.gz
-       cpan> make CHM/PDL-2.007_07.tar.gz
-       cpan> test CHM/PDL-2.007_07.tar.gz
-       cpan> look CHM/PDL-2.007_07.tar.gz
 
 Highlights:
 
@@ -507,40 +481,11 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_06 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_06 2015-01-05 13:31:13-05:00
 
 General Notes:
 
  * Counting down to a PDL-2.008 release this January 2015
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_06.tar.gz
-       cpan> make CHM/PDL-2.007_06.tar.gz
-       cpan> test CHM/PDL-2.007_06.tar.gz
-       cpan> look CHM/PDL-2.007_06.tar.gz
 
 Highlights:
 
@@ -554,38 +499,9 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_05 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_05 2014-12-24 09:24:04-05:00
 
 General Notes:
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_05.tar.gz
-       cpan> make CHM/PDL-2.007_05.tar.gz
-       cpan> test CHM/PDL-2.007_05.tar.gz
-       cpan> look CHM/PDL-2.007_05.tar.gz
 
 Highlights:
 
@@ -600,38 +516,9 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_04 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_04 2014-09-09 00:44:29+01:00
 
 General Notes:
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_04.tar.gz
-       cpan> make CHM/PDL-2.007_04.tar.gz
-       cpan> test CHM/PDL-2.007_04.tar.gz
-       cpan> look CHM/PDL-2.007_04.tar.gz
 
 Highlights:
 
@@ -641,38 +528,9 @@ Highlights:
    'MyMod', 'PDL'"
 
 
-Release Notes for PDL 2.007_03 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_03 2014-07-01 16:54:59-04:00
 
 General Notes:
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_03.tar.gz
-       cpan> make CHM/PDL-2.007_03.tar.gz
-       cpan> test CHM/PDL-2.007_03.tar.gz
-       cpan> look CHM/PDL-2.007_03.tar.gz
 
 Highlights:
 
@@ -684,38 +542,9 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_02 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_02 2013-11-25 14:10:22-05:00
 
 General Notes:
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_02.tar.gz
-       cpan> make CHM/PDL-2.007_02.tar.gz
-       cpan> test CHM/PDL-2.007_02.tar.gz
-       cpan> look CHM/PDL-2.007_02.tar.gz
 
 Highlights:
 
@@ -730,38 +559,9 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007_01 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007_01 2013-11-17 16:31:17-05:00
 
 General Notes:
-
- * Another quick CPAN developers release
-
-   - It is a snapshot of the current git development tree
-     and everything may not work correctly or have complete
-     documentation.
-
-   - These release notes may not be fully complete.  Please
-     see Changes (from the git log) for full details.
-
-   - All tests may not pass, especially ones corresponding
-     to issues in Known_problems.
-   
-   - Manual build/install is recommended although the
-     cpan shell may be used by specifying the distribution
-     path rather than just the module name, e.g.:
-
-       cpan> get  CHM/PDL-2.007_01.tar.gz
-       cpan> make CHM/PDL-2.007_01.tar.gz
-       cpan> test CHM/PDL-2.007_01.tar.gz
-       cpan> look CHM/PDL-2.007_01.tar.gz
 
 Highlights:
 
@@ -781,15 +581,7 @@ Highlights:
 
 
 
-Release Notes for PDL 2.007 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.006 and earlier.  This     |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.007 2013-10-12 12:56:52-04:00
 
 General Notes:
 
@@ -904,15 +696,7 @@ Highlights:
 
 
 
-Release Notes for PDL 2.006 --------------------------
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API for PDL versions 2.4.10 and earlier.  This    |
- | will require that you re-build any PP or XS modules.  Do not  |
- | upgrade or install over an existing PDL installation unless   |
- | you are prepared to do so!!!                                  |
- +---------------------------------------------------------------+
+v2.006 2013-03-23 10:02:31-04:00
 
 General Notes:
 
@@ -1059,20 +843,12 @@ Highlights:
 
 
 
-Release Notes for PDL 2.4.11  -----------------------------
+v2.4.11 2012-05-20 13:32:17-04:00
 
 General Notes:
 
  * This is a point release of PDL to support the coming perl
    5.16.0 release.
-
- +---------------------------------------------------------------+
- | BE WARNED:  This release includes an update to the internal,  |
- | C-level PDL API and will require that you re-build any PP or  |
- | XS modules.  Do not upgrade or install over an existing PDL   |
- | installation unless you are prepared to do so!!!              |
- +---------------------------------------------------------------+
-
 
 Highlights:
 
@@ -1122,9 +898,7 @@ Highlights:
    which is a convenience target that allows one to regenerate the
    Changes file from git.
 
-
-
-Release Notes for PDL 2.4.10 --------------------------
+v2.4.10 2012-02-03 18:44:47-05:00
 
 General Notes:
 
@@ -1384,7 +1158,7 @@ Highlights:
 
 
 
-Release Notes for PDL 2.4.9 --------------------------
+v2.4.9 2011-04-09 10:05:43-04:00
 
 General Notes:
 
@@ -1409,7 +1183,7 @@ Highlights:
 
 
 
-Release Notes for PDL 2.4.8 --------------------------
+v2.4.8 2011-03-29 17:12:41-04:00
 
 General Notes:
 
@@ -1598,7 +1372,7 @@ Highlights:
 
 
     
-Release notes for PDL 2.4.7 --------------------------
+v2.4.7 2010-08-18 20:55:52-04:00
 
 General Notes:
 
@@ -1854,7 +1628,7 @@ Highlights:
 
 
 
-Release notes for PDL 2.4.6     --------------------------
+v2.4.6 2009-12-31 23:06:11-05:00
 
 General Notes:
 
@@ -1973,7 +1747,7 @@ Summary of Changes:
 
 
 
-Release notes for PDL 2.4.5 ------------------------------
+v2.4.5 2009-10-24 11:56:23-04:00
 
 Highlights:
 
@@ -2092,7 +1866,7 @@ Summary of Changes:
   
 
 
-Release notes for PDL 2.4.4 ------------------------------
+v2.4.4 2008-11-12 19:16:53-10:00
 
 General Notes:
 
@@ -2197,7 +1971,7 @@ Summary of Changes:
     
 
 
-Release notes for PDL 2.4.3 ------------------------------
+v2.4.3 2006-08-20 06:07:30-10:00
 
 General Notes:
 
@@ -2277,7 +2051,7 @@ Summary of Changes:
 
 
 
-Release notes for PDL 2.4.2 ------------------------------
+v2.4.2 2004-12-28 09:19:30-10:00
 
 General Notes:
 
@@ -2327,7 +2101,7 @@ Summary of Changes:
 
 
 
-Release notes for PDL 2.4.1 -------------------------------
+v2.4.1 2004-01-05 12:27:18-10:00
 
 General Notes:
 
@@ -2353,7 +2127,7 @@ Summary of Changes:
      - Fixed most reported bugs
 
 
-Release notes for PDL 2.4.0 -------------------------------
+v2.4.0 2003-05-22 12:09:26-10:00
 
 General Notes:
 
@@ -2423,7 +2197,7 @@ Summary of Changes:
         determinant, linear equation solving, matrix inversion, 
         eigenvalue decomposition, and LU-decomposition.
 
-Release notes for PDL 2.3.4 -------------------------------
+v2.3.4 2002-09-23 15:50:06-10:00
 
      - Now should compile using perl 5.8.0
      - Improved speed for generating PDL's from a perl array ref
@@ -2435,7 +2209,7 @@ Release notes for PDL 2.3.4 -------------------------------
         
   See the Changes file for a detailed list of changes.
 
-Release notes for PDL 2.3.3 -------------------------------
+v2.3.3 2002-05-22 03:16:29-10:00
   
   Mainly a bugfix release with some nice little additions:
      - PDL::IO::Dumper: Cleanly save and restore complex
@@ -2445,18 +2219,18 @@ Release notes for PDL 2.3.3 -------------------------------
         
   See the Changes file for a detailed list of changes.
 
-Release notes for PDL 2.3.2 ------------------------------
+v2.3.2 2001-12-18 22:20:31-10:00
 
-A pure bugfix release to fix compilation problems with gimp-perl
-(part of the gimp distribution). The following notes from
-2.3 and 2.3.1 still apply:
+  - A pure bugfix release to fix compilation problems with gimp-perl
+    (part of the gimp distribution). The following notes from
+    2.3 and 2.3.1 still apply:
 
-Release notes for PDL 2.3.1 ------------------------------
+v2.3.1 2001-11-21 14:38:32-10:00
 
-A bugfix release to fix some compilation problems seen with
-2.3. The following notes from 2.3 still apply:
+  - A bugfix release to fix some compilation problems seen with
+    2.3. The following notes from 2.3 still apply:
 
-Release notes for PDL 2.3 -------------------------------
+v2.3 2001-11-16 05:12:41-10:00
  
  Summary of Changes
    - A nicer slicing syntax for PDL added via the new 
@@ -2473,7 +2247,7 @@ Release notes for PDL 2.3 -------------------------------
         
   See the Changes file for a detailed list of changes.
   
-Release notes for PDL 2.2.1 -------------------------------
+v2.2.1 2001-04-25 03:05:46-10:00
  
  Summary of Changes
     Bugs Fixed:
@@ -2491,7 +2265,7 @@ Release notes for PDL 2.2.1 -------------------------------
         
   See the Changes file for a detailed list of changes.
   
-Release notes for PDL 2.2 -------------------------------
+v2.2 2000-12-21 03:25:36-10:00
 
 Major Changes:
 
@@ -2527,7 +2301,7 @@ Major Changes:
   
 Many other changes. See the Changes file for a detailed list of changes.
 
-Release notes for PDL 2.1 -------------------------------
+v2.1 2000-06-07 22:23:47+00:00
 
 Major Changes:
   - Speed Increase. Most PDL functions are now done totally
@@ -2543,23 +2317,20 @@ See the Changes file for a detailed list of changes.
 
 
 
-Release notes for PDL 2.005 -----------------------------
+v2.005 2000-04-05 22:30:35+00:00
 
-A bugfix release to fix 2.004 problems with PGPLOT changes
-and perl 5.6.0.
-
-The following notes from 2.004 still apply:
-                                             
-*IMPORTANT NOTE*: Due to changes to the PGPLOT module, 'use
-PDL::Graphics::PGPLOT' has been removed from PDL.pm (i.e. in scripts
-and within perldl you now need to explicitly say 'use
-PDL::Graphics::PGPLOT'). Additionally, it needs Karl's new 2.16
-release of the PGPLOT module (available from CPAN).
-
-Notable additions are a module for operations on complex piddles
-(PDL::Complex), a subtype of PDL which allows manipulation of byte
-type PDLs as N dimensional arrays of fixed length strings (PDL::Char)
-and a Levenberg-Marquardt fitting module (PDL::Fit::LM).
-
-Bug reports and patches to the relevant places on sourceforge, please.
+Major Changes:
+   - A bugfix release to fix 2.004 problems with PGPLOT changes
+     and perl 5.6.0.
+   - The following notes from 2.004 still apply:
+     - *IMPORTANT NOTE*: Due to changes to the PGPLOT module, 'use
+       PDL::Graphics::PGPLOT' has been removed from PDL.pm (i.e. in scripts
+       and within perldl you now need to explicitly say 'use
+       PDL::Graphics::PGPLOT'). Additionally, it needs Karl's new 2.16
+       release of the PGPLOT module (available from CPAN).
+     - Notable additions are a module for operations on complex piddles
+       (PDL::Complex), a subtype of PDL which allows manipulation of byte
+       type PDLs as N dimensional arrays of fixed length strings (PDL::Char)
+       and a Levenberg-Marquardt fitting module (PDL::Fit::LM).
+   - Bug reports and patches to the relevant places on sourceforge, please.
 
