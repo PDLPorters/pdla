@@ -890,10 +890,10 @@ PDL_Indx av_ndcheck(AV* av, AV* dims, int level, int *datalevel)
 static int _detect_datatype(AV *av) {
   SV **item;
   AV *array;
-  int top, i;
+  int count, i;
   if (!av) return PDL_D;
-  top = av_top_index(av);
-  for (i = 0; i <= top; i++) {
+  count = av_len(av);
+  for (i = 0; i < count; i++) {
     item = av_fetch(av, i, 0);
     if (*item) {
       if (SvROK(*item)) {
