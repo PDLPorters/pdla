@@ -707,8 +707,8 @@ at_bad_c(x,position)
    /* do we have to bother about NaN's? */
    if ( badflag &&
         ( ( x->datatype < PDL_F && ANYVAL_EQ_ANYVAL(result, pdl_get_badvalue(x->datatype)) ) ||
-          ( x->datatype == PDL_F && finite(pdl_val.value.F) == 0 ) ||
-          ( x->datatype == PDL_D && finite(pdl_val.value.D) == 0 ) )
+          ( x->datatype == PDL_F && finite(result.value.F) == 0 ) ||
+          ( x->datatype == PDL_D && finite(result.value.D) == 0 )
         )
       ) {
 	 RETVAL = newSVpvn( "BAD", 3 );
