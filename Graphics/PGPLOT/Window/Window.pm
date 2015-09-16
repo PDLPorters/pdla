@@ -2259,7 +2259,10 @@ use PDLA::Graphics::PGPLOTOptions qw(default_options);
 use PDLA::Slices;
 use PDLA::NiceSlice;
 use SelfLoader;
-use PGPLOT;
+BEGIN {
+  eval { require PGPLOT; PGPLOT->import; 1 }
+    or die "Dependency on PGPLOT is not satisfied: $@";
+}
 
 require DynaLoader;
 
