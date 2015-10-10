@@ -1,4 +1,19 @@
 2.014000 
+ - PDLA can now create and use piddles having more
+   than 2**32 elements.  Of particular use is that
+   you can now use PDLA::IO::FlexRaw to memory map
+   piddles from files on disk which can allow for
+   simplified processing and IO on extremely large
+   data.
+ - Many fixes to the build process to make PDLA more robust
+   to build, test, and install.  This takes advantage of new
+   automated CI testing via Travis CI on the github site.
+   Thanks much to Ed and Zakariyya for their work to get
+   this started and maintained.  This CI testing makes
+   this the best tested and best testing PDLA release ever!
+ - Various documentation clean-ups and work to improve
+   on-line viewing at http://metacpan.org and others.
+   (Thanks kmx and Derek!)
 
 2.013006 2019-04-19
  - zap IO/{Misc,FITS,Pic}, Lib/ImageRGB as restored to ::Core
