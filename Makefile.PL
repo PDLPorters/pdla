@@ -91,6 +91,7 @@ my $preop = '$(PERL) -I$(INST_ARCHLIB) -I$(INST_LIB) -MPDLA::Core::Dev -e pdlpp_
 
 my %makefile_hash = (
 	      'PREREQ_PM' => { @prereq },
+	      'LICENSE' => 'perl',
               'CONFIGURE_REQUIRES' => {
                 @coredep,
                 'Devel::CheckLib' => 1.01,
