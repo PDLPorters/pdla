@@ -515,6 +515,7 @@ t/limits_trans.t
 t/limits_trans_err.t
 t/limits_ulimits.t
 t/linfit.t
+t/lm.t
 t/lut.t
 t/minuit.t
 t/opengl.t
