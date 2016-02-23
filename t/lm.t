@@ -6,7 +6,6 @@ use Test::More;
 use PDLA::LiteF;
 use PDLA::Config;
 use PDLA::IO::Misc 'rcols';
-my $ntests;
 
 BEGIN {
     if ($PDLA::Config{WITH_SLATEC}) {
