@@ -15,7 +15,7 @@ BEGIN
 {
    use PDLA::Config;
    if ( $PDLA::Config{WITH_GSL} ) {
-      eval {
+       eval "
 	  use PDLA::GSLSF::AIRY;
 	  use PDLA::GSLSF::BESSEL;
 	  use PDLA::GSLSF::CLAUSEN;
@@ -44,7 +44,7 @@ BEGIN
 	  use PDLA::GSLSF::TRANSPORT;
 	  use PDLA::GSLSF::TRIG;
 	  use PDLA::GSLSF::ZETA;
-      };
+      ";
       unless ($@) {
          plan tests => 3;
       } else {
