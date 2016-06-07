@@ -1884,6 +1884,8 @@ ran_shuffle(rng, in)
    case PDLA_S: size=sizeof(PDLA_Short); break;
    case PDLA_US: size=sizeof(PDLA_Ushort); break;
    case PDLA_L: size=sizeof(PDLA_Long); break;
+   case PDLA_IND: size=sizeof(PDLA_Indx); break;
+   case PDLA_LL: size=sizeof(PDLA_LongLong); break;
    case PDLA_F: size=sizeof(PDLA_Float); break;
    case PDLA_D: size=sizeof(PDLA_Double); break;
   }
@@ -1907,6 +1909,8 @@ ran_choose(rng, in, out)
    case PDLA_S: size=sizeof(PDLA_Short); break;
    case PDLA_US: size=sizeof(PDLA_Ushort); break;
    case PDLA_L: size=sizeof(PDLA_Long); break;
+   case PDLA_IND: size=sizeof(PDLA_Indx); break;
+   case PDLA_LL: size=sizeof(PDLA_LongLong); break;
    case PDLA_F: size=sizeof(PDLA_Float); break;
    case PDLA_D: size=sizeof(PDLA_Double); break;
   }
