@@ -117,7 +117,7 @@ BEGIN{
   # make sure not to use uuencode/uudecode
   # on MSWin32 systems (it doesn't work)
   # Force Convert::UU for BSD systems to see if that fixes uudecode problem
-  if ($^O !~ /(MSWin32|bsd)$/) {
+  if (($^O !~ /(MSWin32|bsd)$/) or ($^O eq 'gnukfreebsd')) {
      $PDLA::IO::Dumper::uudecode_ok = &$checkprog('uudecode') and &$checkprog('uuencode') and ($^O !~ /MSWin32/);
   }
 
@@ -423,7 +423,7 @@ sub _make_tmpname () {
 # so we go this way for now as it is less-likely to break things
 #
 my $uudecode_string = "|uudecode";
-$uudecode_string .= " -s" if $^O =~ m/darwin|((free|open)bsd)|dragonfly/;
+$uudecode_string .= " -s" if (($^O =~ m/darwin|((free|open)bsd)|dragonfly/) and ($^O ne 'gnukfreebsd'));
 
 sub PDLA::IO::Dumper::uudecode_PDLA {
     my $lines = shift;
