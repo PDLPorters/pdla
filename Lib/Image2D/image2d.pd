@@ -193,7 +193,7 @@ pp_addhdr('
 
 ');
 
-for (keys %PDLA::Types::typehash) {
+for ( PDLA::Types::typesrtkeys() ) {
     my $ctype = $PDLA::Types::typehash{$_}{ctype};
     my $ppsym = $PDLA::Types::typehash{$_}{ppsym};
 
