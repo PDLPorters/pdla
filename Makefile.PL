@@ -97,6 +97,7 @@ my %makefile_hash = (
                 'File::Path'          => 0,
                 'ExtUtils::Depends' => '0.402',
                 'Alien::HDF4' => 0,
+                'ExtUtils::ParseXS'   => 3.01, # avoids 2.21, known broken
               },
               TEST_REQUIRES => {
                 'CPAN::Meta' => '2.120900',
@@ -107,7 +108,6 @@ my %makefile_hash = (
               },
               BUILD_REQUIRES => {
                 'ExtUtils::MakeMaker' => 0,
-                'ExtUtils::ParseXS'   => 3.01, # avoids 2.21, known broken
                 'File::Path'          => 0,
               },
               'MIN_PERL_VERSION' => '5.010',
