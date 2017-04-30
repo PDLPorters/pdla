@@ -58,6 +58,7 @@ my @prereq = (
 	   'Filter::Simple'      => 0.88,      # for new PDLA::NiceSlice
 	   'Inline'              => 0.68,
 	   'Inline::C'           => 0.62,
+	   'List::MoreUtils'     => 0,         # for PDLA::IO::GD
 	   'Module::Compile'     => 0.23,      # for new PDLA::NiceSlice
 	   @coredep,
 	   'Pod::Parser'         => 0,         # version TBD for PDLA::Doc
