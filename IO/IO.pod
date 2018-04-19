@@ -107,8 +107,8 @@ or type at the system prompt:
 
 If you want to get more information about PDLA::IO::Browser and it's
 not installed on your system, I'm afraid you'll have to pick out the
-pod from the source file, which can be found online at 
-L<http://pdl.git.sourceforge.net/git/gitweb.cgi?p=pdl/pdl;a=blob_plain;f=IO/Browser/browser.pd;hb=HEAD>.
+pod from the source file, which can be found online at
+L<https://github.com/PDLAPorters/pdl/blob/master/IO/Browser/browser.pd>.
 
 =head2 PDLA::IO::Dicom
 
@@ -160,10 +160,10 @@ and L<http://en.wikipedia.org/wiki/FITS>.  It is an image format
 commonly used in Astronomy.
 
 This module may or may not be installed on your machine.  To get more
-information, check online at 
-L<http://pdl.sourceforge.net/PDLAdocs/IO/FITS.html>.  To see if the
-module is installed on your machine, follow L<this link|PDLA::IO::FITS>
-or type at the system prompt:
+information, check online at
+L<http://pdl.perl.org/?docs=IO/FITS&title=PDLA::IO::FITS>.  To see if the
+module is installed, look for L<PDLA::IO::FITS> on your machine
+by typing at the system prompt:
 
  perldoc PDLA::IO::FITS
 
@@ -286,5 +286,3 @@ distribute and/or modify this document under the same terms as the
 current Perl license.
 
 See: http://dev.perl.org/licenses/
-
-
