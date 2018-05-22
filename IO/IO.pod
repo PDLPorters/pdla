@@ -108,7 +108,7 @@ or type at the system prompt:
 If you want to get more information about PDLA::IO::Browser and it's
 not installed on your system, I'm afraid you'll have to pick out the
 pod from the source file, which can be found online at
-L<https://github.com/PDLAPorters/pdl/blob/master/IO/Browser/browser.pd>.
+L<https://github.com/PDLPorters/pdla-rest/blob/master/IO/Browser/browser.pd>.
 
 =head2 PDLA::IO::Dicom
 

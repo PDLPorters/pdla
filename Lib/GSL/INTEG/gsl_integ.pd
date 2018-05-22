@@ -70,20 +70,20 @@ Please check the GSL documentation for more information.
    use PDLA;
    use PDLA::GSL::INTEG;
 
-   my $a = 1.2;
+   my $x = 1.2;
    my $b = 3.7;
    my $epsrel = 0;
    my $epsabs = 1e-6;
 
    # Non adaptive integration
-   my ($res,$abserr,$ierr,$neval) = gslinteg_qng(\&myf,$a,$b,$epsrel,$epsabs);
+   my ($res,$abserr,$ierr,$neval) = gslinteg_qng(\&myf,$x,$b,$epsrel,$epsabs);
    # Warnings on
-   my ($res,$abserr,$ierr,$neval) = gslinteg_qng(\&myf,$a,$b,$epsrel,$epsabs,{Warn=>'y'});
+   my ($res,$abserr,$ierr,$neval) = gslinteg_qng(\&myf,$x,$b,$epsrel,$epsabs,{Warn=>'y'});
 
    # Adaptive integration with warnings on
    my $limit = 1000;
    my $key = 5;
-   my ($res,$abserr,$ierr) = gslinteg_qag(\&myf,$a,$b,$epsrel,
+   my ($res,$abserr,$ierr) = gslinteg_qag(\&myf,$x,$b,$epsrel,
                                      $epsabs,$limit,$key,{Warn=>'y'});
 
    sub myf{
@@ -99,7 +99,7 @@ pp_addpm({At=>Bot},<<'EOD'); # the rest of FUNCTIONS section
 Non-adaptive Gauss-Kronrod integration
 
 This function applies the Gauss-Kronrod 10-point, 21-point, 43-point and 87-point 
-integration rules in succession until an estimate of the integral of f over ($a,$b) 
+integration rules in succession until an estimate of the integral of f over ($x,$b) 
 is achieved within the desired absolute and relative error limits, $epsabs and $epsrel.
 It is meant for fast integration of smooth functions. It returns an array with the 
 result, an estimate of the absolute error, an error flag and the number of function
@@ -109,7 +109,7 @@ evaluations performed.
 
 Usage:
 
-  ($res,$abserr,$ierr,$neval) = gslinteg_qng($function_ref,$a,$b,
+  ($res,$abserr,$ierr,$neval) = gslinteg_qng($function_ref,$x,$b,
                                              $epsrel,$epsabs,[{Warn => $warn}]);
 
 =for example
@@ -131,7 +131,7 @@ Example:
 Adaptive integration
 
 This function applies an integration rule adaptively until an estimate of 
-the integral of f over ($a,$b) is achieved within the desired absolute and 
+the integral of f over ($x,$b) is achieved within the desired absolute and 
 relative error limits, $epsabs and $epsrel. On each iteration the adaptive 
 integration strategy bisects the interval with the largest error estimate; 
 the maximum number of allowed subdivisions is given by the parameter $limit.
@@ -149,7 +149,7 @@ Please check the GSL documentation for more information.
 
 Usage:
 
-  ($res,$abserr,$ierr) = gslinteg_qag($function_ref,$a,$b,$epsrel,
+  ($res,$abserr,$ierr) = gslinteg_qag($function_ref,$x,$b,$epsrel,
                                       $epsabs,$limit,$key,[{Warn => $warn}]);
 
 =for example
@@ -170,7 +170,7 @@ Example:
 Adaptive integration with singularities
 
 This function applies the Gauss-Kronrod 21-point integration rule 
-adaptively until an estimate of the integral of f over ($a,$b) is 
+adaptively until an estimate of the integral of f over ($x,$b) is 
 achieved within the desired absolute and relative error limits, 
 $epsabs and $epsrel. The algorithm is such that it
 accelerates the convergence of the integral in the presence of 
@@ -186,7 +186,7 @@ Please check the GSL documentation for more information.
 
 Usage:
 
-  ($res,$abserr,$ierr) = gslinteg_qags($function_ref,$a,$b,$epsrel,
+  ($res,$abserr,$ierr) = gslinteg_qags($function_ref,$x,$b,$epsrel,
                                        $epsabs,$limit,[{Warn => $warn}]);
 
 =for example
@@ -209,7 +209,7 @@ Adaptive integration with known singular points
 This function applies the adaptive integration algorithm used by 
 gslinteg_qags taking into account the location of singular points
 until an estimate of 
-the integral of f over ($a,$b) is achieved within the desired absolute and 
+the integral of f over ($x,$b) is achieved within the desired absolute and 
 relative error limits, $epsabs and $epsrel.
 Singular points are supplied in the piddle $points, whose endpoints 
 determine the integration range.
@@ -302,7 +302,7 @@ Please check the GSL documentation for more information.
 
 Usage:
 
-  ($res,$abserr,$ierr) = gslinteg_qagiu($function_ref,$a,$epsabs,
+  ($res,$abserr,$ierr) = gslinteg_qagiu($function_ref,$x,$epsabs,
                                         $epsrel,$limit,[{Warn => $warn}]);
 
 =for example
@@ -375,7 +375,7 @@ Please check the GSL documentation for more information.
 
 Usage:
 
-  ($res,$abserr,$ierr) = gslinteg_qawc($function_ref,$a,$b,$c,$epsabs,$epsrel,$limit)
+  ($res,$abserr,$ierr) = gslinteg_qawc($function_ref,$x,$b,$c,$epsabs,$epsrel,$limit)
 
 =for example
 
@@ -412,7 +412,7 @@ Please check the GSL documentation for more information.
 Usage: 
 
   ($res,$abserr,$ierr) = 
-      gslinteg_qawc($function_ref,$alpha,$beta,$mu,$nu,$a,$b,
+      gslinteg_qawc($function_ref,$alpha,$beta,$mu,$nu,$x,$b,
                     $epsabs,$epsrel,$limit,[{Warn => $warn}]);
 
 =for example
@@ -454,7 +454,7 @@ Please check the GSL documentation for more information.
 Usage:
 
   ($res,$abserr,$ierr) = gslinteg_qawo($function_ref,$omega,$sin_or_cos,
-                                $a,$b,$epsabs,$epsrel,$limit,[opt])
+                                $x,$b,$epsabs,$epsrel,$limit,[opt])
 
 =for example
 
@@ -494,7 +494,7 @@ Please check the GSL documentation for more information.
 
 Usage:
 
-  gslinteg_qawf($function_ref,$omega,$sin_or_cos,$a,$epsabs,$limit,[opt])
+  gslinteg_qawf($function_ref,$omega,$sin_or_cos,$x,$epsabs,$limit,[opt])
 
 =for example
 
@@ -568,10 +568,10 @@ sub gslinteg_qng{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$a,$b,$epsabs,$epsrel) = @_;
-  barf \'Usage: gslinteg_qng($function_ref,$a,$b,$epsabs,$epsrel,[opt]) \' 
+  my ($f,$x,$b,$epsabs,$epsrel) = @_;
+  barf \'Usage: gslinteg_qng($function_ref,$x,$b,$epsabs,$epsrel,[opt]) \' 
 	unless ($#_ == 4);
-  my ($res,$abserr,$neval,$ierr) = qng_meat($a,$b,$epsabs,$epsrel,$warn,$f);
+  my ($res,$abserr,$neval,$ierr) = qng_meat($x,$b,$epsabs,$epsrel,$warn,$f);
   return ($res,$abserr,$ierr,$neval);
 }
 ');
@@ -579,7 +579,7 @@ pp_def('qng_meat',
         Pars => 'double a(); double b(); double epsabs();
                    double epsrel(); double [o] result(); double [o] abserr(); 
                    int [o] neval(); int [o] ierr(); int gslwarn()',
-	OtherPars => 'SV* funcion;',
+	OtherPars => 'SV* function;',
         Docs => undef,
         Code => '
 gsl_error_handler_t * old_handler;
@@ -587,7 +587,7 @@ if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
 else { gsl_set_error_handler_off ();}
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 $ierr() = gsl_integration_qng(&F,$a(),$b(),$epsabs(),$epsrel(),$P(result),$P(abserr),(size_t *) $P(neval));
@@ -601,10 +601,10 @@ sub gslinteg_qag{
    else{ $opt = {Warn => \'n\'}; }
    if($$opt{Warn}=~/y/i) { $warn = 1;}
    else {$warn = 0;} 
-   my ($f,$a,$b,$epsabs,$epsrel,$limit,$key) = @_;
-   barf \'Usage: gslinteg_qag($function_ref,$a,$b,$epsabs,$epsrel,$limit,$key,[opt]) \' 
+   my ($f,$x,$b,$epsabs,$epsrel,$limit,$key) = @_;
+   barf \'Usage: gslinteg_qag($function_ref,$x,$b,$epsabs,$epsrel,$limit,$key,[opt]) \' 
 	unless ($#_ == 6);
-   my ($res,$abserr,$ierr) = qag_meat($a,$b,$epsabs,$epsrel,$limit,$key,$limit,$warn,$f);
+   my ($res,$abserr,$ierr) = qag_meat($x,$b,$epsabs,$epsrel,$limit,$key,$limit,$warn,$f);
    return ($res,$abserr,$ierr);
 }
 ');
@@ -612,7 +612,7 @@ sub gslinteg_qag{
 pp_def('qag_meat',
         Pars => 'double a(); double b(); double epsabs();double epsrel(); int limit();
 	           int key(); double [o] result(); double [o] abserr();int n();int [o] ierr();int gslwarn();',
-        OtherPars => 'SV* funcion;',
+        OtherPars => 'SV* function;',
         Docs => undef,
         Code =>'
 gsl_error_handler_t * old_handler;
@@ -621,7 +621,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -638,17 +638,17 @@ sub gslinteg_qags{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$a,$b,$epsabs,$epsrel,$limit) = @_;
-  barf \'Usage: gslinteg_qags($function_ref,$a,$b,$epsabs,$epsrel,$limit,[opt]) \' 
+  my ($f,$x,$b,$epsabs,$epsrel,$limit) = @_;
+  barf \'Usage: gslinteg_qags($function_ref,$x,$b,$epsabs,$epsrel,$limit,[opt]) \' 
 	unless ($#_ == 5);
-  my ($res,$abserr,$ierr) = qags_meat($a,$b,$epsabs,$epsrel,$limit,$limit,$warn,$f);
+  my ($res,$abserr,$ierr) = qags_meat($x,$b,$epsabs,$epsrel,$limit,$limit,$warn,$f);
   return ($res,$abserr,$ierr);
 }
 ');
 pp_def('qags_meat',
         Pars => 'double a(); double b(); double epsabs();double epsrel(); int limit();
 	           double [o] result(); double [o] abserr();int n();int [o] ierr();int gslwarn();',
-        OtherPars => 'SV* funcion;',
+        OtherPars => 'SV* function;',
         Docs => undef,
         Code =>'
 gsl_error_handler_t * old_handler;
@@ -657,7 +657,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -684,7 +684,7 @@ sub gslinteg_qagp{
 pp_def('qagp_meat',
         Pars => 'double pts(l); double epsabs();double epsrel();int limit();
 		   double [o] result(); double [o] abserr();int n();int [o] ierr();int gslwarn();',
-	OtherPars => 'SV* funcion;',
+	OtherPars => 'SV* function;',
 	Code =>'
 gsl_error_handler_t * old_handler;
 if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
@@ -692,7 +692,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -719,7 +719,7 @@ sub gslinteg_qagi{
 pp_def('qagi_meat',
         Pars => 'double epsabs();double epsrel(); int limit();
 		   double [o] result(); double [o] abserr(); int n(); int [o] ierr();int gslwarn();',
-        OtherPars => 'SV* funcion;',
+        OtherPars => 'SV* function;',
 	Code =>'
 gsl_error_handler_t * old_handler;
 if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
@@ -727,7 +727,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -744,17 +744,17 @@ sub gslinteg_qagiu{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$a,$epsabs,$epsrel,$limit) = @_;
-  barf \'Usage: gslinteg_qagiu($function_ref,$a,$epsabs,$epsrel,$limit,[opt]) \' 
+  my ($f,$x,$epsabs,$epsrel,$limit) = @_;
+  barf \'Usage: gslinteg_qagiu($function_ref,$x,$epsabs,$epsrel,$limit,[opt]) \' 
 	unless ($#_ == 4);
-  my ($res,$abserr,$ierr) = qagiu_meat($a,$epsabs,$epsrel,$limit,$limit,$warn,$f);
+  my ($res,$abserr,$ierr) = qagiu_meat($x,$epsabs,$epsrel,$limit,$limit,$warn,$f);
   return ($res,$abserr,$ierr);
 }
 ');
 pp_def('qagiu_meat',
         Pars => 'double a(); double epsabs();double epsrel();int limit();
 		   double [o] result(); double [o] abserr();int n();int [o] ierr();int gslwarn();',
-        OtherPars => 'SV* funcion;',
+        OtherPars => 'SV* function;',
         Docs => undef,
 	Code =>'
 gsl_error_handler_t * old_handler;
@@ -763,7 +763,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -790,7 +790,7 @@ sub gslinteg_qagil{
 pp_def('qagil_meat',
         Pars => 'double b(); double epsabs();double epsrel();int limit();
 		   double [o] result(); double [o] abserr();int n();int [o] ierr();int gslwarn();',
-        OtherPars => 'SV* funcion;',
+        OtherPars => 'SV* function;',
         Docs => undef,
 	Code =>'
 gsl_error_handler_t * old_handler;
@@ -799,7 +799,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -816,17 +816,17 @@ sub gslinteg_qawc{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$a,$b,$c,$epsabs,$epsrel,$limit) = @_;
-  barf \'Usage: gslinteg_qawc($function_ref,$a,$b,$c,$epsabs,$epsrel,$limit,[opt]) \' 
+  my ($f,$x,$b,$c,$epsabs,$epsrel,$limit) = @_;
+  barf \'Usage: gslinteg_qawc($function_ref,$x,$b,$c,$epsabs,$epsrel,$limit,[opt]) \' 
 	unless ($#_ == 6);
-  my ($res,$abserr,$ierr) = qawc_meat($a,$b,$c,$epsabs,$epsrel,$limit,$limit,$warn,$f);
+  my ($res,$abserr,$ierr) = qawc_meat($x,$b,$c,$epsabs,$epsrel,$limit,$limit,$warn,$f);
   return ($res,$abserr,$ierr);
 }
 ');
 pp_def('qawc_meat',
         Pars => 'double a(); double b(); double c(); double epsabs();double epsrel();int limit();
 	           double [o] result(); double [o] abserr();int n();int [o] ierr();int gslwarn();',
-	OtherPars => 'SV* funcion;',
+	OtherPars => 'SV* function;',
 	Code =>'
 gsl_error_handler_t * old_handler;
 if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
@@ -834,7 +834,7 @@ else { gsl_set_error_handler_off ();}
 {gsl_integration_workspace *w;
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -851,10 +851,10 @@ sub gslinteg_qaws{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$alpha,$beta,$mu,$nu,$a,$b,$epsabs,$epsrel,$limit) = @_;
-  barf \'Usage: gslinteg_qaws($function_ref,$alpha,$beta,$mu,$nu,$a,$b,$epsabs,$epsrel,$limit,[opt]) \' 
+  my ($f,$alpha,$beta,$mu,$nu,$x,$b,$epsabs,$epsrel,$limit) = @_;
+  barf \'Usage: gslinteg_qaws($function_ref,$alpha,$beta,$mu,$nu,$x,$b,$epsabs,$epsrel,$limit,[opt]) \' 
 	unless ($#_ == 9);
-  my ($res,$abserr,$ierr) = qaws_meat($a,$b,$epsabs,$epsrel,$limit,$limit,$alpha,$beta,$mu,$nu,$warn,$f);
+  my ($res,$abserr,$ierr) = qaws_meat($x,$b,$epsabs,$epsrel,$limit,$limit,$alpha,$beta,$mu,$nu,$warn,$f);
   return ($res,$abserr,$ierr);
 }
 ');
@@ -862,7 +862,7 @@ pp_def('qaws_meat',
         Pars => 'double a(); double b();double epsabs();double epsrel();int limit();
 	         double [o] result(); double [o] abserr();int n();
 		 double alpha(); double beta(); int mu(); int nu();int [o] ierr();int gslwarn();',
-        OtherPars => 'SV* funcion;',
+        OtherPars => 'SV* function;',
 	Code => '
 gsl_error_handler_t * old_handler;
 if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
@@ -874,7 +874,7 @@ qtab = gsl_integration_qaws_table_alloc($alpha(),$beta(),$mu(),$nu());
 
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -892,17 +892,17 @@ sub gslinteg_qawo{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$omega,$sincosopt,$a,$b,$epsabs,$epsrel,$limit) = @_;
-  barf \'Usage: gslinteg_qawo($function_ref,$omega,$sin_or_cos,$a,$b,$epsabs,$epsrel,$limit,[opt]) \' 
+  my ($f,$omega,$sincosopt,$x,$b,$epsabs,$epsrel,$limit) = @_;
+  barf \'Usage: gslinteg_qawo($function_ref,$omega,$sin_or_cos,$x,$b,$epsabs,$epsrel,$limit,[opt]) \' 
 	unless ($#_ == 7);
   my $OPTION_SIN_COS;
   if($sincosopt=~/cos/i){ $OPTION_SIN_COS = 0;}
   elsif($sincosopt=~/sin/i){ $OPTION_SIN_COS = 1;}
   else { barf("Error in argument 3 of function gslinteg_qawo: specify \'cos\' or \'sin\'\n");}
 
-  my $L = $b - $a;
+  my $L = $b - $x;
   my $nlevels = $limit;
-  my ($res,$abserr,$ierr) = qawo_meat($a,$b,$epsabs,$epsrel,$limit,$limit,$OPTION_SIN_COS,$omega,$L,$nlevels,$warn,$f);
+  my ($res,$abserr,$ierr) = qawo_meat($x,$b,$epsabs,$epsrel,$limit,$limit,$OPTION_SIN_COS,$omega,$L,$nlevels,$warn,$f);
   return ($res,$abserr,$ierr);
 }
 ');
@@ -910,7 +910,7 @@ pp_def('qawo_meat',
 	Pars => 'double a(); double b();double epsabs();double epsrel();int limit();
 	         double [o] result(); double [o] abserr();int n();
 		 int sincosopt(); double omega(); double L(); int nlevels();int [o] ierr();int gslwarn();',
-	OtherPars =>  'SV* funcion;',
+	OtherPars =>  'SV* function;',
 	Code => '
 gsl_error_handler_t * old_handler;
 if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
@@ -926,7 +926,7 @@ qtab = gsl_integration_qawo_table_alloc($omega(),$L(),T,(size_t) $nlevels());
 
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 w = gsl_integration_workspace_alloc((size_t) $n());
@@ -944,15 +944,15 @@ sub gslinteg_qawf{
   else{ $opt = {Warn => \'n\'}; }
   if($$opt{Warn}=~/y/i) { $warn = 1;}
   else {$warn = 0;} 
-  my ($f,$omega,$sincosopt,$a,$epsabs,$limit) = @_;
-  barf \'Usage: gslinteg_qawf($function_ref,$omega,$sin_or_cos,$a,$epsabs,$limit,[opt]) \' 
+  my ($f,$omega,$sincosopt,$x,$epsabs,$limit) = @_;
+  barf \'Usage: gslinteg_qawf($function_ref,$omega,$sin_or_cos,$x,$epsabs,$limit,[opt]) \' 
 	unless ($#_ == 5);
   my $OPTION_SIN_COS;
   if($sincosopt=~/cos/i){ $OPTION_SIN_COS = 0;}
   elsif($sincosopt=~/sin/i){ $OPTION_SIN_COS = 1;}
   else { barf("Error in argument 3 of function gslinteg_qawf: specify \'cos\' or \'sin\'\n");}
   my $nlevels = $limit;
-  my ($res,$abserr,$ierr) = qawf_meat($a,$epsabs,$limit,$limit,$OPTION_SIN_COS,$omega,$nlevels,$warn,$f);
+  my ($res,$abserr,$ierr) = qawf_meat($x,$epsabs,$limit,$limit,$OPTION_SIN_COS,$omega,$nlevels,$warn,$f);
   return ($res,$abserr,$ierr);
 }
 ');
@@ -961,7 +961,7 @@ pp_def('qawf_meat',
 	Pars => 'double a(); double epsabs();int limit();
 		 double [o] result(); double [o] abserr();int n();
 		 int sincosopt(); double omega(); int nlevels();int [o] ierr();int gslwarn();',
-	OtherPars => 'SV* funcion;',
+	OtherPars => 'SV* function;',
 	Code => '
 gsl_error_handler_t * old_handler;
 if ($gslwarn() == 1) { old_handler = gsl_set_error_handler(&my_handler); }
@@ -978,7 +978,7 @@ qtab = gsl_integration_qawo_table_alloc($omega(),1.,T,(size_t) $nlevels());
 
 current_fun++;
 if (current_fun >= (max_nested_integrals)) barf("Too many nested integrals, sorry!\n");
-ext_funname[current_fun] = $COMP(funcion);
+ext_funname[current_fun] = $COMP(function);
 F.function = &FUNC;
 F.params = 0;
 

@@ -406,7 +406,7 @@ Chris Marshall, C<< <devel dot chm dot 01 at gmail.com> >>
 =head1 BUGS
 
 Bugs and feature requests may be submitted through the PDLA GitHub
-project page at L<https://github.com/PDLAPorters/pdl/issues> .
+project page at L<https://github.com/PDLPorters/pdla-rest/issues> .
 
 
 =head1 SUPPORT

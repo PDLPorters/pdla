@@ -15,10 +15,10 @@ use PDLA::Graphics::OpenGL;
 $g = new PDLA::Graphics::TriD::Graph();
 $g->default_axes();
 
-$a = PDLA->zeroes(3,1000);
-random($a->inplace);
+$x = PDLA->zeroes(3,1000);
+random($x->inplace);
 
-$g->add_dataseries(new PDLA::Graphics::TriD::Points($a,$a),"pts");
+$g->add_dataseries(new PDLA::Graphics::TriD::Points($x,$x),"pts");
 $g->bind_default("pts");
 
 $b = PDLA->zeroes(3,30,30);

@@ -92,6 +92,7 @@ This package comes with NO WARRANTY.
 package PDLA::IO::Dumper;
 use File::Temp;
 
+
 BEGIN{
   use Exporter ();
 
@@ -299,16 +300,16 @@ $PDLA::IO::Dumper::med_thresh   = 400; # Smaller than this gets eval'ed
                                       # Any bigger gets uuencoded
 
 sub PDLA::IO::Dumper::big_PDLA {
-  my($a) = shift;
+  my($x) = shift;
   
   return 0 
-    if($a->nelem <= $PDLA::IO::Dumper::small_thresh 
-       && !(keys %{$a->hdr()})
+    if($x->nelem <= $PDLA::IO::Dumper::small_thresh
+       && !(keys %{$x->hdr()})
        );
   
   return 1
-    if($a->nelem <= $PDLA::IO::Dumper::med_thresh
-       && ( !( ( (tied %{$a->hdr()}) || '' ) =~ m/^Astro::FITS::Header\=/)  )
+    if($x->nelem <= $PDLA::IO::Dumper::med_thresh
+       && ( !( ( (tied %{$x->hdr()}) || '' ) =~ m/^Astro::FITS::Header\=/)  )
        );
 
   return 2;
@@ -370,7 +371,7 @@ sub PDLA::IO::Dumper::stringify_PDLA{
       print STDERR "PDLA::IO::Dumper:  Warning, stringifying a '$t' PDLA using default method\n\t(Will be silent after this)\n";
       $PDLA::IO::Dumper::stringify_warned = 1;
     }
-    $dmp_elt = sub { my($a) = shift; "$a"; };
+    $dmp_elt = sub { my($x) = shift; "$x"; };
   }
   $i = 0;
 
@@ -590,15 +591,15 @@ sub PDLA::IO::Dumper::find_PDLAs {
     next findpdl unless ref($_);
 
     if(UNIVERSAL::isa($_,'ARRAY')) {
-      my($a);
-      foreach $a(@{$_}) {
-	$out .= find_PDLAs($sp,$a);
+      my($x);
+      foreach $x(@{$_}) {
+	$out .= find_PDLAs($sp,$x);
       }
     } 
     elsif(UNIVERSAL::isa($_,'HASH')) {
-      my($a);
-      foreach $a(values %{$_}) {
-	$out .= find_PDLAs($sp,$a)
+      my($x);
+      foreach $x(values %{$_}) {
+	$out .= find_PDLAs($sp,$x)
 	}
     } elsif(UNIVERSAL::isa($_,'PDLA')) {
 

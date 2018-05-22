@@ -10,7 +10,7 @@ use warnings;
 ##       garbage to slatec polfit
 ##
 ## <https://sourceforge.net/p/pdl/bugs/368/>
-## <https://github.com/PDLAPorters/pdl/issues/48>
+## <https://github.com/PDLPorters/pdl/issues/48>
 
 use PDLA::LiteF;
 BEGIN {
