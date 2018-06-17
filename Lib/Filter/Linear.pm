@@ -8,7 +8,7 @@ PDLA::Filter::Linear - linear filtering for PDLA
 		{Weights => $v,
 		 Point => 10});
 
-	$b = new PDLA::Filter::Gaussian(15,2); # 15 points, 2 std devn.
+	$y = new PDLA::Filter::Gaussian(15,2); # 15 points, 2 std devn.
 
 	($pred,$corrslic) = $x->predict($dat);
 
