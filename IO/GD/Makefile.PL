@@ -128,6 +128,6 @@ $hash{INC} = PDLA_INCLUDE() . " -I$include_path";
 push( @{ $hash{TYPEMAPS} }, 'typemap' );
 
 undef &MY::postamble; # suppress warning
-*MY::postamble = sub { pdlpp_postamble_int( $package ); };
+*MY::postamble = sub { pdlpp_postamble( $package ); };
 
 WriteMakefile(%hash);

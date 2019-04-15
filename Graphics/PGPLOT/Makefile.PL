@@ -10,7 +10,7 @@ if ($@) {
 
 WriteMakefile(
 	      'NAME'  	=> 'PDLA::Graphics::PGPLOT',
-	      'VERSION_FROM' => '../../Basic/Core/Version.pm',
+              'VERSION_FROM' => '../../lib/PDLA/Rest.pm',
 	      'DIR' => ['Window'],
     (eval ($ExtUtils::MakeMaker::VERSION) >= 6.57_02 ? ('NO_MYMETA' => 1) : ()),
 );

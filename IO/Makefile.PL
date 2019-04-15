@@ -13,7 +13,7 @@ if ($PDLA::Config{WITH_IO_BROWSER} && $PDLA::Config{WITH_IO_BROWSER}) {
 
 WriteMakefile(
      'NAME'	=> 'PDLA::IO',
-     'VERSION_FROM' => '../Basic/Core/Version.pm',
+     'VERSION_FROM' => '../lib/PDLA/Rest.pm',
      'PM'       => {
                     'Dumper.pm' => '$(INST_LIB)/PDLA/IO/Dumper.pm',
                     'IO.pod' => '$(INST_LIB)/PDLA/IO.pod',

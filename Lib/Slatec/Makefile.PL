@@ -69,7 +69,7 @@ return if $donot;
 
 my @pack = (["slatec.pd", qw(Slatec PDLA::Slatec)]);
 my @slatecfiles = map {s/^slatec\///; s/\.f$//; $_} glob("slatec/*.f");
-my %hash = pdlpp_stdargs_int(@pack);
+my %hash = pdlpp_stdargs(@pack);
 
 $hash{OBJECT} .= join '', map {" slatec/${_}$Config{obj_ext} "} @slatecfiles;
 
@@ -124,7 +124,7 @@ undef &MY::postamble; # suppress warning
 *MY::postamble = sub {
         my $mycompiler     = $f77->compiler();
         my $mycflags       = $f77->cflags();
-	my $orig = pdlpp_postamble_int(@pack);
+	my $orig = pdlpp_postamble(@pack);
 	my $hack_64bit = ($Config{archname}=~m/x86_64/ ?" -fPIC " : "");
 	$orig =~ s/:\s*slatec\.pd/: slatec.pd/;
 	$orig .join "\n",map {

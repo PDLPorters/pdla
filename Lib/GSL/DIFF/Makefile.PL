@@ -62,11 +62,11 @@ if (($skip && !$forcebuild) ||
 }
 
 my @pack = (["gsl_diff.pd", qw(DIFF PDLA::GSL::DIFF)]);
-my %hash = pdlpp_stdargs_int(@pack);
+my %hash = pdlpp_stdargs(@pack);
 
 $hash{INC} .= " $GSL_includes";
 push @{$hash{LIBS}},$GSL_libs;
 
 undef &MY::postamble; # suppress warning
-*MY::postamble = sub { pdlpp_postamble_int(@pack); };
+*MY::postamble = sub { pdlpp_postamble(@pack); };
 WriteMakefile(%hash);

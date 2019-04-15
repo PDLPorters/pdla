@@ -4,6 +4,6 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	      NAME => "PDLA::Interpolate",
-	      VERSION_FROM => "../../Basic/Core/Version.pm",
+	      VERSION_FROM => "../../lib/PDLA/Rest.pm",
               DIR => [ 'Slatec' ],
 );

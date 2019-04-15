@@ -8,12 +8,12 @@ if ($^O =~ /win32/i) {
 }
 
 my @pack = (["iis.pd", qw(IIS PDLA::Graphics::IIS)]);
-my %hash = pdlpp_stdargs_int(@pack);
+my %hash = pdlpp_stdargs(@pack);
 $hash{LIBS} = ['-lm'];
 
 undef &MY::postamble; # suppress warning
 *MY::postamble = sub {
-	pdlpp_postamble_int(@pack);
+	pdlpp_postamble(@pack);
 };
 
 WriteMakefile(%hash);

@@ -10,6 +10,6 @@ undef &MY::postamble; # suppress warning
 
 WriteMakefile(
      NAME => "PDLA::IO::Dicom",
-     'VERSION_FROM' => '../../Basic/Core/Version.pm',
+     'VERSION_FROM' => '../../lib/PDLA/Rest.pm',
     (eval ($ExtUtils::MakeMaker::VERSION) >= 6.57_02 ? ('NO_MYMETA' => 1) : ()),
 );

@@ -9,7 +9,7 @@ my @tables = glob( "*.fits" );
 
 WriteMakefile(
   'NAME'         => 'PDLA::Graphics::LUT::tables::DATA',   
-  'VERSION_FROM' => '../../../Basic/Core/Version.pm',
+  'VERSION_FROM' => '../../../lib/PDLA/Rest.pm',
   'PM' => {
       (map {($_,'$(INST_LIBDIR)/'.$_)} @tables)
    },

@@ -4,11 +4,11 @@ use ExtUtils::MakeMaker;
 
 my @pack = (["pnm.pd", qw(Pnm PDLA::IO::Pnm)]);
 
-my %hash = pdlpp_stdargs_int(@pack);
+my %hash = pdlpp_stdargs(@pack);
 $hash{'PM'}->{'Pic.pm'} = '$(INST_LIBDIR)/Pic.pm';
 
 # Add genpp rule
 undef &MY::postamble; # suppress warning
-*MY::postamble = sub { pdlpp_postamble_int(@pack); };
+*MY::postamble = sub { pdlpp_postamble(@pack); };
 
 WriteMakefile(%hash);

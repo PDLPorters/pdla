@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	'NAME' => 'PDLA::Fit',
-	VERSION_FROM => '../../Basic/Core/Version.pm',
+	VERSION_FROM => '../../lib/PDLA/Rest.pm',
 	DIR =>  [ qw/Gaussian/ ],
 	PM => { map {($_ => '$(INST_LIBDIR)/Fit/'.$_)}
         grep {

@@ -6,9 +6,14 @@ use Config;
 my $package = [ qw(VS.pd VS PDLA::IO::HDF::VS) ];
 
 undef &MY::postamble; # suppress warning
-*MY::postamble = sub { pdlpp_postamble_int($package); };
+*MY::postamble = sub { pdlpp_postamble($package); };
 
-my $pkg = ExtUtils::Depends->new(qw(PDLA::IO::HDF::VS Alien::HDF4));
+my $pkg = eval { ExtUtils::Depends->new(qw(PDLA::IO::HDF::SD Alien::HDF4)) };
+if (!$pkg) {
+    write_dummy_make( $msg );
+    return;
+}
+
 $pkg->set_inc(&PDLA_INCLUDE());
 $pkg->add_typemaps(&PDLA_TYPEMAP());
 $pkg->add_pm(

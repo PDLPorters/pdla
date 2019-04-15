@@ -4,7 +4,6 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	      'NAME'  	=> 'PDLA::Graphics::PGPLOT::Window',
-	      'VERSION_FROM' => '../../../Basic/Core/Version.pm',
-	      'INC' => '-I../../../Basic/Core/', # for ppport.h
+              'VERSION_FROM' => '../../../lib/PDLA/Rest.pm',
     (eval ($ExtUtils::MakeMaker::VERSION) >= 6.57_02 ? ('NO_MYMETA' => 1) : ()),
 );

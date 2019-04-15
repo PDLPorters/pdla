@@ -10,7 +10,7 @@ undef &MY::postamble; # suppress warning
 
 WriteMakefile(
   NAME => 'PDLA::Lib',
-  VERSION_FROM => '../Basic/Core/Version.pm',
+  VERSION_FROM => '../lib/PDLA/Rest.pm',
   DIR =>  [ qw/Simplex ImageRGB Fit FFT Filter Image2D ImageND
                CallExt Slatec GSL GIS Transform Minuit Compression
                / ],

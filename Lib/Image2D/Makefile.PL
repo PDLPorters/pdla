@@ -4,7 +4,7 @@ use ExtUtils::MakeMaker;
 
 my @pack = (["image2d.pd", qw(Image2D PDLA::Image2D)]);
 
-my %hash = pdlpp_stdargs_int( @pack );
+my %hash = pdlpp_stdargs( @pack );
 $hash{LIBS} = [ '-lm' ];
 
 # On windows we do not have an rint function (at least on VC++)
@@ -26,6 +26,6 @@ for my $file ( qw( resample ) ) {
 
 # Add genpp rule
 undef &MY::postamble; # suppress warning
-*MY::postamble = sub { pdlpp_postamble_int(@pack); };
+*MY::postamble = sub { pdlpp_postamble(@pack); };
 
 WriteMakefile( %hash );

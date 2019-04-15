@@ -6,7 +6,7 @@ use Devel::CheckLib;
 
 my @pack = (["browser.pd", qw(Browser PDLA::IO::Browser)]);
 
-my %hash = pdlpp_stdargs_int(@pack);
+my %hash = pdlpp_stdargs(@pack);
 
 $hash{'OBJECT'} .= ' browse$(OBJ_EXT)';
 $hash{'clean'}{FILES} .= ' browse$(OBJ_EXT) browse$(EXE_EXT) Browser.c Browser.pm Browser.xs Browser$(OBJ_EXT)';
@@ -42,7 +42,7 @@ push @{$hash{LIBS}} , $libstring if defined $libstring;
 
 # Add genpp rule
 undef &MY::postamble; # suppress warning
-*MY::postamble = sub { pdlpp_postamble_int(@pack); };
+*MY::postamble = sub { pdlpp_postamble(@pack); };
 
 if (defined($incstring) && defined($libstring)) {
    WriteMakefile(%hash);

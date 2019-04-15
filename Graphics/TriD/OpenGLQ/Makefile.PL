@@ -12,7 +12,7 @@ BEGIN {
 }
 
 my @pack = (["openglq.pd", qw(OpenGLQ PDLA::Graphics::OpenGLQ)]);
-my %hash = pdlpp_stdargs_int(@pack);
+my %hash = pdlpp_stdargs(@pack);
 
 if ( $PDLA::Config{USE_POGL} ) {
    push @{$hash{LIBS}}, $OpenGL::Config->{LIBS};
@@ -33,7 +33,7 @@ ${$hash{LIBS}}[0] .= ' -lm';
 
 undef &MY::postamble; # suppress warning
 *MY::postamble = sub {
-	pdlpp_postamble_int(@pack);
+	pdlpp_postamble(@pack);
 };
 
 WriteMakefile(%hash);
