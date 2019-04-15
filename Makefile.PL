@@ -15,102 +15,6 @@ use PDLA::Config;
 
 $::PP_VERBOSE = $::PP_VERBOSE = 0; # =1 makes PP waffle a lot
 
-# file globals(!)
-my ($pdl_f77conf, $forcebuild);
-my ($seen_pdlconf, $seen_f77conf);
-my $pdl_conf_file = ''; # apparently for users to change
-
-# build-system globals
-our ($usenan, $bvalflag, $bvalPerPdl);
-
-sub checkbuggysetup {
-    # detect buggy Perl setups
-    if (!$forcebuild &&
-	$Config{osname} eq 'solaris' &&
-	($Config{cc} =~ /gcc/ || $Config{gccversion} ne '') &&
-	$Config{usemymalloc} eq 'y'
-	) {
-	die <<'EOM';
-
-FATAL BUG IN YOUR PERL SETUP DETECTED. BUILD TERMINATED.
-
-On this platform the combination of gcc and the Perl malloc
-are buggy. The optimizations lead to random coredumps
-and make PDLA essentially unusable.
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-WORKAROUND: YOU MUST RECOMPILE PERL WITH 'usemymalloc=n' !!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-You may override and force the build by including the
-'FORCE' switch:
-
-  perl Makefile.PL FORCE
-
-However, you will most likely end up with an unusable
-PDLA build unless *all* optimizations are disabled!
-YOU HAVE BEEN WARNED!!
-
-EOM
-  }
-
-    my($dot);
-    for(@INC) {$dot += $_ eq '.'}
-    $dot-- if($INC[-1] eq '.');
-    if($dot) {
-	$INC = join(":",@INC);
-	warn << "EOM"
-
-**********************************************************************
-Your Perl \@INC path is:
-
-$INC
-
-That seems to include the directory '.' before the last entry in the
-path.  Configurations like that might be broken, because they may
-prevent strict division of hierarchy in the module name space.
-In particular, adding a module Foo::Bar::Baz can cause trouble
-if Baz exists in the top level elsewhere, and if you run from the
-Foo/Bar directory.
-
-This happens with the PDLA::Config and some other modules.  You may
-not be able to build PDLA with this \@INC setup.
-
-If you strike trouble, you may need to fix your \@INC.
-**********************************************************************
-
-
-EOM
-unless $ENV{PDLA_INC_OK};
-}
-
-}
-
-# Scan ARGV for config file argument
-@ARGV = map {
-	if(/^PDLACONF=(.*)$/) {
-		$seen_pdlconf=1;
-		$pdl_conf_file = $1; ();
-	} elsif (/^F77CONF=(.*)$/) {
-		$seen_f77conf=1;
-		$pdl_f77conf=$1; ();
-	} elsif (/^FORCE$/i) {
-		$forcebuild=1;
-		();
-        } else {
-		$_
-	}
-} @ARGV;
-
-warn "WARNING: forcing build...\n" if $forcebuild;
-
-checkbuggysetup(); # check for buggy Perl setups
-
-unless ( $seen_pdlconf ) {
-    my $defname = "$ENV{HOME}/.perldl.conf";
-    $pdl_conf_file = $defname if -f $defname;
-}
-
 # Check environment for SKIP_KNOWN_PROBLEMS
 if (!defined($PDLA::Config{SKIP_KNOWN_PROBLEMS}) and defined($ENV{SKIP_KNOWN_PROBLEMS})) {
    $PDLA::Config{SKIP_KNOWN_PROBLEMS} = $ENV{SKIP_KNOWN_PROBLEMS};
@@ -167,8 +71,6 @@ my @prereq = (
 
 # add OpenGL version dependency for CPAN to follow
 push @prereq, ('OpenGL' => $PDLA::Config{POGL_VERSION}) if $PDLA::Config{USE_POGL};
-
-# push @prereq, ('ExtUtils::F77' => 1.10) unless $seen_f77conf;
 
 my @cleanup = (qw(
     t/callext$(OBJ_EXT) t/callext.$(DLEXT)
@@ -420,39 +322,4 @@ sub parallel_target_mangle {
     my $target = join '_', @$dir, @$targets;
     $target =~ s#[/\\]#_#g; # avoid ambiguity with filenames
     $target;
-}
-
-# remove pdl.c from making EUMM think this dir has XS in it
-sub MY::init_dirscan {
-    package MY;
-    my ($self) = @_;
-    $self->SUPER::init_dirscan;
-    $self->{C} = [];
-    $self->{O_FILES} = [];
-}
-
-##############################
-# processPL: generate Makefile lines for top-level components that are created by just perling a .PL file.
-#EU::MM's processPL() is continually broken on Win32 ... hence:
-### This fix seems necessary with current versions of MM - otherwise it creates circular
-### dependencies to "pm_to_blib" for .PL files (!) -- CED 9-July-2008
-sub MY::processPL {
-    package MY;
-    my ($self) = @_;
-    return $self->SUPER::processPL if 0; ## || $^O =~ /MSWin32/i && $Config{make} =~ /\b[dn]make/i
-    return "" unless $self->{PL_FILES};
-    my @m;
-    my $alltarget = 'all';
-    my $colon = $Config::Config{make} =~ /\bdmake/i ? ':' : '::';
-    foreach my $plfile (sort keys %{$self->{PL_FILES}}) {
-        my $list = ref($self->{PL_FILES}->{$plfile})
-                     ?  $self->{PL_FILES}->{$plfile}
-                     : [$self->{PL_FILES}->{$plfile}];
-        foreach my $target (@$list) {
-            push @m,
-                "\n$alltarget :: $target\n\t\$(NOECHO) \$(NOOP)\n",
-                "\n$target $colon\n\t\$(PERLRUNINST) $plfile $target\n";
-        }
-    }
-    return join "", @m;
 }
