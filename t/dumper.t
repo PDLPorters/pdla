@@ -15,7 +15,7 @@ BEGIN {
    my $hasuuencode = !$@ || (inpath('uuencode') && inpath('uudecode'));
 
    if ($hasuuencode) {
-      plan tests => 16;
+      plan tests => 17;
    } else {
       plan skip_all => "Skip neither uuencode/decode nor Convert:UU is available\n";
    }
@@ -35,10 +35,10 @@ use_ok('PDLA::IO::Dumper');
 my ( $s, $a );
 
 eval '$s = sdump({a=>3,b=>pdl(4),c=>xvals(3,3),d=>xvals(4,4)});';
-ok(!$@, 'Call sdump()')
+is $@, '', 'Call sdump()'
    or diag("Call sdump() output string:\n$s\n");
 $a = eval $s;
-ok(!$@, 'Can eval dumped data code') or diag("The output string was '$s'\n");
+is $@, '', 'Can eval dumped data code' or diag("The output string was '$s'\n");
 ok(ref $a eq 'HASH', 'HASH was restored');
 ok(($a->{a}==3), 'SCALAR value restored ok');
 ok(((ref $a->{b} eq 'PDLA') && ($a->{b}==4)), '0-d PDLA restored ok');
@@ -50,24 +50,12 @@ ok(((ref $a->{d} eq 'PDLA') && ($a->{d}->nelem == 16)
 ########## Dump a uuencoded expr and try to get it back...
 # e: uuencoded expr
 eval '$s = sdump({e=>xvals(25,25)});';
-ok(!$@, 'sdump() of 25x25 PDLA to test uuencode dumps');
+is $@, '', 'sdump() of 25x25 PDLA to test uuencode dumps';
 
 #diag $s,"\n";
 
 $a = eval $s;
-ok(!$@, 'Can eval dumped 25x25 PDLA');
-
-# $s and $@ can be long so try and make things a bit clearer in the
-# output
-#
-if ( $@ ) {
-   diag "--- ERROR ---\n";
-   diag "--Error message start:\n";
-   diag $@;
-   diag "\n--Error message end:\n";
-   diag "String was:\n$s\n";
-   diag "--- ERROR (end) ---\n";
-}
+is $@, '', 'Can eval dumped 25x25 PDLA' or diag 'string: ', $s;
 
 ok((ref $a eq 'HASH'), 'HASH structure for uuencoded 25x25 PDLA restored');
 ok(((ref $a->{e} eq 'PDLA') 
@@ -76,10 +64,11 @@ ok(((ref $a->{e} eq 'PDLA')
 
 ########## Check header dumping...
 eval '$a = xvals(2,2); $a->sethdr({ok=>1}); $a->hdrcpy(1); $b = xvals(25,25); $b->sethdr({ok=>2}); $b->hdrcpy(0); $s = sdump([$a,$b,yvals(25,25)]);';
-ok(!$@, 'Check header dumping');
+is $@, '', 'Check header dumping';
 
 $a = eval $s;
-ok((!$@ && (ref $a eq 'ARRAY')), 'ARRAY can restore');
+is $@, '', 'ARRAY can restore';
+is ref($a), 'ARRAY' or diag explain $a;
 
 ok(eval('$a->[0]->hdrcpy() == 1 && $a->[1]->hdrcpy() == 0'), 'Check hdrcpy()\'s persist');
 ok(eval('($a->[0]->gethdr()->{ok}==1) && ($a->[1]->gethdr()->{ok}==2)'), 'Check gethdr() values persist');
