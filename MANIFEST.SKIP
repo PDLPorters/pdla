@@ -158,10 +158,7 @@ RCS
 ^gsl.pl
 ^inv-data.pl
 ^patch
-^pdl$
 ^pdl.*-log.txt$
-^pdldoc.db$
-^pdldoc.pod
 ^perl$
 ^pm_to_blib$
 ^podsel$

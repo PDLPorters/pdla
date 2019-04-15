@@ -262,5 +262,4 @@ _Inline/
 gsl.pl
 perldl.conf-fast
 perldl.conf-orig
-perldl.pod
 t/*.dll*

@@ -315,23 +315,6 @@ doc_perl_install ::
     $text=~ s/\%HTML\%//og; # Remove just %HTML% markers
   }
 
-$text .= << "EOPS" ;
-
-perldl.pod : perldl
-\t\$(PERLRUN) -MPod::Select -e "podselect('perldl');" > perldl.pod
-
-pdldoc.pod : pdldoc
-\t\$(PERLRUN) -MPod::Select -e "podselect('pdldoc');" > pdldoc.pod
-
-EOPS
-
-# Here, `pdl.c` is used directly because some makes (e.g., on Solaris) do not
-# support the `$<` variable in explicit rules
-$text .= <<EOT if $^O !~ /MSWin/;
-pdl$Config::Config{exe_ext} : pdl.c
-	\$(CC) pdl.c -o \$\@
-EOT
-
 $text .= << 'EOT' if $^O =~ /MSWin/;
 
 DISTWIN32NAME=$(DISTVNAME)-win32

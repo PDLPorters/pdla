@@ -471,7 +471,6 @@ Lib/Transform/transform.pd
 MANIFEST			This list of files
 MANIFEST.SKIP
 Makefile.PL
-PDLdb.pl
 README
 TODO
 cygwin/INSTALL
@@ -510,9 +509,6 @@ inc/Carp/Heavy.pm
 lib/PDLA/Rest.pm
 m51.fits
 macosx/README
-pdl.c
-pdldoc
-perldl
 t/00-report-prereqs.t
 t/01-checkmanifest.t
 t/callext.c
