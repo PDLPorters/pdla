@@ -259,7 +259,6 @@ Lib/Transform/Transform.c
 Lib/Transform/Transform.pm
 Lib/Transform/Transform.xs
 MANIFEST.bak
-Perldl2/pdl2.pod
 _Inline/
 gsl.pl
 perldl.conf-fast
