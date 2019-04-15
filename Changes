@@ -1,3 +1,8 @@
+2.013004 2019-04-15
+ - strip out duplicate PDLA::Core stuff, dep on that distro
+ - updates of tests and modules that broke with PDLA's smaller default imports
+ - rename this distro PDLA::Rest, since "PDLA" is within PDLA::Core
+
 v2.013003 Sat Aug 29 22:28:17 BST 2015
  - fixup $VERSION in PDLA::Core more
 
