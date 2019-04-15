@@ -136,9 +136,6 @@ if (!defined($PDLA::Config{USE_POGL}) or +$PDLA::Config{USE_POGL}) {
    warn "Makefile.PL: Have \$PDLA::Config{USE_POGL} => 0 so skipping TriD build with POGL\n";
 }
 
-my @podpms = map { $_.".pod", '$(INST_LIBDIR)/PDLA/' . $_ .".pod"}
-  qw/Bugs/;
-
 my @prereq = (
 	   'Astro::FITS::Header' => 0,
            'Carp'                => 0,         # Need to run
@@ -214,7 +211,6 @@ my %makefile_hash = (
               'MIN_PERL_VERSION' => '5.010',
 	      'NAME' => 'PDLA::Rest',
 	      'VERSION_FROM' => 'lib/PDLA/Rest.pm',
-	      'PM' => { @podpms }, #so that the script docs are picked up
               'META_MERGE' => {
                 "meta-spec" => { version => 2 },
                 resources => {
