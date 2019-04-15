@@ -466,15 +466,17 @@ my %makefile_hash = (
 	      'PM' => { @podpms }, #so that the script docs are picked up
               'META_MERGE' => {
                 "meta-spec" => { version => 2 },
-                 resources => {
-                    homepage => 'http://pdl.perl.org/',
-                    bugtracker  => 'http://sourceforge.net/p/pdl/bugs/',
-                    repository  => {
-                       url => 'git://git.code.sf.net/p/pdl/code',
-                       type => 'git',
-                       web => 'http://sourceforge.net/p/pdl/code/ci/master/tree/',
-                    },
-                 },
+                resources => {
+                  homepage => 'http://pdlporters.github.io',
+                  bugtracker  => {web=>'https://github.com/PDLPorters/pdla-rest/issues'},
+                  repository  => {
+                    url => 'git://github.com/PDLPorters/pdla-rest',
+                    type => 'git',
+                    web => 'https://github.com/PDLPorters/pdla-rest',
+                  },
+                  x_IRC => 'irc://irc.perl.org/#pdl',
+                },
+                no_index => { file => ['Doc/scantree.pl'] },
               },
               'MAN1PODS' => { 'Bugs.pod' => '$(INST_MAN1DIR)/PDLA::Bugs.$(MAN1EXT)',
                               'perldl' => '$(INST_MAN1DIR)/perldl.$(MAN1EXT)',
