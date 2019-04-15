@@ -9,6 +9,7 @@ BEGIN{
 use strict;
 
 use PDLA;
+use PDLA::IO::FITS; # rfits
 use Test::More;
 
 sub eval_skip {
