@@ -1,3 +1,22 @@
+2.017000 
+ - Bugs fixed:
+    - 379 Passing qsort an extra argument causes a segfault
+    - 393 Tests may fail if perl is compiled with -Duselongdouble
+    - 409 PDLA demos with PGPLOT display ignore $ENV{PGPLOT_DEV}
+    - 413 PDLA::Core::Dev::pdlpp_postamble() cannot handle .pd files in subdirectories
+    - 419 t/#pdl_from_string.t fails on long double systems
+    - 421 PDLA::IO::FITS can't handle 64-bit integers (longlong, indx)
+    - 422 PDLA misc. compiler warnings.
+    - 423 wcols FORMAT option always incorrectly gives error
+    - 424 Calling PDLA on a list of piddles fails to propogate bad values
+    - 425 svd is broken for everything but 2x2 matrices
+    - --- Typo in PDLA::GSLSF::COUPLING routine gsl_sf_coupling_- 6j
+ - Several patches contributed from the Debian team have been applied
+   that fix documentation spelling errors, make PDLA builds more
+   reproducible, and will make packaging PDLA easier.
+ - Many cleanups and additions to the test suite to use Test::More
+   and to add meaningful test descriptions.
+
 2.016000 2019-04-19
  - Bugs fixed:
    - 417   Perl 5.22: + GSL 2.1 fails to build
