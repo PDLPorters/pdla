@@ -1,3 +1,12 @@
+2.015000
+ - Fixes to improve compile and test of F77 modules
+   on OS X (i.e. don't build i386 versions)
+ - Fix win10 breakage in t/flexraw_fortran.t  Apparently, temp
+   files were not being released after use which was preventing
+   the tests to pass.
+ - improving PDLA::GSL::RNG documentation
+ - remove spurious '}' from gnuplot demo
+
 2.014000 2019-04-19
  - PDLA can now create and use piddles having more
    than 2**32 elements.  Of particular use is that
