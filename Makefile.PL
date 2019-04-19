@@ -40,7 +40,7 @@ if (!defined($PDLA::Config{USE_POGL}) or +$PDLA::Config{USE_POGL}) {
    warn "Makefile.PL: Have \$PDLA::Config{USE_POGL} => 0 so skipping TriD build with POGL\n";
 }
 
-my @coredep = ('PDLA::Core' => '2.013009');
+my @coredep = ('PDLA::Core' => '2.014000');
 my @prereq = (
 	   'Astro::FITS::Header' => 0,
            'Carp'                => 0,         # Need to run
