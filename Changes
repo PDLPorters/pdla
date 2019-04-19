@@ -1,4 +1,4 @@
-2.014000 
+2.014000 2019-04-19
  - PDLA can now create and use piddles having more
    than 2**32 elements.  Of particular use is that
    you can now use PDLA::IO::FlexRaw to memory map
@@ -14,9 +14,8 @@
  - Various documentation clean-ups and work to improve
    on-line viewing at http://metacpan.org and others.
    (Thanks kmx and Derek!)
-
-2.013006 2019-04-19
  - zap IO/{Misc,FITS,Pic}, Lib/ImageRGB as restored to ::Core
+ - zap IO/Storable as restored to ::Core
 
 2.013005 2019-04-17
  - zap IO/HDF as that's in separate distro
