@@ -1,4 +1,4 @@
-2.016000 
+2.016000 2019-04-19
  - Bugs fixed:
    - 417   Perl 5.22: + GSL 2.1 fails to build
    - 408   PDLA::GSL::RNG set_seed minor improvement
