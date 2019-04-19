@@ -501,9 +501,6 @@ t/gsl_interp.t
 t/gsl_mroot.t
 t/gsl_rng.t
 t/gsl_sf.t
-t/hdf_sd.t
-t/hdf_vdata.t
-t/hdf_vgroup.t
 t/image2d.t
 t/imagend.t
 t/interp.t
