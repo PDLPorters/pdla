@@ -1,3 +1,6 @@
+2.013006 2019-04-19
+ - zap IO/{Misc,FITS,Pic}, Lib/ImageRGB as restored to ::Core
+
 2.013005 2019-04-17
  - zap IO/HDF as that's in separate distro
  - hide PDLA package declaration from IO/Storage as PAUSE tries to index

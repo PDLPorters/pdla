@@ -175,8 +175,6 @@ IO/Dicom/Dicom.pm
 IO/Dicom/Makefile.PL
 IO/Dumper.pm
 IO/ENVI/readenvi.pdl
-IO/FITS/FITS.pm
-IO/FITS/Makefile.PL
 IO/FastRaw/FastRaw.pm
 IO/FastRaw/Makefile.PL
 IO/FlexRaw/FlexRaw.pm
@@ -191,11 +189,6 @@ IO/IDL/Makefile.PL
 IO/IDL/README
 IO/IO.pod
 IO/Makefile.PL
-IO/Misc/Makefile.PL
-IO/Misc/misc.pd
-IO/Pnm/Makefile.PL
-IO/Pnm/Pic.pm
-IO/Pnm/pnm.pd
 IO/Storable/Makefile.PL
 IO/Storable/storable.pd
 Known_problems
@@ -311,10 +304,6 @@ Lib/Image2D/resample.h
 Lib/Image2D/rotate.c
 Lib/ImageND/Makefile.PL
 Lib/ImageND/imagend.pd
-Lib/ImageRGB/Makefile.PL
-Lib/ImageRGB/imagergb.pd
-Lib/ImageRGB/pdlppm.h
-Lib/ImageRGB/ppm_quant.c
 Lib/Interpolate/Interpolate.pm
 Lib/Interpolate/Makefile.PL
 Lib/Interpolate/Slatec/Makefile.PL
@@ -502,7 +491,6 @@ t/diskcache.t
 t/dumper.t
 t/fastraw.t
 t/fft.t
-t/fits.t
 t/flexraw.t
 t/flexraw_fortran.t
 t/gauss.t
@@ -520,7 +508,6 @@ t/hdf_vdata.t
 t/hdf_vgroup.t
 t/image2d.t
 t/imagend.t
-t/imagergb.t
 t/interp.t
 t/interp_slatec.t
 t/iotypes.t
@@ -535,17 +522,11 @@ t/limits_ulimits.t
 t/linfit.t
 t/lut.t
 t/minuit.t
-t/misc.t
 t/opengl.t
 t/pgplot.t
-t/pic_16bit.t
-t/picnorgb.t
-t/picrgb.t
-t/pnm.t
 t/poly.t
 t/proj_transform.t
 t/proj_transform2.t
-t/rim.t
 t/simplex.t
 t/slatec-polyfit-weight.t
 t/slatec.t

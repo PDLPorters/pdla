@@ -103,13 +103,7 @@ IO/Browser/Browser.xs
 IO/GD/GD.c
 IO/GD/GD.pm
 IO/GD/GD.xs
-IO/Misc/Misc.c
-IO/Misc/Misc.pm
-IO/Misc/Misc.xs
 IO/NDF/NDF.pm
-IO/Pnm/Pnm.c
-IO/Pnm/Pnm.pm
-IO/Pnm/Pnm.xs
 IO/Storable/Storable.c
 IO/Storable/Storable.pm
 IO/Storable/Storable.xs
@@ -231,9 +225,6 @@ Lib/Image2D/Image2D.xs
 Lib/ImageND/ImageND.c
 Lib/ImageND/ImageND.pm
 Lib/ImageND/ImageND.xs
-Lib/ImageRGB/ImageRGB.c
-Lib/ImageRGB/ImageRGB.pm
-Lib/ImageRGB/ImageRGB.xs
 Lib/Minuit/Minuit.c
 Lib/Minuit/Minuit.pm
 Lib/Minuit/Minuit.xs
