@@ -104,9 +104,6 @@ IO/GD/GD.c
 IO/GD/GD.pm
 IO/GD/GD.xs
 IO/NDF/NDF.pm
-IO/Storable/Storable.c
-IO/Storable/Storable.pm
-IO/Storable/Storable.xs
 Lib/CallExt/CallExt.c
 Lib/Compression/Compression.c
 Lib/Compression/Compression.pm

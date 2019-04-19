@@ -189,8 +189,6 @@ IO/IDL/Makefile.PL
 IO/IDL/README
 IO/IO.pod
 IO/Makefile.PL
-IO/Storable/Makefile.PL
-IO/Storable/storable.pd
 Known_problems
 Lib/CallExt/CallExt.pm
 Lib/CallExt/CallExt.xs
@@ -530,9 +528,6 @@ t/proj_transform2.t
 t/simplex.t
 t/slatec-polyfit-weight.t
 t/slatec.t
-t/storable.t
-t/storable_new_amd64.dat
-t/storable_old_amd64.dat
 t/transform.t
 utils/perldlpp.pl
 win32/INSTALL

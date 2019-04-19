@@ -71,9 +71,6 @@ RCS
 ^IO/GD/GD\.pm
 ^IO/GD/GD\.xs
 ^IO/NDF/NDF.pm$
-^IO/Storable/Storable\.c
-^IO/Storable/Storable\.pm
-^IO/Storable/Storable\.xs
 ^IO/tmp0
 ^IO/tmp0.hdr
 ^Image2D/Image2D\..*
