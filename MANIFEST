@@ -1,8 +1,6 @@
 COPYING
 Changes
-Changes_CVS
 DEPENDENCIES
-DEVELOPMENT
 Demos/BAD2_demo.pm.PL
 Demos/BAD_demo.pm.PL
 Demos/Cartography_demo.pm
