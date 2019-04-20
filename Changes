@@ -1,3 +1,8 @@
+2.019000 
+ - The 'thresh' options in fitwarp2d has been removed.
+ - Multiple minor fixes, docs, cleanup, and changing
+   things to point to github away from sf.net.
+
 2.018000 2019-04-20
  - SF.net Bugs fixed:
    - 429 Alien::Proj4->load_projection_information parses PJ_sch parameters incorrectly
