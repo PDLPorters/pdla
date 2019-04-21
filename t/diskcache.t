@@ -25,15 +25,15 @@ lives_ok {
   $pa->[1] = xvals(10,10);
   $pa->[2] = yvals(10,10);
   1;
-}, "Make a DiskCache object";
+} "Make a DiskCache object";
 
 ok( (-e "${d}1") && (-e "${d}2") && (-e "${d}3"), "3 files written");
 
 my $pb;
 lives_ok {
   ($pb) = diskcache(["${d}1","${d}2","${d}3"],{ro=>1});
-};
-ok( ($pb->[0]->sum == 0) && ($pb->[1]->sum == xvals(10,10)->sum) );
+} 'could read files';
+ok( ($pb->[0]->sum == 0) && ($pb->[1]->sum == xvals(10,10)->sum), 'files read correctly' );
 
 
 # end
