@@ -77,7 +77,7 @@ before_install:
   - source ~/travis-perl-helpers/init
   - build-perl
   - perl -V
-  - cpanm --quiet --notest ExtUtils::F77 Term::ReadLine::Gnu PGPLOT # do not need tests
+  - cpanm --quiet --notest ExtUtils::F77 Term::ReadLine::Gnu PGPLOT IO::All # do not need tests
   - cpanm --verbose Alien::HDF4
   - if [ "$AUTHOR_TESTING" == 1 ]; then cpanm --quiet --notest CPAN::Changes; fi # for author tests (AUTHOR_TESTING is set to true by default by init)
   - if [ "$EUMM_BLEAD" == 1 ]; then cpanm --quiet --notest --dev ExtUtils::MakeMaker; fi
