@@ -1,3 +1,6 @@
+2.019102 2019-04-22
+ - corrected MANIFEST so PGPLOT::Window has ppport.h in distro - thanks @eserte for report
+
 2.019101 2019-04-21
  - fixed corrupted FITS files
 
