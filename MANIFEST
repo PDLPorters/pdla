@@ -507,6 +507,7 @@ t/iotypes.t
 t/limits_00.t
 t/limits_errb.t
 t/limits_keyspecs.t
+t/limits_normalize_dsets.t
 t/limits_range.t
 t/limits_round.t
 t/limits_trans.t
