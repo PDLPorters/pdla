@@ -1,3 +1,5 @@
+ - zap make-targets that are only relevant for core - thanks @wlmb for report
+
 2.019102 2019-04-22
  - corrected MANIFEST so PGPLOT::Window has ppport.h in distro - thanks @eserte for report
 

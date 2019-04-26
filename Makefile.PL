@@ -90,9 +90,9 @@ my $preop = '$(PERL) -I$(INST_ARCHLIB) -I$(INST_LIB) -MPDLA::Core::Dev -e pdlpp_
 my @optimize = (OPTIMIZE => $PDLA::Config{OPTIMIZE}) if $PDLA::Config{OPTIMIZE};
 
 my %makefile_hash = (
-  'PREREQ_PM' => { @prereq },
-  'LICENSE' => 'perl',
-  'CONFIGURE_REQUIRES' => {
+  PREREQ_PM => { @prereq },
+  LICENSE => 'perl',
+  CONFIGURE_REQUIRES => {
     @coredep,
     'Devel::CheckLib' => 1.01,
     'Carp'            => 1.20,    # EU::MM seems to need this not to crash
@@ -113,10 +113,10 @@ my %makefile_hash = (
     'ExtUtils::MakeMaker' => 0,
     'File::Path'          => 0,
   },
-  'MIN_PERL_VERSION' => '5.010',
-  'NAME' => 'PDLA::Rest',
-  'VERSION_FROM' => 'lib/PDLA/Rest.pm',
-  'META_MERGE' => {
+  MIN_PERL_VERSION => '5.010',
+  NAME => 'PDLA::Rest',
+  VERSION_FROM => 'lib/PDLA/Rest.pm',
+  META_MERGE => {
     "meta-spec" => { version => 2 },
     resources => {
       homepage => 'http://pdlporters.github.io',
@@ -130,21 +130,20 @@ my %makefile_hash = (
     },
   },
   @optimize,
-  'CCFLAGS' => $ccflags,
-  'dist'     => { COMPRESS => 'gzip',
+  CCFLAGS => $ccflags,
+  dist     => { COMPRESS => 'gzip',
                   SUFFIX   => 'gz',
                   PREOP    => $preop },
-  'clean' => {
-    'FILES' => join ' ', @cleanup, qw(
+  clean => {
+    FILES => join ' ', @cleanup, qw(
       tbyte.tif tmp0 tmp0.hdr tushort.tif
       MANIFEST.bak tmp1* tmpraw* t/tmpraw* t/tmp1*
       _Inline/ .inlinepdlpp/ .inlinewith/ *.xfig
     ),
   },
-  'AUTHOR' => 'PerlDL Developers (pdl-general@lists.sourceforge.net)',
-  'ABSTRACT' => 'Perl Data Language',
-  'BINARY_LOCATION' => 'PDLA.tar.gz',
-
+  AUTHOR => 'PerlDL Developers (pdl-general@lists.sourceforge.net)',
+  ABSTRACT => 'Perl Data Language',
+  BINARY_LOCATION => 'PDLA.tar.gz',
 );
 
 =begin comment
