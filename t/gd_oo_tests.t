@@ -12,46 +12,12 @@ use PDLA;
 use Test::More;
 use File::Temp qw(tempdir);
 
-BEGIN
-{
-    my $Ntests = 32;
+eval "use PDLA::IO::GD";
+plan skip_all => "PDLA::IO::GD requires the gd image library. \$@='$@'" if $@;
 
-    use PDLA::Config;
-    if ( $PDLA::Config{WITH_GD} ) 
-    {
-        eval( " use PDLA::IO::GD; " );
-        if( $@ )
-        {
-            plan skip_all => "PDLA::IO::GD requires the gd image library. \$@='$@'";
-        }  
-#        elsif( $^O =~ /bsd$/i or $^O =~ /dragonfly/i )
-#        {
-#           if ( $ENV{AUTOMATED_TESTING} )
-#           {
-#              plan skip_all => "Known problem: sf.net bug #3518190, t/gd_oo_tests.t fails for BSD AMD64";
-#           }
-#           else
-#           {
-#              diag "Known problem: sf.net bug #3518190, t/gd_oo_tests.t fails for BSD AMD64";
-#              plan tests => $Ntests;
-#           }
-#        }  
-        else
-        {
-            plan tests => $Ntests;
-        }
-    }
-    else
-    {
-        plan skip_all => "PDLA::IO::GD not compiled.";
-    }
-}
+plan tests => 32;
 
 use ExtUtils::testlib;
-
-use PDLA::IO::GD;
-use PDLA::Config;
-
 
 sub tapprox
 {
@@ -544,4 +510,3 @@ sub write_lut
 ENDLUT
     close( LUT );
 } # End of write_lut()...
-

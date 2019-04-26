@@ -7,21 +7,10 @@
 
 use PDLA;
 use Test::More;
-	
-BEGIN
-{
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_GSL} ) {
-      eval " use PDLA::GSL::DIFF; ";
-      unless ($@) {
-         plan tests => 4;
-      } else {
-         plan skip_all => "PDLA::GSL::DIFF not installed.";
-      }
-   } else {
-      plan skip_all => "PDLA::GSL::DIFF not compiled.";
-   }
-}
+
+eval " use PDLA::GSL::DIFF; ";
+plan skip_all => "PDLA::GSL::DIFF not installed." if $@;
+plan tests => 4;
 
 @res = gsldiff(\&myf,1.5);
 

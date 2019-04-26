@@ -8,21 +8,10 @@
 use PDLA;
 use Test::More;
 
-BEGIN
-{
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_GSL} ) {
-      eval " use PDLA::GSL::MROOT; ";
-      unless ($@) {
-         ## plan tests => 2;
-         plan skip_all => "PDLA::GSL::MROOT doesn't work with PDLA_Index, yet";
-      } else {
-         plan skip_all => "PDLA::GSL::MROOT not installed";
-      }
-   } else {
-      plan skip_all => "PDLA::GSL::MROOT not compiled.";
-   }
-}
+eval "use PDLA::GSL::MROOT";
+plan skip_all => "PDLA::GSL::MROOT not installed" if $@;
+
+plan skip_all => "PDLA::GSL::MROOT doesn't work with PDLA_Index, yet";
 
 my $init = pdl (-10.00, -5.0);
 my $epsabs = 1e-7;

@@ -11,54 +11,41 @@ use PDLA::LiteF;
 use Test::More;
 use strict;
 
-BEGIN
-{
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_GSL} ) {
-       my $v = `gsl-config --version`;
-       eval "
-	  use PDLA::GSLSF::AIRY;
-	  use PDLA::GSLSF::BESSEL;
-	  use PDLA::GSLSF::CLAUSEN;
-	  use PDLA::GSLSF::COULOMB;
-	  use PDLA::GSLSF::COUPLING;
-	  use PDLA::GSLSF::DAWSON;
-	  use PDLA::GSLSF::DEBYE;
-	  use PDLA::GSLSF::DILOG;
-	  use PDLA::GSLSF::ELEMENTARY;
-	  use PDLA::GSLSF::ELLINT;
-	  use PDLA::GSLSF::ELLJAC;
-	  use PDLA::GSLSF::ERF;
-	  use PDLA::GSLSF::EXP;
-	  use PDLA::GSLSF::EXPINT;
-	  use PDLA::GSLSF::FERMI_DIRAC;
-	  use PDLA::GSLSF::GAMMA;
-	  use PDLA::GSLSF::GEGENBAUER;
-	  use PDLA::GSLSF::HYPERG;
-	  use PDLA::GSLSF::LAGUERRE;
-	  use PDLA::GSLSF::LEGENDRE;
-	  use PDLA::GSLSF::LOG;
-	  use PDLA::GSLSF::POLY;
-	  use PDLA::GSLSF::POW_INT;
-	  use PDLA::GSLSF::PSI;
-	  use PDLA::GSLSF::SYNCHROTRON;
-	  use PDLA::GSLSF::TRANSPORT;
-	  use PDLA::GSLSF::TRIG;
-	  use PDLA::GSLSF::ZETA;
-      ";
-      unless ($@) {
-	  plan tests => 4 if $v>=2.0;
-	  plan tests => 2 if $v<2.0;
-      } else {
-	  warn "Warning: $@\n\n";
-         plan skip_all => "PDLA::GSLSF modules not installed.";
-      }
-   } else {
-      plan skip_all => "PDLA::GSLSF modules not compiled.";
-   }
-}
-
+eval "
+  use PDLA::GSLSF::AIRY;
+  use PDLA::GSLSF::BESSEL;
+  use PDLA::GSLSF::CLAUSEN;
+  use PDLA::GSLSF::COULOMB;
+  use PDLA::GSLSF::COUPLING;
+  use PDLA::GSLSF::DAWSON;
+  use PDLA::GSLSF::DEBYE;
+  use PDLA::GSLSF::DILOG;
+  use PDLA::GSLSF::ELEMENTARY;
+  use PDLA::GSLSF::ELLINT;
+  use PDLA::GSLSF::ELLJAC;
+  use PDLA::GSLSF::ERF;
+  use PDLA::GSLSF::EXP;
+  use PDLA::GSLSF::EXPINT;
+  use PDLA::GSLSF::FERMI_DIRAC;
+  use PDLA::GSLSF::GAMMA;
+  use PDLA::GSLSF::GEGENBAUER;
+  use PDLA::GSLSF::HYPERG;
+  use PDLA::GSLSF::LAGUERRE;
+  use PDLA::GSLSF::LEGENDRE;
+  use PDLA::GSLSF::LOG;
+  use PDLA::GSLSF::POLY;
+  use PDLA::GSLSF::POW_INT;
+  use PDLA::GSLSF::PSI;
+  use PDLA::GSLSF::SYNCHROTRON;
+  use PDLA::GSLSF::TRANSPORT;
+  use PDLA::GSLSF::TRIG;
+  use PDLA::GSLSF::ZETA;
+";
+plan skip_all => "PDLA::GSLSF modules not installed." if $@;
 my $version = `gsl-config --version`;
+plan tests => 4 if $version>=2.0;
+plan tests => 2 if $version<2.0;
+
 my $arg = 5.0;
 my $expected = -0.17759677131433830434739701;
 

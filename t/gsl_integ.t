@@ -7,21 +7,10 @@
 
 use PDLA;
 use Test::More;
-	
-BEGIN
-{
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_GSL} ) {
-      eval " use PDLA::GSL::INTEG; ";
-      unless ($@) {
-         plan tests => 22;
-      } else {
-         plan skip_all => "PDLA::GSL::INTEG not installed.";
-      }
-   } else {
-      plan skip_all => "PDLA::GSL::INTEG not compiled.";
-   }
-}
+
+eval "use PDLA::GSL::INTEG";
+plan skip_all => "PDLA::GSL::INTEG not installed." if $@;
+plan tests => 22;
 
 my $alfa = 2.6;
 

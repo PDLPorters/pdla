@@ -2,23 +2,13 @@
 use PDLA::LiteF;
 use PDLA::Config;
 use Test::More;
-my $ntests;
-BEGIN {
-   if ($PDLA::Config{WITH_SLATEC}) {
-      eval " use PDLA::Slatec; ";
-      $loaded = ($@ ? 0 : 1);
-      if ($loaded) {
-         $ntests = 40;
-         $ntests -= 3 unless ($PDLA::Config{WITH_BADVAL}); # two fewer tests if no bad val support
-         plan tests => $ntests;
-      } 
-   }
-   else { 
-      ## print STDERR "$@\n";
-      plan skip_all => 'PDLA::Slatec not available';
-   }
-}
 
+eval "use PDLA::Slatec";
+plan skip_all => 'PDLA::Slatec not available' if $@;
+
+my $ntests = 40;
+$ntests -= 3 unless ($PDLA::Config{WITH_BADVAL}); # fewer tests if no bad val support
+plan tests => $ntests;
 
 kill INT,$$  if $ENV{UNDER_DEBUGGER}; # Useful for debugging.
 

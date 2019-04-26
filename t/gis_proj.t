@@ -13,26 +13,10 @@ use strict;
 use PDLA;
 use Test::More;
 
-BEGIN
-{
-    use PDLA::Config;
-    if ( $PDLA::Config{WITH_PROJ} )
-    {
-        eval( " use PDLA::GIS::Proj; " );
-        if( $@ )
-        {
-            plan skip_all => "PDLA::GIS::Proj compiled, but not available.";
-        }
-        else
-        {
-            plan tests => 15;
-        }
-    }
-    else
-    {
-        plan skip_all => "PDLA::GIS::Proj module not compiled.";
-    }
-}
+eval "use PDLA::GIS::Proj";
+plan skip_all => "PDLA::GIS::Proj compiled, but not available." if $@;
+
+plan tests => 15;
 
 sub tapprox
 {

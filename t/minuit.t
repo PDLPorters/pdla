@@ -1,23 +1,9 @@
-
 use PDLA;
-use PDLA::Config;
 use Test::More;
-        
-BEGIN{
-   unless ($PDLA::Config{WITH_MINUIT}) {
-      plan skip_all => 'PDLA not built WITH_MINUIT';
-      exit;
-   }
-   eval " use PDLA::Minuit; ";
-   unless ($@){
-      plan tests => 5;
-   }
-   else {
-      diag "$@\n";
-      plan skip_all => 'PDLA::Minuit not available';
-      exit;
-   }
-}
+
+eval "use PDLA::Minuit";
+plan skip_all => 'PDLA::Minuit not available' if $@;
+plan tests => 5;
 
 use File::Temp qw( tempfile tempdir );
 my $tempd = tempdir( CLEANUP => 1 ) or die "Couldn't get tempdir\n";

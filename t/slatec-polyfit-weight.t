@@ -13,19 +13,13 @@ use warnings;
 ## <https://github.com/PDLPorters/pdl/issues/48>
 
 use PDLA::LiteF;
-use PDLA::Config;
 
-BEGIN {
-    unless ($PDLA::Config{WITH_SLATEC} &&
-	    eval {
-		require PDLA::Slatec;
-		PDLA::Slatec->import();
-		1;
-	    }
-	) {
-	plan skip_all => "PDLA::Slatec not available";
-    }
-}
+eval {
+  require PDLA::Slatec;
+  PDLA::Slatec->import();
+  1;
+};
+plan skip_all => "PDLA::Slatec not available" if $@;
 
 plan tests => 3;
 

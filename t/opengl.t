@@ -16,20 +16,11 @@ sub hasDISPLAY {
 
 use Test::More;
 
-BEGIN { 
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_3D} ) {  # check if compiled
-      if ( $PDLA::Config{USE_POGL} ) {  # check if using Perl OpenGL
-         plan tests => 2;
-         use_ok("OpenGL $PDLA::Config{POGL_VERSION}", qw(:all));
-         use_ok('PDLA::Graphics::OpenGL::Perl::OpenGL');
-      } else {
-         plan skip_all => 'Non-POGL TriD graphics not supported';
-      }
-   } else {
-      plan skip_all => 'TriD graphics not compiled';
-   }
-}
+eval "use PDLA::Graphics::OpenGL::Perl::OpenGL";
+plan skip_all => 'PDLA::Graphics::OpenGL::Perl::OpenGL not available' if $@;
+
+plan tests => 1;
+use_ok("OpenGL 0.6702", qw(:all));
 
 #
 # TODO: add runtime tests

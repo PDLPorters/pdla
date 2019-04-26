@@ -1,5 +1,3 @@
-
-
 # Test Script for the PDLA interface to the GSL library
 #  This tests only that the interface is working, i.e. that the
 #   functions can be called. The actual return values are not
@@ -10,20 +8,9 @@
 use PDLA;
 use Test::More;
 
-BEGIN
-{
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_GSL} ) {
-      eval " use PDLA::GSL::RNG; ";
-      unless ($@) {
-         plan tests => 19;
-      } else {
-         plan skip_all => "PDLA::GSL::RNG not installed.";
-      }
-   } else {
-      plan skip_all => "PDLA::GSL::RNG not compiled.";
-   }
-}
+eval "use PDLA::GSL::RNG";
+plan skip_all => "PDLA::GSL::RNG not installed." if $@;
+plan tests => 19;
 
 $image = zeroes(10,10);
 $ndim = 2;

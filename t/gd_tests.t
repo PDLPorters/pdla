@@ -9,30 +9,13 @@
 
 use strict;
 use PDLA;
-use PDLA::Config;
 use Test::More;
 use File::Temp qw(tempdir);
 
-BEGIN
-{
-    use PDLA::Config;
-    if ( $PDLA::Config{WITH_GD} ) 
-    {
-        eval( " use PDLA::IO::GD; " );
-        if( $@ )
-        {
-            plan skip_all => "PDLA::IO::GD requires the gd image library. \$@='$@'";
-        }  
-        else
-        {
-            plan tests => 13;
-        }
-    }
-    else
-    {
-        plan skip_all => "PDLA::IO::GD not compiled.";
-    }
-}
+eval "use PDLA::IO::GD";
+plan skip_all => "PDLA::IO::GD requires the gd image library. \$@='$@'" if $@;
+
+plan tests => 13;
 
 sub tapprox
 {
@@ -44,8 +27,6 @@ sub tapprox
 }
 
 use ExtUtils::testlib;
-
-use PDLA::IO::GD;
 
 # Test Files:
 my $tempdir = tempdir( CLEANUP=>1 );

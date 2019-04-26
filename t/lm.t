@@ -4,23 +4,12 @@ use strict;
 use warnings;
 use Test::More;
 use PDLA::LiteF;
-use PDLA::Config;
 use PDLA::IO::Misc 'rcols';
 
-BEGIN {
-    if ($PDLA::Config{WITH_SLATEC}) {
-	eval " use PDLA::Fit::LM; ";
-	unless ($@) {
-	    plan tests => 2;
-	} 
-	else {
-	    plan skip_all => 'PDLA::Fit::LM did not load. Is PDLA::Slatec available?';
-	}
-    }
-    else {
-	plan skip_all => 'PDLA::Fit::LM not available (needs PDLA::Slatec)';
-    }
-}    
+eval " use PDLA::Fit::LM; ";
+plan skip_all => 'PDLA::Fit::LM did not load' if $@;
+
+plan tests => 2;
 
 my ($t,$count,$sigma)=rcols(\*DATA,0,1,2);
 my $initp = pdl(10,900,80,27,225);

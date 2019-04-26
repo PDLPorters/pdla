@@ -6,23 +6,12 @@
 #  do not want to duplicate that effort here.
 
 use PDLA;
-use PDLA::Config;
 use Test::More;
-	
-BEGIN
-{
-   use PDLA::Config;
-   if ( $PDLA::Config{WITH_GSL} ) {
-      eval " use PDLA::GSL::INTERP; ";
-      unless ($@) {
-         plan tests => 12;
-      } else {
-         plan skip_all => "PDLA::GSL::INTERP not installed";
-      }
-   } else {
-      plan skip_all => "PDLA::GSL::INTERP not compiled.";
-   }
-}
+
+eval "use PDLA::GSL::INTERP";
+plan skip_all => "PDLA::GSL::INTERP not installed." if $@;
+
+plan tests => 12;
 
 my $x = sequence(10);
 my $y = exp($x);

@@ -5,9 +5,6 @@ use warnings;
 use PDLA;
 use Test::More;
 
-use PDLA::Config;
-plan skip_all => "PDLA::Transform::Proj4 module not compiled."
-    unless $PDLA::Config{WITH_PROJ};
 eval { require PDLA::Transform::Proj4; PDLA::Transform::Proj4->import; };
 plan skip_all => "PDLA::Transform::Proj4 module compiled, but not available."
     if $@;
