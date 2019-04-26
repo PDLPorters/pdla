@@ -90,62 +90,62 @@ my $preop = '$(PERL) -I$(INST_ARCHLIB) -I$(INST_LIB) -MPDLA::Core::Dev -e pdlpp_
 my @optimize = (OPTIMIZE => $PDLA::Config{OPTIMIZE}) if $PDLA::Config{OPTIMIZE};
 
 my %makefile_hash = (
-	      'PREREQ_PM' => { @prereq },
-	      'LICENSE' => 'perl',
-              'CONFIGURE_REQUIRES' => {
-                @coredep,
-                'Devel::CheckLib' => 1.01,
-                'Carp'            => 1.20,    # EU::MM seems to need this not to crash
-                'ExtUtils::MakeMaker' => 6.56,
-                'File::Path'          => 0,
-                'ExtUtils::Depends' => '0.402',
-                'Alien::HDF4' => 0,
-                'ExtUtils::ParseXS'   => 3.01, # avoids 2.21, known broken
-              },
-              TEST_REQUIRES => {
-                'CPAN::Meta' => '2.120900',
-                'Test::Exception' => 0,
-                'Test::Warn' => 0,  # for t/pptest.t
-                'Test::Deep' => 0,
-                'ExtUtils::Manifest'  => 0,
-              },
-              BUILD_REQUIRES => {
-                'ExtUtils::MakeMaker' => 0,
-                'File::Path'          => 0,
-              },
-              'MIN_PERL_VERSION' => '5.010',
-	      'NAME' => 'PDLA::Rest',
-	      'VERSION_FROM' => 'lib/PDLA/Rest.pm',
-              'META_MERGE' => {
-                "meta-spec" => { version => 2 },
-                resources => {
-                  homepage => 'http://pdlporters.github.io',
-                  bugtracker  => {web=>'https://github.com/PDLPorters/pdla-rest/issues'},
-                  repository  => {
-                    url => 'git://github.com/PDLPorters/pdla-rest',
-                    type => 'git',
-                    web => 'https://github.com/PDLPorters/pdla-rest',
-                  },
-                  x_IRC => 'irc://irc.perl.org/#pdl',
-                },
-              },
-	      @optimize,
-	      'CCFLAGS' => $ccflags,
-	      'dist'     => { COMPRESS => 'gzip',
-                              SUFFIX   => 'gz',
-                              PREOP    => $preop },
-	      'clean' => {
-		'FILES' => join ' ', @cleanup, qw(
-                  tbyte.tif tmp0 tmp0.hdr tushort.tif
-                  MANIFEST.bak tmp1* tmpraw* t/tmpraw* t/tmp1*
-                  _Inline/ .inlinepdlpp/ .inlinewith/ *.xfig
-                ),
-              },
-              'AUTHOR' => 'PerlDL Developers (pdl-general@lists.sourceforge.net)',
-              'ABSTRACT' => 'Perl Data Language',
-              'BINARY_LOCATION' => 'PDLA.tar.gz',
+  'PREREQ_PM' => { @prereq },
+  'LICENSE' => 'perl',
+  'CONFIGURE_REQUIRES' => {
+    @coredep,
+    'Devel::CheckLib' => 1.01,
+    'Carp'            => 1.20,    # EU::MM seems to need this not to crash
+    'ExtUtils::MakeMaker' => 6.56,
+    'File::Path'          => 0,
+    'ExtUtils::Depends' => '0.402',
+    'Alien::HDF4' => 0,
+    'ExtUtils::ParseXS'   => 3.01, # avoids 2.21, known broken
+  },
+  TEST_REQUIRES => {
+    'CPAN::Meta' => '2.120900',
+    'Test::Exception' => 0,
+    'Test::Warn' => 0,  # for t/pptest.t
+    'Test::Deep' => 0,
+    'ExtUtils::Manifest'  => 0,
+  },
+  BUILD_REQUIRES => {
+    'ExtUtils::MakeMaker' => 0,
+    'File::Path'          => 0,
+  },
+  'MIN_PERL_VERSION' => '5.010',
+  'NAME' => 'PDLA::Rest',
+  'VERSION_FROM' => 'lib/PDLA/Rest.pm',
+  'META_MERGE' => {
+    "meta-spec" => { version => 2 },
+    resources => {
+      homepage => 'http://pdlporters.github.io',
+      bugtracker  => {web=>'https://github.com/PDLPorters/pdla-rest/issues'},
+      repository  => {
+        url => 'git://github.com/PDLPorters/pdla-rest',
+        type => 'git',
+        web => 'https://github.com/PDLPorters/pdla-rest',
+      },
+      x_IRC => 'irc://irc.perl.org/#pdl',
+    },
+  },
+  @optimize,
+  'CCFLAGS' => $ccflags,
+  'dist'     => { COMPRESS => 'gzip',
+                  SUFFIX   => 'gz',
+                  PREOP    => $preop },
+  'clean' => {
+    'FILES' => join ' ', @cleanup, qw(
+      tbyte.tif tmp0 tmp0.hdr tushort.tif
+      MANIFEST.bak tmp1* tmpraw* t/tmpraw* t/tmp1*
+      _Inline/ .inlinepdlpp/ .inlinewith/ *.xfig
+    ),
+  },
+  'AUTHOR' => 'PerlDL Developers (pdl-general@lists.sourceforge.net)',
+  'ABSTRACT' => 'Perl Data Language',
+  'BINARY_LOCATION' => 'PDLA.tar.gz',
 
-    );
+);
 
 =begin comment
 
