@@ -42,31 +42,31 @@ if (!defined($PDLA::Config{USE_POGL}) or +$PDLA::Config{USE_POGL}) {
 
 my @coredep = ('PDLA::Core' => '2.019100');
 my @prereq = (
-	   'Astro::FITS::Header' => 0,
-           'Carp'                => 0,         # Need to run
-           'Config'              => 0,         # 
-           'Convert::UU'         => 0,         # for PDLA::IO::Dumper
-           'Data::Dumper'        => 2.121,     # for PDLA::IO::Dumper
-           'Fcntl'               => 0,
-           'File::Basename'      => 0,
-           'File::Find'          => 0,
-	   'File::Map'           => 0.57,      # test new mmap implementation
-           'File::Path'          => 0,
-	   'File::Spec'          => 0.6,
-	   'File::Temp'          => 0,
-	   'Filter::Util::Call'  => 0,         # for PDLA::NiceSlice
-	   'Filter::Simple'      => 0.88,      # for new PDLA::NiceSlice
-	   'Inline'              => 0.68,
-	   'Inline::C'           => 0.62,
-	   'List::MoreUtils'     => 0,         # for PDLA::IO::GD
-	   'Module::Compile'     => 0.23,      # for new PDLA::NiceSlice
-	   @coredep,
-	   'Pod::Parser'         => 0,         # version TBD for PDLA::Doc
-	   'Pod::Select'         => 0,         # version TBD for PDLA::Doc
-           'Scalar::Util'        => 0,
-           'Storable'            => 1.03,      # for PDLA::IO::Storable
-	   'Text::Balanced'      => 1.89,      # for PDLA::NiceSlice
-	  );
+  'Astro::FITS::Header' => 0,
+  'Carp'                => 0,         # Need to run
+  'Config'              => 0,         # 
+  'Convert::UU'         => 0,         # for PDLA::IO::Dumper
+  'Data::Dumper'        => 2.121,     # for PDLA::IO::Dumper
+  'Fcntl'               => 0,
+  'File::Basename'      => 0,
+  'File::Find'          => 0,
+  'File::Map'           => 0.57,      # test new mmap implementation
+  'File::Path'          => 0,
+  'File::Spec'          => 0.6,
+  'File::Temp'          => 0,
+  'Filter::Util::Call'  => 0,         # for PDLA::NiceSlice
+  'Filter::Simple'      => 0.88,      # for new PDLA::NiceSlice
+  'Inline'              => 0.68,
+  'Inline::C'           => 0.62,
+  'List::MoreUtils'     => 0,         # for PDLA::IO::GD
+  'Module::Compile'     => 0.23,      # for new PDLA::NiceSlice
+  @coredep,
+  'Pod::Parser'         => 0,         # version TBD for PDLA::Doc
+  'Pod::Select'         => 0,         # version TBD for PDLA::Doc
+  'Scalar::Util'        => 0,
+  'Storable'            => 1.03,      # for PDLA::IO::Storable
+  'Text::Balanced'      => 1.89,      # for PDLA::NiceSlice
+);
 
 # add OpenGL version dependency for CPAN to follow
 push @prereq, ('OpenGL' => $PDLA::Config{POGL_VERSION}) if $PDLA::Config{USE_POGL};
@@ -89,7 +89,7 @@ my $preop = '$(PERL) -I$(INST_ARCHLIB) -I$(INST_LIB) -MPDLA::Core::Dev -e pdlpp_
 
 my @optimize = (OPTIMIZE => $PDLA::Config{OPTIMIZE}) if $PDLA::Config{OPTIMIZE};
 
-my %makefile_hash = (
+WriteMakefile(
   PREREQ_PM => { @prereq },
   LICENSE => 'perl',
   CONFIGURE_REQUIRES => {
@@ -146,15 +146,9 @@ my %makefile_hash = (
   BINARY_LOCATION => 'PDLA.tar.gz',
 );
 
-WriteMakefile(%makefile_hash);
-
-# do *after* WriteMakefile since some options
-# are set by the recursively called Makefile.PLs
-
 # Extra build target to build the doc database
 sub MY::postamble {
   my ($self) = @_;
-  package MY;
   my  $text = "\n";
 $text .= << 'EOT' if $^O =~ /MSWin/;
 
