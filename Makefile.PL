@@ -128,7 +128,6 @@ my %makefile_hash = (
                   },
                   x_IRC => 'irc://irc.perl.org/#pdl',
                 },
-                no_index => { file => ['Doc/scantree.pl'] },
               },
 	      @optimize,
 	      'CCFLAGS' => $ccflags,
@@ -183,44 +182,12 @@ WriteMakefile(%makefile_hash);
 sub MY::postamble {
   my ($self) = @_;
   package MY;
-  my  $text =
-'
-doctest ::
-	$(NOECHO) $(ECHO) "doctest: Building PDLA documentation database in blib ..."
-	$(NOECHO) $(PERLRUNINST) Doc$(DFSEP)scantree.pl
-%HTML%	$(NOECHO) $(ECHO) "doctest: Building PDLA documentation web pages in blib ..."
-%HTML%	$(NOECHO) $(PERLRUNINST) Doc$(DFSEP)mkhtmldoc.pl
-
-doc_site_install ::
-	$(NOECHO) $(ECHO) "doc_site_install: Building PDLA documentation database ..."
-	$(NOECHO) $(PERLRUNINST) Doc$(DFSEP)scantree.pl "$(DESTDIR)$(INSTALLSITEARCH)"
-%HTML%	$(NOECHO) $(ECHO) "doc_site_install: Building PDLA documentation web pages ..."
-%HTML%	$(NOECHO) $(PERL) Doc$(DFSEP)mkhtmldoc.pl "$(DESTDIR)$(INSTALLSITEARCH)$(DFSEP)PDLA"
-
-doc_vendor_install ::
-	$(NOECHO) $(ECHO) "doc_vendor_install: Building PDLA documentation database ..."
-	$(NOECHO) $(PERLRUNINST) Doc$(DFSEP)scantree.pl "$(DESTDIR)$(INSTALLVENDORARCH)"
-%HTML%	$(NOECHO) $(ECHO) "doc_vendor_install: Building PDLA documentation web pages ..."
-%HTML%	$(NOECHO) $(PERL) Doc$(DFSEP)mkhtmldoc.pl "$(DESTDIR)$(INSTALLVENDORARCH)$(DFSEP)PDLA"
-
-doc_perl_install ::
-	$(NOECHO) $(ECHO) "doc_perl_install: Building PDLA documentation database ..."
-	$(NOECHO) $(PERLRUNINST) Doc$(DFSEP)scantree.pl "$(DESTDIR)$(INSTALLARCHLIB)"
-%HTML%	$(NOECHO) $(ECHO) "doc_perl_install: Building PDLA documentation web pages ..."
-%HTML%	$(NOECHO) $(PERL) Doc$(DFSEP)mkhtmldoc.pl "$(DESTDIR)$(INSTALLARCHLIB)$(DFSEP)PDLA"
-';
-
-  if(defined $PDLA::Config{HTML_DOCS} && !$PDLA::Config{HTML_DOCS}){
-    $text=~ s/\%HTML\%[^\n]*\n//og; # Remove %HTML% lines
-  } else {
-    $text=~ s/\%HTML\%//og; # Remove just %HTML% markers
-  }
-
+  my  $text = "\n";
 $text .= << 'EOT' if $^O =~ /MSWin/;
 
 DISTWIN32NAME=$(DISTVNAME)-win32
 
-ppm : doctest ppd
+ppm : ppd
 	$(MV) blib$(DFSEP)lib$(DFSEP)PDLA$(DFSEP)HtmlDocs$(DFSEP)PDLA blib$(DFSEP)html$(DFSEP)lib$(DFSEP)PDLA
 	$(COMPRESS) -dc win32$(DFSEP)pbmwin32.tar.gz | $(TAR) xf -
 	$(MKPATH) $(DISTWIN32NAME)
