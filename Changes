@@ -1,3 +1,4 @@
+2.019103 2019-04-27
  - zap make-targets that are only relevant for core - thanks @wlmb for report
  - various tests now try, not use %PDLA::Config
 
