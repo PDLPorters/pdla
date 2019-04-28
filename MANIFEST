@@ -134,6 +134,7 @@ Graphics/PGPLOT/Window/Window.pm
 Graphics/PGPLOT/Window/Window.xs
 Graphics/PGPLOT/Window/ppport.h
 Graphics/PGPLOT/Window/typemap
+Graphics/PGPLOT/t/pgplot.t
 Graphics/State.pm
 Graphics/TriD/Makefile.PL
 Graphics/TriD/OpenGLQ/Makefile.PL
@@ -524,7 +525,6 @@ t/image2d.t
 t/imagend.t
 t/interp.t
 t/interp_slatec.t
-t/pgplot.t
 t/proj_transform.t
 utils/perldlpp.pl
 win32/INSTALL
