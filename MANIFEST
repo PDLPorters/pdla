@@ -341,6 +341,7 @@ Libtmp/Minuit/minuit.pd
 Libtmp/Minuit/minuitlib/futils.f
 Libtmp/Minuit/minuitlib/intracfalse.f
 Libtmp/Minuit/minuitlib/minuit.f
+Libtmp/Minuit/t/minuit.t
 Libtmp/Simplex/Makefile.PL
 Libtmp/Simplex/Simplex.pm
 Libtmp/Simplex/t/simplex.t
@@ -522,7 +523,6 @@ t/image2d.t
 t/imagend.t
 t/interp.t
 t/interp_slatec.t
-t/minuit.t
 t/opengl.t
 t/pgplot.t
 t/proj_transform.t
