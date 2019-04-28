@@ -173,6 +173,7 @@ IO/Browser/hints/dec_osf.pl
 IO/Dicom/Dicom.pm
 IO/Dicom/Makefile.PL
 IO/Dumper.pm
+IO/t/dumper.t
 IO/ENVI/readenvi.pdl
 IO/FastRaw/FastRaw.pm
 IO/FastRaw/Makefile.PL
@@ -483,7 +484,6 @@ m51.fits
 macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
-t/dumper.t
 t/fastraw.t
 t/fft.t
 t/flexraw.t
