@@ -26,10 +26,6 @@ if ($@) {
   write_dummy_make("Will skip build of $package_name on this system  (cannot find default_inc)");
   return;
 }
-#@inc = @{$PDLA::Config{$config_incs}}
-#  if $PDLA::Config{$config_incs} and @{$PDLA::Config{$config_incs}};
-#push @inc, File::Spec->catdir((File::Spec->updir) x 2, qw(GIS Proj include));
-#Alien::Proj4->import($PDLA::Config{$config_libs}, \@inc);
 
 if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==1) {
   print "   Will forcibly try and build $package_name on this system\n";
