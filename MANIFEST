@@ -302,6 +302,12 @@ Libtmp/GSL/SF/trig/Makefile.PL
 Libtmp/GSL/SF/trig/gsl_sf_trig.pd
 Libtmp/GSL/SF/zeta/Makefile.PL
 Libtmp/GSL/SF/zeta/gsl_sf_zeta.pd
+Libtmp/GSL/t/gsl_diff.t
+Libtmp/GSL/t/gsl_integ.t
+Libtmp/GSL/t/gsl_interp.t
+Libtmp/GSL/t/gsl_mroot.t
+Libtmp/GSL/t/gsl_rng.t
+Libtmp/GSL/t/gsl_sf.t
 Libtmp/Image2D/Makefile.PL
 Libtmp/Image2D/image2d.pd
 Libtmp/Image2D/resample.c
@@ -497,12 +503,6 @@ t/func.t
 t/gauss.t
 t/gd_oo_tests.t
 t/gd_tests.t
-t/gsl_diff.t
-t/gsl_integ.t
-t/gsl_interp.t
-t/gsl_mroot.t
-t/gsl_rng.t
-t/gsl_sf.t
 t/image2d.t
 t/imagend.t
 t/interp.t
