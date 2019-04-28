@@ -519,7 +519,7 @@ debian/perldl.conf
 debian/rules
 debian/source/format
 debian/write_config_debian.pl
-Lib/PDLA/Rest.pm
+lib/PDLA/Rest.pm
 m51.fits
 macosx/README
 t/00-report-prereqs.t
