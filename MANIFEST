@@ -434,6 +434,8 @@ Libtmp/Slatec/slatec/xermsg.f
 Libtmp/Slatec/slatec/xerprn.f
 Libtmp/Slatec/slatec/xersve.f
 Libtmp/Slatec/slatec/xgetua.f
+Libtmp/Slatec/t/slatec-polyfit-weight.t
+Libtmp/Slatec/t/slatec.t
 Libtmp/Transform/Cartography/Cartography.pm
 Libtmp/Transform/Cartography/Makefile.PL
 Libtmp/Transform/Cartography/earth_coast.vec.fits
@@ -523,8 +525,6 @@ t/poly.t
 t/proj_transform.t
 t/proj_transform2.t
 t/simplex.t
-t/slatec-polyfit-weight.t
-t/slatec.t
 t/transform.t
 utils/perldlpp.pl
 win32/INSTALL
