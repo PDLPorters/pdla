@@ -479,6 +479,7 @@ Libtmp/Transform/Proj4/Makefile.PL
 Libtmp/Transform/Proj4/Proj4.pd
 Libtmp/Transform/Proj4/README
 Libtmp/Transform/Proj4/TODO
+Libtmp/Transform/Proj4/t/proj_transform.t
 Libtmp/Transform/Proj4/t/proj_transform2.t
 Libtmp/Transform/transform.pd
 Libtmp/Transform/t/transform.t
@@ -525,7 +526,6 @@ t/00-report-prereqs.t
 t/01-checkmanifest.t
 t/fft.t
 t/flexraw_fortran.t
-t/proj_transform.t
 utils/perldlpp.pl
 win32/INSTALL
 win32/win32f77.pl
