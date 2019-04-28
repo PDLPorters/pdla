@@ -320,6 +320,7 @@ Libtmp/Minuit/minuitlib/intracfalse.f
 Libtmp/Minuit/minuitlib/minuit.f
 Libtmp/Simplex/Makefile.PL
 Libtmp/Simplex/Simplex.pm
+Libtmp/Simplex/t/simplex.t
 Libtmp/Slatec/Makefile.PL
 Libtmp/Slatec/slatec.pd
 Libtmp/Slatec/slatec/chfcm.f
@@ -524,7 +525,6 @@ t/pgplot.t
 t/poly.t
 t/proj_transform.t
 t/proj_transform2.t
-t/simplex.t
 t/transform.t
 utils/perldlpp.pl
 win32/INSTALL
