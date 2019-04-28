@@ -144,6 +144,7 @@ Graphics/TriD/POGL/OpenGL.pm
 Graphics/TriD/POGL/README
 Graphics/TriD/POGL/ignore.txt
 Graphics/TriD/POGL/t/00-load.t
+Graphics/TriD/POGL/t/opengl.t
 Graphics/TriD/Rout/Makefile.PL
 Graphics/TriD/Rout/rout.pd
 Graphics/TriD/TriD.pm
@@ -523,7 +524,6 @@ t/image2d.t
 t/imagend.t
 t/interp.t
 t/interp_slatec.t
-t/opengl.t
 t/pgplot.t
 t/proj_transform.t
 utils/perldlpp.pl
