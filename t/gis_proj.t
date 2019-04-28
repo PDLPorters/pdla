@@ -27,8 +27,6 @@ sub tapprox
     return all($d < 1.0e-5);
 }
 
-use PDLA::GIS::Proj;
-
 print "Testing forward transformation...\n";
 my $proj = "+proj=merc +ellps=WGS72 +lon_0=80.25w +lat_0=30n";
 print "Perl level params: \'$proj\'\n";
