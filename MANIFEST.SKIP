@@ -109,10 +109,6 @@ RCS
 ^Libtmp/Slatec/slatec/.*\.c$
 ^Libtmp/Transform/Cartography/earth_day.ppm
 ^Libtmp/Transform/Cartography/earth_night.ppm
-^Libtmp/Transform/Proj4/Makefile.PL-gis$
-^Libtmp/Transform/Proj4/Proj4\.c
-^Libtmp/Transform/Proj4/Proj4\.pm
-^Libtmp/Transform/Proj4/Proj4\.xs
 ^Libtmp/Transform/Transform\.c
 ^Libtmp/Transform/Transform\.pm
 ^Libtmp/Transform/Transform\.xs
