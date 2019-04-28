@@ -13,6 +13,10 @@ $file = pop @dirs; # so get the dir to give to catpath
 $directories = File::Spec->catdir( @dirs );
 my $corepath = File::Spec->catpath($volume, $directories, $file);
 
+my @cleanup = (qw(
+    t/callext$(OBJ_EXT) t/callext.$(DLEXT)
+));
+
 use ExtUtils::MakeMaker;
 WriteMakefile(
  'NAME'	        => 'PDLA::CallExt',
@@ -20,4 +24,5 @@ WriteMakefile(
  'INC' => qq{-I"$corepath" $mallocinc},
  'LIBS' => [$malloclib],
  (eval ($ExtUtils::MakeMaker::VERSION) >= 6.57_02 ? ('NO_MYMETA' => 1) : ()),
+ clean => { FILES => join ' ', @cleanup },
 );

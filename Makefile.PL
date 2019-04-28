@@ -67,10 +67,6 @@ my @prereq = (
 # add OpenGL version dependency for CPAN to follow
 push @prereq, ('OpenGL' => $PDLA::Config{POGL_VERSION}) if $PDLA::Config{USE_POGL};
 
-my @cleanup = (qw(
-    t/callext$(OBJ_EXT) t/callext.$(DLEXT)
-));
-
 ##############################
 # Hack to include fPIC on x86_64 systems -
 # use similar mods to affect CCFLAGS on other systems as needed...
@@ -131,7 +127,7 @@ WriteMakefile(
                   SUFFIX   => 'gz',
                   PREOP    => $preop },
   clean => {
-    FILES => join ' ', @cleanup, qw(
+    FILES => join ' ', qw(
       tbyte.tif tmp0 tmp0.hdr tushort.tif
       MANIFEST.bak tmp1* tmpraw* t/tmpraw* t/tmp1*
       _Inline/ .inlinepdlpp/ .inlinewith/ *.xfig
