@@ -335,6 +335,7 @@ Libtmp/Image2D/rotate.c
 Libtmp/Image2D/t/image2d.t
 Libtmp/ImageND/Makefile.PL
 Libtmp/ImageND/imagend.pd
+Libtmp/ImageND/t/imagend.t
 Libtmp/Interpolate/Interpolate.pm
 Libtmp/Interpolate/Makefile.PL
 Libtmp/Interpolate/Slatec/Makefile.PL
@@ -524,7 +525,6 @@ t/00-report-prereqs.t
 t/01-checkmanifest.t
 t/fft.t
 t/flexraw_fortran.t
-t/imagend.t
 t/proj_transform.t
 utils/perldlpp.pl
 win32/INSTALL
