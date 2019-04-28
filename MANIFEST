@@ -221,6 +221,7 @@ Libtmp/FFT/Makefile.PL
 Libtmp/FFT/fft.pd
 Libtmp/FFT/fftn.c
 Libtmp/FFT/fftn.h
+Libtmp/FFT/t/fft.t
 Libtmp/Filter/LinPred.pm
 Libtmp/Filter/Linear.pm
 Libtmp/Filter/Makefile.PL
@@ -524,7 +525,6 @@ m51.fits
 macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
-t/fft.t
 t/flexraw_fortran.t
 utils/perldlpp.pl
 win32/INSTALL
