@@ -198,6 +198,7 @@ Libtmp/Compression/Makefile.PL
 Libtmp/Compression/compression.pd
 Libtmp/Compression/ricecomp.c
 Libtmp/DiskCache.pm
+Libtmp/t/diskcache.t
 Libtmp/FFT/Makefile.PL
 Libtmp/FFT/fft.pd
 Libtmp/FFT/fftn.c
@@ -482,7 +483,6 @@ m51.fits
 macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
-t/diskcache.t
 t/dumper.t
 t/fastraw.t
 t/fft.t
