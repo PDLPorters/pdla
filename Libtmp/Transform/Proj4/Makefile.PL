@@ -5,48 +5,26 @@ use PDLA::Core::Dev;
 
 my $package_name = "PDLA::Transform::Proj4";
 my $lib_name = "Proj4";
-my $config_flag = 'WITH_PROJ';
-my $config_libs = 'PROJ_LIBS';
-my $config_incs = 'PROJ_INC';
 
-my $forcebuild=0;
-
-$PDLA::Config{WITH_PROJ} = 1;
-
-if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==0) {
-  write_dummy_make("Will skip build of $package_name on this system");
-  $PDLA::Config{$config_flag}=0;
-  return;
-}
-
-eval { require Alien::Proj4 }; # runtime not compile-time so return above will work
-my @inc = eval { Alien::Proj4->default_inc };
+eval { require Alien::Proj4 };
 if ($@) {
-    warn $@;
-  write_dummy_make("Will skip build of $package_name on this system  (cannot find default_inc)");
+  write_dummy_make("Will skip build of $package_name on this system - no Alien::Proj4");
   return;
 }
 
-if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==1) {
-  print "   Will forcibly try and build $package_name on this system\n";
-  $forcebuild=1;
-}
-
-if (!$forcebuild && !Alien::Proj4->installed) {
+if (!Alien::Proj4->installed) {
   write_dummy_make( <<EOF );
 \tCannot find $lib_name installation.
 \tPlease add the correct library path to perldl.conf or install $lib_name.
 Skipping build of $package_name.
 EOF
-  $PDLA::Config{$config_flag}=0;
   return;
 }
 
 my $libflags = Alien::Proj4->libflags;
 my $incflags = Alien::Proj4->incflags;
 
-print "Building $package_name. Turn off $config_flag if there are any problems\n";
-$PDLA::Config{$config_flag}=1;
+print "Building $package_name.\n";
 
 my $ppfile = "Proj4.pd";
 my $package = [$ppfile, 'Proj4', $package_name];
