@@ -236,6 +236,7 @@ Libtmp/Fit/t/linfit.t
 Libtmp/Fit/t/lm.t
 Libtmp/Fit/t/poly.t
 Libtmp/Func.pm
+Libtmp/t/func.t
 Libtmp/GIS/Makefile.PL
 Libtmp/GIS/Proj/Makefile.PL
 Libtmp/GIS/Proj/Proj.pd
@@ -522,7 +523,6 @@ t/00-report-prereqs.t
 t/01-checkmanifest.t
 t/fft.t
 t/flexraw_fortran.t
-t/func.t
 t/image2d.t
 t/imagend.t
 t/proj_transform.t
