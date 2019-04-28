@@ -1,3 +1,6 @@
+2.019105 2019-04-28
+ - zap (lots of) unneeded deps
+
 2.019104 2019-04-28
  - rename Lib to Libtmp for windows reasons
  - relocate tests
