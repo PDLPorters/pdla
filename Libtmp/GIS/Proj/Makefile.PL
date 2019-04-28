@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 my $PJ_VERSION;
 my $donot;
@@ -12,6 +13,8 @@ my $config_incs = 'PROJ_INC';
 
 my $forcebuild=0;  # Note: forcebuild not used
 
+$PDLA::Config{WITH_PROJ} = 1;
+
 if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==0) {
   write_dummy_make("Will skip build of $package_name on this system");
   $PDLA::Config{$config_flag}=0;
@@ -21,7 +24,8 @@ if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==0) {
 eval { require Alien::Proj4 }; # runtime not compile-time so return above will work
 my @inc = eval { Alien::Proj4->default_inc };
 if ($@) {
-  write_dummy_make("Will skip build of $package_name on this system");
+  warn $@;
+  write_dummy_make("Will skip build of $package_name on this system (cannot find default_inc)");
   $PDLA::Config{$config_flag}=0; # we know Proj4 doesn't work
   return;
 }
