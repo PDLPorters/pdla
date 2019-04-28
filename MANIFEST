@@ -337,6 +337,8 @@ Libtmp/Interpolate/Interpolate.pm
 Libtmp/Interpolate/Makefile.PL
 Libtmp/Interpolate/Slatec/Makefile.PL
 Libtmp/Interpolate/Slatec/Slatec.pm
+Libtmp/Interpolate/t/interp.t
+Libtmp/Interpolate/t/interp_slatec.t
 Libtmp/Makefile.PL
 Libtmp/Minuit/FCN.c
 Libtmp/Minuit/Makefile.PL
@@ -523,8 +525,6 @@ t/flexraw_fortran.t
 t/func.t
 t/image2d.t
 t/imagend.t
-t/interp.t
-t/interp_slatec.t
 t/proj_transform.t
 utils/perldlpp.pl
 win32/INSTALL
