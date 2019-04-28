@@ -177,6 +177,7 @@ IO/t/dumper.t
 IO/ENVI/readenvi.pdl
 IO/FastRaw/FastRaw.pm
 IO/FastRaw/Makefile.PL
+IO/FastRaw/t/fastraw.t
 IO/FlexRaw/FlexRaw.pm
 IO/FlexRaw/Makefile.PL
 IO/GD/Changes
@@ -484,7 +485,6 @@ m51.fits
 macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
-t/fastraw.t
 t/fft.t
 t/flexraw.t
 t/flexraw_fortran.t
