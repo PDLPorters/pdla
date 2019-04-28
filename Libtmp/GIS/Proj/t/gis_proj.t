@@ -14,7 +14,7 @@ use PDLA;
 use Test::More;
 
 eval "use PDLA::GIS::Proj";
-plan skip_all => "PDLA::GIS::Proj compiled, but not available." if $@;
+plan skip_all => "PDLA::GIS::Proj compiled, but not available: $@" if $@;
 
 plan tests => 15;
 
