@@ -180,6 +180,8 @@ IO/FastRaw/Makefile.PL
 IO/FastRaw/t/fastraw.t
 IO/FlexRaw/FlexRaw.pm
 IO/FlexRaw/Makefile.PL
+IO/FlexRaw/t/flexraw.t
+IO/FlexRaw/t/iotypes.t
 IO/GD/Changes
 IO/GD/GD.pd
 IO/GD/Makefile.PL
@@ -490,7 +492,6 @@ macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
 t/fft.t
-t/flexraw.t
 t/flexraw_fortran.t
 t/func.t
 t/gauss.t
@@ -506,7 +507,6 @@ t/image2d.t
 t/imagend.t
 t/interp.t
 t/interp_slatec.t
-t/iotypes.t
 t/limits_00.t
 t/limits_errb.t
 t/limits_keyspecs.t
