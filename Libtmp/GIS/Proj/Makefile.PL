@@ -29,10 +29,10 @@ if ($@) {
   $PDLA::Config{$config_flag}=0; # we know Proj4 doesn't work
   return;
 }
-@inc = @{$PDLA::Config{$config_incs}}
-  if $PDLA::Config{$config_incs} and @{$PDLA::Config{$config_incs}};
-push @inc, qw(include);
-Alien::Proj4->import($PDLA::Config{$config_libs}, \@inc);
+#@inc = @{$PDLA::Config{$config_incs}}
+#  if $PDLA::Config{$config_incs} and @{$PDLA::Config{$config_incs}};
+#push @inc, qw(include);
+#Alien::Proj4->import($PDLA::Config{$config_libs}, \@inc);
 
 if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==1) {
   print "\n   Will forcibly try and build $package_name on this system   \n\n";
