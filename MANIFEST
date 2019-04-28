@@ -113,6 +113,7 @@ Graphics/LUT/tables/staircase.fits
 Graphics/LUT/tables/stairs8.fits
 Graphics/LUT/tables/stairs9.fits
 Graphics/LUT/tables/standard.fits
+Graphics/LUT/t/lut.t
 Graphics/Limits/Limits.pm
 Graphics/Limits/Makefile.PL
 Graphics/Limits/t/limits_00.t
@@ -521,7 +522,6 @@ t/image2d.t
 t/imagend.t
 t/interp.t
 t/interp_slatec.t
-t/lut.t
 t/minuit.t
 t/opengl.t
 t/pgplot.t
