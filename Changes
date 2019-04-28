@@ -1,3 +1,6 @@
+2.019106 2019-04-28
+ - carve out PDLA::Transform into another separate distro
+
 2.019105 2019-04-28
  - zap (lots of) unneeded deps
 

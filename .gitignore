@@ -230,11 +230,6 @@ Libtmp/Slatec/Slatec.pm
 Libtmp/Slatec/Slatec.xs
 Libtmp/Slatec/SlatecProtos.h
 Libtmp/Slatec/f77_underscore
-Libtmp/Transform/Cartography/earth_day.ppm
-Libtmp/Transform/Cartography/earth_night.ppm
-Libtmp/Transform/Transform.c
-Libtmp/Transform/Transform.pm
-Libtmp/Transform/Transform.xs
 MANIFEST.bak
 _Inline/
 gsl.pl

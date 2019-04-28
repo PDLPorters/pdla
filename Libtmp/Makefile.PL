@@ -12,7 +12,7 @@ WriteMakefile(
   NAME => 'PDLA::Lib',
   VERSION_FROM => '../lib/PDLA/Rest.pm',
   DIR =>  [ qw/Simplex Fit FFT Filter Image2D ImageND
-               CallExt Slatec GSL Transform Minuit Compression
+               CallExt Slatec GSL Minuit Compression
                / ],
   PM => { map {($_ => '$(INST_LIBDIR)/'.$_)}
     grep {

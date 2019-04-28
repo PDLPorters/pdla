@@ -464,14 +464,6 @@ Libtmp/Slatec/slatec/xersve.f
 Libtmp/Slatec/slatec/xgetua.f
 Libtmp/Slatec/t/slatec-polyfit-weight.t
 Libtmp/Slatec/t/slatec.t
-Libtmp/Transform/Cartography/Cartography.pm
-Libtmp/Transform/Cartography/Makefile.PL
-Libtmp/Transform/Cartography/earth_coast.vec.fits
-Libtmp/Transform/Cartography/earth_day.jpg
-Libtmp/Transform/Cartography/earth_night.jpg
-Libtmp/Transform/Makefile.PL
-Libtmp/Transform/transform.pd
-Libtmp/Transform/t/transform.t
 MANIFEST			This list of files
 MANIFEST.SKIP
 Makefile.PL
