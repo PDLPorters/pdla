@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 our ($GSL_includes, $GSL_libs);
 my $msg = undef;
