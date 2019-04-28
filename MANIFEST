@@ -192,6 +192,8 @@ Known_problems
 Libtmp/CallExt/CallExt.pm
 Libtmp/CallExt/CallExt.xs
 Libtmp/CallExt/Makefile.PL
+Libtmp/CallExt/t/callext.c
+Libtmp/CallExt/t/callext.t
 Libtmp/Compression/Makefile.PL
 Libtmp/Compression/compression.pd
 Libtmp/Compression/ricecomp.c
@@ -480,8 +482,6 @@ m51.fits
 macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
-t/callext.c
-t/callext.t
 t/diskcache.t
 t/dumper.t
 t/fastraw.t
