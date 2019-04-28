@@ -6,13 +6,12 @@ use PDLA::Core::Dev;
 my $package_name = "PDLA::Transform::Proj4";
 my $lib_name = "Proj4";
 
-eval { require Alien::Proj4 };
-if ($@) {
-  write_dummy_make("Will skip build of $package_name on this system - no Alien::Proj4");
-  return;
+our $have_alien_proj4;
+BEGIN {
+    $have_alien_proj4 = eval 'use Alien::Proj4';
 }
 
-if (!Alien::Proj4->installed) {
+if (!$have_alien_proj4) {
   write_dummy_make( <<EOF );
 \tCannot find $lib_name installation.
 \tPlease add the correct library path to perldl.conf or install $lib_name.
@@ -21,8 +20,8 @@ EOF
   return;
 }
 
-my $libflags = Alien::Proj4->libflags;
-my $incflags = Alien::Proj4->incflags;
+my $libflags = join ' ',  Alien::Proj4->libs;
+my $incflags = Alien::Proj4->cflags;
 
 print "Building $package_name.\n";
 
