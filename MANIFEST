@@ -187,6 +187,8 @@ IO/GD/GD.pd
 IO/GD/Makefile.PL
 IO/GD/TODO
 IO/GD/typemap
+IO/GD/t/gd_oo_tests.t
+IO/GD/t/gd_tests.t
 IO/IDL/IDL.pm
 IO/IDL/Makefile.PL
 IO/IDL/README
@@ -503,8 +505,6 @@ t/fft.t
 t/flexraw_fortran.t
 t/func.t
 t/gauss.t
-t/gd_oo_tests.t
-t/gd_tests.t
 t/image2d.t
 t/imagend.t
 t/interp.t
