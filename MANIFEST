@@ -476,12 +476,6 @@ Libtmp/Transform/Cartography/earth_coast.vec.fits
 Libtmp/Transform/Cartography/earth_day.jpg
 Libtmp/Transform/Cartography/earth_night.jpg
 Libtmp/Transform/Makefile.PL
-Libtmp/Transform/Proj4/Makefile.PL
-Libtmp/Transform/Proj4/Proj4.pd
-Libtmp/Transform/Proj4/README
-Libtmp/Transform/Proj4/TODO
-Libtmp/Transform/Proj4/t/proj_transform.t
-Libtmp/Transform/Proj4/t/proj_transform2.t
 Libtmp/Transform/transform.pd
 Libtmp/Transform/t/transform.t
 MANIFEST			This list of files
