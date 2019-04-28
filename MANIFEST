@@ -244,7 +244,6 @@ Libtmp/GIS/Proj/Makefile.PL
 Libtmp/GIS/Proj/Proj.pd
 Libtmp/GIS/Proj/README
 Libtmp/GIS/Proj/TODO
-Libtmp/GIS/Proj/include/projects.h
 Libtmp/GIS/Proj/t/gis_proj.t
 Libtmp/GSL/DIFF/FUNC.c
 Libtmp/GSL/DIFF/Makefile.PL
@@ -520,8 +519,7 @@ debian/perldl.conf
 debian/rules
 debian/source/format
 debian/write_config_debian.pl
-inc/Alien/Proj4.pm
-lib/PDLA/Rest.pm
+Lib/PDLA/Rest.pm
 m51.fits
 macosx/README
 t/00-report-prereqs.t
