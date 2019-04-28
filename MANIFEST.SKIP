@@ -83,9 +83,6 @@ RCS
 ^Libtmp/Fit/Gaussian/Gaussian\.c
 ^Libtmp/Fit/Gaussian/Gaussian\.pm
 ^Libtmp/Fit/Gaussian/Gaussian\.xs
-^Libtmp/GIS/Proj/Proj\.c
-^Libtmp/GIS/Proj/Proj\.pm
-^Libtmp/GIS/Proj/Proj\.xs
 ^Libtmp/GSL/.*\.pm$
 ^Libtmp/GSL/.*\.xs$
 ^Libtmp/GSL/DIFF/D.*\.c$

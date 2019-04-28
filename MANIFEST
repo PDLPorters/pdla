@@ -239,12 +239,6 @@ Libtmp/Fit/t/lm.t
 Libtmp/Fit/t/poly.t
 Libtmp/Func.pm
 Libtmp/t/func.t
-Libtmp/GIS/Makefile.PL
-Libtmp/GIS/Proj/Makefile.PL
-Libtmp/GIS/Proj/Proj.pd
-Libtmp/GIS/Proj/README
-Libtmp/GIS/Proj/TODO
-Libtmp/GIS/Proj/t/gis_proj.t
 Libtmp/GSL/DIFF/FUNC.c
 Libtmp/GSL/DIFF/Makefile.PL
 Libtmp/GSL/DIFF/gsl_diff.pd

@@ -120,9 +120,6 @@ Libtmp/FFT/FFT.xs
 Libtmp/Fit/Gaussian/Gaussian.c
 Libtmp/Fit/Gaussian/Gaussian.pm
 Libtmp/Fit/Gaussian/Gaussian.xs
-Libtmp/GIS/Proj/Proj.c
-Libtmp/GIS/Proj/Proj.pm
-Libtmp/GIS/Proj/Proj.xs
 Libtmp/GSL/DIFF/DIFF.c
 Libtmp/GSL/DIFF/DIFF.pm
 Libtmp/GSL/DIFF/DIFF.xs
