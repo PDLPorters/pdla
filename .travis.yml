@@ -40,7 +40,6 @@ matrix:
 #    - perl: "5.18"
     - perl: "blead"
     - perl: "blead-dbg"
-    - perl: "5.28-dbg" # 5.28+ debugging exposes a PDLA bug
     - perl: "5.20"
     - perl: "5.20"
       env: DISABLE_FORTRAN=1 # what if we don't have Fortran installed?
