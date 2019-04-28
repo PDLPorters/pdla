@@ -332,6 +332,7 @@ Libtmp/Image2D/image2d.pd
 Libtmp/Image2D/resample.c
 Libtmp/Image2D/resample.h
 Libtmp/Image2D/rotate.c
+Libtmp/Image2D/t/image2d.t
 Libtmp/ImageND/Makefile.PL
 Libtmp/ImageND/imagend.pd
 Libtmp/Interpolate/Interpolate.pm
@@ -523,7 +524,6 @@ t/00-report-prereqs.t
 t/01-checkmanifest.t
 t/fft.t
 t/flexraw_fortran.t
-t/image2d.t
 t/imagend.t
 t/proj_transform.t
 utils/perldlpp.pl
