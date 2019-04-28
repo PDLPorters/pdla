@@ -228,6 +228,9 @@ Libtmp/Fit/LM.pm
 Libtmp/Fit/Linfit.pm
 Libtmp/Fit/Makefile.PL
 Libtmp/Fit/Polynomial.pm
+Libtmp/Fit/t/linfit.t
+Libtmp/Fit/t/lm.t
+Libtmp/Fit/t/poly.t
 Libtmp/Func.pm
 Libtmp/GIS/Makefile.PL
 Libtmp/GIS/Proj/Makefile.PL
@@ -518,13 +521,10 @@ t/image2d.t
 t/imagend.t
 t/interp.t
 t/interp_slatec.t
-t/linfit.t
-t/lm.t
 t/lut.t
 t/minuit.t
 t/opengl.t
 t/pgplot.t
-t/poly.t
 t/proj_transform.t
 utils/perldlpp.pl
 win32/INSTALL
