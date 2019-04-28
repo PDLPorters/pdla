@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 my @pack = (["gaussian.pd", qw(Gaussian PDLA::Fit::Gaussian)]);
 my %hash = pdlpp_stdargs(@pack);

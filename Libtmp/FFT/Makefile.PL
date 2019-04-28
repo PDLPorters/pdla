@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 my @pack = (["fft.pd", qw(FFT PDLA::FFT)]);
 my %hash = pdlpp_stdargs(@pack);

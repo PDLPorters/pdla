@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 our ($GSL_includes, $GSL_libs); 
 my @pack = (['gsl_sf_pow_int.pd', qw(POW_INT PDLA::GSLSF::POW_INT)]);

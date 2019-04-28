@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 my @pack = (["imagend.pd", qw(ImageND PDLA::ImageND)]);
 

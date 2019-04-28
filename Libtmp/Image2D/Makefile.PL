@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 my @pack = (["image2d.pd", qw(Image2D PDLA::Image2D)]);
 
