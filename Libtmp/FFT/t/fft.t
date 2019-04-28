@@ -24,7 +24,7 @@ foreach my $type(double,float){
 }
 
 $pk = ones(5,5);
-$pa = rfits("m51.fits");
+$pa = rfits("../../m51.fits");
 
 $pb = $pa->copy;
 $pc = $pb->zeroes;

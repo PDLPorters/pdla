@@ -102,7 +102,7 @@ my $w = PDLA::Graphics::PGPLOT::Window->new(
 );
 isa_ok($w, "PDLA::Graphics::PGPLOT::Window");
 
-my $x = rfits('m51.fits');
+my $x = rfits('../../m51.fits');
 
 ##############################
 # Page 1
