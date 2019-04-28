@@ -47,21 +47,11 @@ my @prereq = (
   'File::Basename'      => 0,
   'File::Find'          => 0,
   'File::Map'           => 0.57,      # test new mmap implementation
-  'File::Path'          => 0,
   'File::Spec'          => 0.6,
   'File::Temp'          => 0,
-  'Filter::Util::Call'  => 0,         # for PDLA::NiceSlice
-  'Filter::Simple'      => 0.88,      # for new PDLA::NiceSlice
-  'Inline'              => 0.68,
-  'Inline::C'           => 0.62,
   'List::MoreUtils'     => 0,         # for PDLA::IO::GD
-  'Module::Compile'     => 0.23,      # for new PDLA::NiceSlice
   @coredep,
-  'Pod::Parser'         => 0,         # version TBD for PDLA::Doc
-  'Pod::Select'         => 0,         # version TBD for PDLA::Doc
-  'Scalar::Util'        => 0,
   'Storable'            => 1.03,      # for PDLA::IO::Storable
-  'Text::Balanced'      => 1.89,      # for PDLA::NiceSlice
 );
 
 # add OpenGL version dependency for CPAN to follow
@@ -89,21 +79,14 @@ WriteMakefile(
     'Devel::CheckLib' => 1.01,
     'Carp'            => 1.20,    # EU::MM seems to need this not to crash
     'ExtUtils::MakeMaker' => 6.56,
-    'File::Path'          => 0,
-    'ExtUtils::Depends' => '0.402',
-    'Alien::HDF4' => 0,
-    'ExtUtils::ParseXS'   => 3.01, # avoids 2.21, known broken
   },
   TEST_REQUIRES => {
     'CPAN::Meta' => '2.120900',
     'Test::Exception' => 0,
-    'Test::Warn' => 0,  # for t/pptest.t
-    'Test::Deep' => 0,
     'ExtUtils::Manifest'  => 0,
   },
   BUILD_REQUIRES => {
     'ExtUtils::MakeMaker' => 0,
-    'File::Path'          => 0,
   },
   MIN_PERL_VERSION => '5.010',
   NAME => 'PDLA::Rest',
@@ -130,12 +113,11 @@ WriteMakefile(
     FILES => join ' ', qw(
       tbyte.tif tmp0 tmp0.hdr tushort.tif
       MANIFEST.bak tmp1* tmpraw* t/tmpraw* t/tmp1*
-      _Inline/ .inlinepdlpp/ .inlinewith/ *.xfig
+      *.xfig
     ),
   },
   AUTHOR => 'PerlDL Developers (pdl-general@lists.sourceforge.net)',
   ABSTRACT => 'Perl Data Language',
-  BINARY_LOCATION => 'PDLA.tar.gz',
 );
 
 # Extra build target to build the doc database
