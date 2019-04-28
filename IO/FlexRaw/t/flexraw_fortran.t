@@ -53,17 +53,6 @@ BEGIN{
       }
    }
 
-    # Configuration
-    # Get ExtUtils::F77 if run in either PDLA/t/ or PDLA/
-    #
-    if(-e 'flexraw.t') {
-	unshift @INC, '../Lib/Slatec/' if -e 'flexraw.t';
-    } elsif(-e 'INTERNATIONALIZATION') {
-	unshift @INC, 'Lib/Slatec/' if -e 'INTERNATIONALIZATION';
-    } else {
-	print "I'm not in PDLA now, right? Still trying\n";
-    }
-
 }
 
 # use ExtUtils::F77;
