@@ -1,55 +1,32 @@
 use strict;
 use warnings;
 use ExtUtils::MakeMaker;
+use PDLA::Core::Dev;
 
 my $PJ_VERSION;
 my $donot;
 my $package_name = "PDLA::GIS::Proj";
 my $lib_name = "Proj";
 my $config_flag = 'WITH_PROJ';
-my $config_libs = 'PROJ_LIBS';
-my $config_incs = 'PROJ_INC';
 
-my $forcebuild=0;  # Note: forcebuild not used
-
-if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==0) {
-  write_dummy_make("Will skip build of $package_name on this system");
-  $PDLA::Config{$config_flag}=0;
-  return;
+our $have_alien_proj4;
+BEGIN {
+    $have_alien_proj4 = eval 'use Alien::Proj4';
 }
 
-eval { require Alien::Proj4 }; # runtime not compile-time so return above will work
-my @inc = eval { Alien::Proj4->default_inc };
-if ($@) {
-  write_dummy_make("Will skip build of $package_name on this system");
-  $PDLA::Config{$config_flag}=0; # we know Proj4 doesn't work
-  return;
-}
-@inc = @{$PDLA::Config{$config_incs}}
-  if $PDLA::Config{$config_incs} and @{$PDLA::Config{$config_incs}};
-push @inc, qw(include);
-Alien::Proj4->import($PDLA::Config{$config_libs}, \@inc);
-
-if (defined $PDLA::Config{$config_flag} && $PDLA::Config{$config_flag}==1) {
-  print "\n   Will forcibly try and build $package_name on this system   \n\n";
-  $forcebuild=1;
-}
-
-if (!$forcebuild && !Alien::Proj4->installed) {
+if (!$have_alien_proj4) {
   write_dummy_make( <<EOF );
 \tCannot find $lib_name installation.
 \tPlease add the correct library path to perldl.conf or install $lib_name.
 Skipping build of $package_name.
 EOF
-  $PDLA::Config{$config_flag}=0;
   return;
 }
 
-my $libflags = Alien::Proj4->libflags;
-my $incflags = Alien::Proj4->incflags;
+my $libflags = join ' ',  Alien::Proj4->libs;
+my $incflags = Alien::Proj4->cflags;
 
-print "Building $package_name. Turn off $config_flag if there are any problems\n";
-$PDLA::Config{$config_flag}=1;
+print "Building $package_name.\n";
 
 my $ppfile = "Proj.pd";
 my $package = [$ppfile, 'Proj', $package_name];
