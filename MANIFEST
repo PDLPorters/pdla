@@ -193,6 +193,7 @@ IO/FastRaw/t/fastraw.t
 IO/FlexRaw/FlexRaw.pm
 IO/FlexRaw/Makefile.PL
 IO/FlexRaw/t/flexraw.t
+IO/FlexRaw/t/flexraw_fortran.t
 IO/FlexRaw/t/iotypes.t
 IO/GD/Changes
 IO/GD/GD.pd
@@ -525,7 +526,6 @@ m51.fits
 macosx/README
 t/00-report-prereqs.t
 t/01-checkmanifest.t
-t/flexraw_fortran.t
 utils/perldlpp.pl
 win32/INSTALL
 win32/win32f77.pl
