@@ -38,6 +38,7 @@ if (!defined($PDLA::Config{USE_POGL}) or +$PDLA::Config{USE_POGL}) {
 
 my @coredep = ('PDLA::Core' => '2.019100');
 my @prereq = (
+  'autodie'             => 0,         # for PDLA::Graphics::LUT
   'Astro::FITS::Header' => 0,
   'Carp'                => 0,         # Need to run
   'Config'              => 0,         # 
